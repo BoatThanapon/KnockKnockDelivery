@@ -4,8 +4,11 @@ Laravel and Angular
 # Laravel
 - select backend folder in terminal
 - composer install
-- Create .env file (can be based on .env.example)
-  - php artisan key:generate
+- Create .env file and copy code on .env.example to .env file
+- php artisan key:generate
+- php artisan config:cache
+- php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+- php artisan jwt:secret (if jwt not found in .env file)
 - Run Laravel
   - php artisan serve
 
