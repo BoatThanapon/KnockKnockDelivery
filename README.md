@@ -22,12 +22,12 @@ Laravel and Angular
 # Start server MySQL on XAMPP
 - Create Database name: knock-knock
 - In .env file folder backend
-  - DB_CONNECTION=mysql
-  - DB_HOST=127.0.0.1
-  - DB_PORT=3306
-  - DB_DATABASE=knock-knock
-  - DB_USERNAME=root
-  - DB_PASSWORD=
+- DB_CONNECTION=mysql
+- DB_HOST=knockknockdelivery.ceisn90mxwfd.ap-southeast-1.rds.amazonaws.com
+- DB_PORT=3306
+- DB_DATABASE=knockdb
+- DB_USERNAME=KnockDelivery
+- DB_PASSWORD=knock1234
 - open terminal backend folder
   - php artisan migrate
   
