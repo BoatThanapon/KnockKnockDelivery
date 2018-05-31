@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource as ProfileResource;
 use App\Http\Resources\ProfileCollection;
+use App\Http\Requests\CreateProfileRequest;
 use App\Profile;
 use App\User;
 use App\Role;
@@ -24,4 +25,10 @@ class ProfileController extends Controller
         return ProfileResource::collection($profiles);
     }
 
+    public function createProfile(CreateProfileRequest $request)
+    {
+        Profile::create($request->all());
+
+        return response()->json(['message' => 'Profile created'], 201);
+    }
 }
