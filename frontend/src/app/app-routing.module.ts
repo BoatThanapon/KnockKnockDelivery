@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 
 const routes: Routes = [
@@ -15,12 +16,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
-    canActivate: [IsNotLoggedInService]
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [IsNotLoggedInService]
   },
   {
     path: 'login',
@@ -36,6 +35,11 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'create-profile',
+    component: CreateProfileComponent,
     canActivate: [IsLoggedInService]
   },
   {

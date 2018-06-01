@@ -1,3 +1,42 @@
-<p>
-  profile works!
-</p>
+<div class="loader-container">
+  <div class="loader" [hidden]="isShow"></div>
+</div>
+<div class="container" [hidden]="!isShow">
+  <div class="card card-container w3-display-middle">
+    <div class="w3-row-padding">
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Seller</div>
+          <div class="card-body w3-center" *ngIf="validSeller">
+              <p>Display Seller profile detail</p>
+            </div>
+          <div class="card-body w3-center" *ngIf="!validSeller">
+            <button class="btn">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Buyer</div>
+          <div class="card-body w3-center" *ngIf="validBuyer">
+              <p>Display Buyer profile detail</p>
+            </div>
+          <div class="card-body w3-center" *ngIf="!validBuyer">
+            <button class="btn">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Deliver</div>
+          <div class="card-body w3-center" *ngIf="validDeliver">
+              <p>Display deliver profile detail</p>
+            </div>
+          <div class="card-body w3-center" *ngIf="!validDeliver">
+            <button class="btn" (click)="createProfile(4)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

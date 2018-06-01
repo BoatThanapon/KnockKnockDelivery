@@ -14,6 +14,7 @@ import { RequestResetComponent } from './components/password/request-reset/reque
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { AuthService } from './services/auth.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ProfileComponent,
     RequestResetComponent,
     ResponseResetComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateProfileComponent
   ],
   imports: [
     BrowserModule,
