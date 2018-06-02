@@ -15,6 +15,8 @@ class Seller extends Model
         'profile_id'
     ];
 
+    public $timestamps = false;
+
     public function shoptype()
     {
         return $this->belongsTo('App\ShopType','shop_type_id', 'shop_type_id');

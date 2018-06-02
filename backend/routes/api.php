@@ -15,6 +15,15 @@ Route::group([
 Route::group([
     // 'middleware' => 'jwt.auth',
 ], function ($router) {
-    Route::get('/user/{user_id}/profiles', 'ProfileController@profilesList');
+    Route::get('user/{user_id}/profiles', 'ProfileController@getProfilesByUserId');
+    Route::post('profile', 'ProfileController@createProfile');    
 });
-Route::post('profile', 'ProfileController@createProfile');    
+
+Route::group([
+    // 'middleware' => 'jwt.auth',
+], function ($router) {
+    Route::get('sellers', 'SellerController@getSellers');
+    Route::get('seller/{seller_id}', 'SellerController@getSellerBySellerId');
+    Route::post('seller', 'SellerController@createSeller');
+    Route::put('seller', 'SellerController@updateSeller');
+});
