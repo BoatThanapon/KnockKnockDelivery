@@ -19,8 +19,7 @@ Laravel and Angular
 - Run App
   - ng serve or ng serve -o
 
-# Start server MySQL on XAMPP
-- Create Database name: knock-knock
+# Connect with AWS MySQL
 - In .env file folder backend
 - DB_CONNECTION=mysql
 - DB_HOST=knockknockdelivery.ceisn90mxwfd.ap-southeast-1.rds.amazonaws.com
@@ -28,6 +27,4 @@ Laravel and Angular
 - DB_DATABASE=knockdb
 - DB_USERNAME=KnockDelivery
 - DB_PASSWORD=knock1234
-- open terminal backend folder
-  - php artisan migrate
   

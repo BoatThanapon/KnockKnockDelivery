@@ -15,5 +15,6 @@ Route::group([
 Route::group([
     // 'middleware' => 'jwt.auth',
 ], function ($router) {
-    Route::get('/user/{user_id}/profiles', 'ProfileController@profilesList');    
+    Route::get('/user/{user_id}/profiles', 'ProfileController@profilesList');
 });
+Route::post('profile', 'ProfileController@createProfile');    
