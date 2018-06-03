@@ -9,7 +9,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
 
 Route::group([
@@ -23,7 +22,7 @@ Route::group([
     // 'middleware' => 'jwt.auth',
 ], function ($router) {
     Route::get('sellers', 'SellerController@getSellers');
-    Route::get('seller/{seller_id}', 'SellerController@getSellerBySellerId');
+    Route::get('seller/profile/{profile_id}', 'SellerController@getSellerBySellerId');
     Route::post('seller', 'SellerController@createSeller');
-    Route::put('seller', 'SellerController@updateSeller');
+    Route::put('seller/{seller_id}', 'SellerController@updateSeller');
 });
