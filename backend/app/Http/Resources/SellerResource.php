@@ -27,7 +27,9 @@ class SellerResource extends JsonResource
                 'status_id' => $this->status->status_id,
                 'status_name' => $this->status->status_name
             ],
-            'profile_id' => $this->profile_id
+            'profile_id' => $this->profile_id,
+            'shop_latitude' => $this->shop_latitude,
+            'shop_longitude' => $this->shop_longitude
         ];
     }
 }

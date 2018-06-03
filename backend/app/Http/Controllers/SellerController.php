@@ -62,7 +62,8 @@ class SellerController extends Controller
         }
 
         $seller = Seller::where('seller_id', $seller_id)->first();
-        if($seller->isEmpty())
+        $sellerCount = Seller::where('seller_id', $seller_id)->first()->count();
+        if($sellerCount < 1)
         {
             return response()->json('Seller not found', 404);
         }
@@ -71,9 +72,9 @@ class SellerController extends Controller
         $seller->shop_name = $request->input('shop_name');
         $seller->shop_location = $request->input('shop_location');
         $seller->shop_type_id = $request->input('shop_type_id');
-        $seller->status_id = $request->input('status_id');        
-        $seller->status_id = $request->input('status_id');        
-        $seller->status_id = $request->input('status_id');        
+        $seller->status_id = $request->input('status_id');     
+        $seller->shop_latitude = $request->input('shop_latitude');     
+        $seller->shop_longitude = $request->input('shop_longitude');     
        
         $seller->save();
         
