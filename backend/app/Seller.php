@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seller extends Model
 {
+    protected $primaryKey = 'seller_id';
+
     protected $fillable = [
         'seller_name',
         'shop_name',
         'shop_location',
         'shop_type_id',
         'status_id',
-        'profile_id'
+        'profile_id',
+        'shop_latitude',
+        'shop_longitude'
     ];
 
     public $timestamps = false;

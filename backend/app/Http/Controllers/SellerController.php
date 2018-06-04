@@ -16,14 +16,14 @@ class SellerController extends Controller
         return SellerResource::collection($sellers);
     }
 
-    public function getSellerBySellerId($seller_id)
+    public function getSellerBySellerId($profile_id)
     {
-        if($seller_id < 0)
+        if($profile_id < 0)
         {
             return response()->json('Bad Request', 400);
         }
 
-        $seller = Seller::with('shop_type')->where('seller_id', $seller_id)->get();
+        $seller = Seller::with('shoptype','status')->where('profile_id', $profile_id)->get();
         if($seller->isEmpty())
         {
             return response()->json('Seller not found', 404);
@@ -54,21 +54,28 @@ class SellerController extends Controller
         );
     }
 
-    public function updateSeller($seller_id ,Request $request)
+    public function updateSeller(Request $request, $seller_id )
     {
-        if($seller->isEmpty())
+        if($seller_id < 0)
         {
-            return Seller::abort('400', 'Error');
+            return response()->json('Error', 400);
         }
 
-        $seller = Seller::findOrFail($seller_id);
+        $seller = Seller::where('seller_id', $seller_id)->first();
         if($seller->isEmpty())
         {
-            return Seller::abort('404', 'Seller not found');
+            return response()->json('Seller not found', 404);
         }
 
-        $seller->update($request->all());
-
+        $seller->seller_name = $request->input('seller_name');
+        $seller->shop_name = $request->input('shop_name');
+        $seller->shop_location = $request->input('shop_location');
+        $seller->shop_type_id = $request->input('shop_type_id');
+        $seller->status_id = $request->input('status_id');        
+       
+       
+        $seller->save();
+        
         return response()->json(
             [
                 'message' => 'Successfully',

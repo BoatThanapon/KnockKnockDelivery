@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function getProfilesByUserId($user_id)
     {
         $user = User::find($user_id);
-
+        
         if (!$user)
             return response()->json(['message' => 'User not found'], 404);
 
