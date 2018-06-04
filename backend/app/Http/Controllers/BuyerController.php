@@ -66,3 +66,5 @@ class BuyerController extends Controller
         );
     }
 }
+
+
