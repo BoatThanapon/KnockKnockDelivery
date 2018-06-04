@@ -26,3 +26,11 @@ Route::group([
     Route::post('seller', 'SellerController@createSeller');
     Route::put('seller/{seller_id}', 'SellerController@updateSeller');
 });
+
+Route::group([
+    // 'middleware' => 'jwt.auth',
+], function ($router) {
+    Route::get('buyers', 'BuyerController@getBuyers');
+    Route::post('buyer', 'BuyerController@createBuyer');
+    Route::put('buyer/{buyer_id}', 'BuyerController@updateBuyer');
+});

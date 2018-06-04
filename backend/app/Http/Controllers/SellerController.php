@@ -72,8 +72,7 @@ class SellerController extends Controller
         $seller->shop_location = $request->input('shop_location');
         $seller->shop_type_id = $request->input('shop_type_id');
         $seller->status_id = $request->input('status_id');        
-        $seller->status_id = $request->input('status_id');        
-        $seller->status_id = $request->input('status_id');        
+       
        
         $seller->save();
         
