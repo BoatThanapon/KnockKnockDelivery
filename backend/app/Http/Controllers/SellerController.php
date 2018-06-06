@@ -3,27 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seller;
 use App\Http\Resources\SellerResource as SellerResource;
-use App\Http\Resources\SellerCollection;
+use App\Http\Requests\SellerRequest;
+use App\Seller;
+use App\Profile;
 
 class SellerController extends Controller
 {
+    private $profile;
+    private $seller;
+
+    public function __construct(Seller $seller, Profile $profile)
+    {
+        $this->seller = $seller;
+        $this->profile = $profile;
+    }
+
     public function getSellers()
     {
-        $sellers = Seller::all();
+        $sellers = $this->seller->all();
 
         return SellerResource::collection($sellers);
     }
 
-    public function getSellerBySellerId($profile_id)
+    public function getSellerByProfileId($profile_id)
     {
-        if($profile_id < 0)
+        if($profile_id <= 0)
         {
             return response()->json('Bad Request', 400);
         }
 
-        $seller = Seller::with('shoptype','status')->where('profile_id', $profile_id)->get();
+        $seller = $this->seller->with('shoptype','status')->where('profile_id', $profile_id)->get();
         if($seller->isEmpty())
         {
             return response()->json('Seller not found', 404);
@@ -32,48 +42,66 @@ class SellerController extends Controller
         return SellerResource::collection($seller);
     }
 
-    public function createSeller(Request $request)
+    public function createSeller(SellerRequest $request)
     {
-        $sellerExist = Seller::where('profile_id', $request->profile_id)->count();
-        if($sellerExist > 1)
+        $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 2)->count();
+        if($checkRole > 0)
         {
-            return response()->json('Seller already exist', 500);
+            return response()->json([
+                'message' => 'this role already exists in your profiles'
+            ], 400 );
         }
 
-        $seller = Seller::create($request->all());
-        if(!$seller){
-            return response()->json('Error', 500);
+        $profile = new Profile();
+        $profile->user_id = $request->user_id;
+        $profile->role_id = 2;
+
+        $profile->save();
+
+        $seller = new Seller();
+        $seller->seller_name = $request->seller_name;
+        $seller->shop_name = $request->shop_name;
+        $seller->shop_type_id = $request->shop_type_id;
+        $seller->shop_location = $request->shop_location;
+        $seller->status_id = 1;
+        $seller->profile_id = $profile->profile_id;
+        $seller->shop_latitude = $request->shop_latitude;
+        $seller->shop_longitude = $request->shop_longitude;
+
+        $saveSeller = $seller->save();
+        if(!$saveSeller)
+        {
+            $profile->delete();
+            return response()->json(['message' =>'Bad Request'], 400);
+        }
+        else
+        {
+            $saveSeller;
         }
 
-        return response()->json(
-            [
-                'message' => 'Successfully',
-                'result' => $seller
-            ], 
-            201
-        );
+
+        return response()->json([
+            'message' => 'Successfully',
+            'result' => $seller
+        ]);
     }
 
-    public function updateSeller(Request $request, $seller_id )
+    public function updateSeller(SellerRequest $request, $seller_id )
     {
-        if($seller_id < 0)
-        {
-            return response()->json('Error', 400);
-        }
+        $seller = $this->seller->where('seller_id', $seller_id)->first();
 
-        $seller = Seller::where('seller_id', $seller_id)->first();
-        if($seller->isEmpty())
+        if($seller_id->count() == 0)
         {
-            return response()->json('Seller not found', 404);
+            return response()->json(['message'=>'Seller not found'], 404);
         }
-
-        $seller->seller_name = $request->input('seller_name');
-        $seller->shop_name = $request->input('shop_name');
-        $seller->shop_location = $request->input('shop_location');
-        $seller->shop_type_id = $request->input('shop_type_id');
-        $seller->status_id = $request->input('status_id');        
-       
-       
+     
+        $seller->seller_name = $request->seller_name;
+        $seller->shop_name = $request->shop_name;
+        $seller->shop_type_id = $request->shop_type_id;
+        $seller->shop_location = $request->shop_location;
+        $seller->status_id = $request->status_id;
+        $seller->shop_latitude = $request->shop_latitude;
+        $seller->shop_longitude = $request->shop_longitude;   
         $seller->save();
         
         return response()->json(
