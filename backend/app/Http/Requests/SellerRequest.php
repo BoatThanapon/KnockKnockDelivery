@@ -12,7 +12,9 @@ class SellerRequest extends FormRequest
         'shop_location' => 'required',
         'shop_type_id' => 'required',
         'shop_latitude' => 'required',
-        'shop_longitude' => 'required'
+        'shop_longitude' => 'required',
+        'seller_photos' => 'required|array',
+        'seller_photos.*' => 'required|image|mimes:jpeg,bmp,png|max:7000'
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -44,6 +46,7 @@ class SellerRequest extends FormRequest
     private function getPostRules()
     {
         $rules = $this->rules;
+
         //เปลี่ยนหรือเพิ่มกฎสำหรับเมธอด Post     
         $rules['user_id'] =  'required';
         return $rules;

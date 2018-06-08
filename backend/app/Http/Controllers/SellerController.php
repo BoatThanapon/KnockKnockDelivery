@@ -8,18 +8,21 @@ use App\Http\Requests\SellerRequest;
 use App\Seller;
 use App\Profile;
 use App\User;
+use App\SellerPhoto;
 
 class SellerController extends Controller
 {
     private $profile;
     private $seller;
     private $user;
+    private $sellerPhoto;
 
-    public function __construct(Seller $seller, Profile $profile, User $user)
+    public function __construct(Seller $seller, Profile $profile, User $user, SellerPhoto $sellerPhoto)
     {
         $this->seller = $seller;
         $this->profile = $profile;
         $this->user = $user;
+        $this->sellerPhoto = $sellerPhoto;
     }
 
     public function getSellers()
@@ -88,6 +91,14 @@ class SellerController extends Controller
         else
         {
             $saveSeller;
+        }
+
+        foreach ($request->seller_photos as $photo) {
+            $filename = $photo->store('photos');
+            $this->sellerPhoto->create([
+                'seller_id' => $seller->seller_id,
+                'seller_photo_filename' => $filename
+            ]);
         }
 
 
