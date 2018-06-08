@@ -7,16 +7,19 @@ use App\Http\Resources\SellerResource as SellerResource;
 use App\Http\Requests\SellerRequest;
 use App\Seller;
 use App\Profile;
+use App\User;
 
 class SellerController extends Controller
 {
     private $profile;
     private $seller;
+    private $user;
 
-    public function __construct(Seller $seller, Profile $profile)
+    public function __construct(Seller $seller, Profile $profile, User $user)
     {
         $this->seller = $seller;
         $this->profile = $profile;
+        $this->user = $user;
     }
 
     public function getSellers()
@@ -36,7 +39,7 @@ class SellerController extends Controller
         $seller = $this->seller->with('shoptype','status')->where('profile_id', $profile_id)->get();
         if($seller->isEmpty())
         {
-            return response()->json('Seller not found', 404);
+            return response()->json(['message' => 'Seller not found'], 404);
         }
 
         return SellerResource::collection($seller);
@@ -44,6 +47,14 @@ class SellerController extends Controller
 
     public function createSeller(SellerRequest $request)
     {
+        $user = $this->user->find($request->user_id);
+        if($user === null)
+        {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404 );
+        }
+
         $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 2)->count();
         if($checkRole > 0)
         {
@@ -99,7 +110,14 @@ class SellerController extends Controller
         $seller->shop_name = $request->shop_name;
         $seller->shop_type_id = $request->shop_type_id;
         $seller->shop_location = $request->shop_location;
-        $seller->status_id = $request->status_id;
+        if ($request->status_id == null)
+        {
+            $seller->status_id = 1;
+        }
+        else
+        {
+            $seller->status_id = $request->status_id;
+        }
         $seller->shop_latitude = $request->shop_latitude;
         $seller->shop_longitude = $request->shop_longitude;   
         $seller->save();

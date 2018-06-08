@@ -6,16 +6,19 @@ use App\Http\Resources\DeliverResource as DeliverResource;
 use App\Http\Requests\DeliverRequest;
 use App\Profile;
 use App\Deliver;
+use App\User;
 
 class DeliverController extends Controller
 {
     private $deliver;
     private $profile;
+    private $user;
 
-    public function __construct(Deliver $deliver, Profile $profile)
+    public function __construct(Deliver $deliver, Profile $profile, User $user)
     {
         $this->deliver = $deliver;
         $this->profile = $profile;
+        $this->user = $user;
     }
 
     public function getDelivers()
@@ -43,6 +46,14 @@ class DeliverController extends Controller
 
     public function createDeliver(DeliverRequest $request)
     {
+        $user = $this->user->find($request->user_id);
+        if($user === null)
+        {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404 );
+        }
+        
         $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 4)->count();
         if($checkRole > 0)
         {
@@ -95,7 +106,14 @@ class DeliverController extends Controller
         $deliver->deliver_lastname = $request->deliver_lastname;
         $deliver->dateOfBirth = date($request->dateOfBirth);
         $deliver->telephone_number = $request->telephone_number;
-        $deliver->status_id = $request->status_id;
+        if ($request->status_id == null)
+        {
+            $deliver->status_id = 1;
+        }
+        else
+        {
+            $deliver->status_id = $request->status_id;
+        }
 
         $deliver->save();
 

@@ -41,11 +41,18 @@ class SellerRequest extends FormRequest
         }
     }
 
-    prte function getPostRules()
+    private function getPostRules()
     {
         $rules = $this->rules;
         //เปลี่ยนหรือเพิ่มกฎสำหรับเมธอด Post     
         $rules['user_id'] =  'required';
         return $rules;
     }
+    
+    private function getPutRules()
+    {
+        return $this->rules;
+    }
+    
+}
     
