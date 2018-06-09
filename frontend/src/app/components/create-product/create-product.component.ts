@@ -54,7 +54,7 @@ export class CreateProductComponent implements OnInit {
         // context.drawImage(img,0,0,400,400)
 
       }
-      img.src = event.target.result;
+      // img.src = event.target.result;
     };
     render.readAsDataURL(e.target.files[0]);
 

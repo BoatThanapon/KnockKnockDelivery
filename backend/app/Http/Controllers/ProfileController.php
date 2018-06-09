@@ -22,7 +22,7 @@ class ProfileController extends Controller
     private $buyer;
     private $deliver;
 
-    public function __construct(Profile $profile, User $user, Seller $sell, Buyer $buyer, Deliver $deliver )
+    public function __construct(Profile $profile, User $user, Seller $seller, Buyer $buyer, Deliver $deliver )
     {
         $this->profile = $profile;
         $this->user = $user;
