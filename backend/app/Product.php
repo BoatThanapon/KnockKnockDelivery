@@ -15,7 +15,7 @@ class Product extends Model
         'unit_in_stock',
         'product_available',
         'product_category_id',
-        'seller_id'
+        // 'seller_id'
     ];
 
     public function category()
