@@ -24,6 +24,24 @@ export class UserService {
 
     }
 
+    createSeller(seller) {
+        var seller_form = {
+            seller_name:seller.sellerName,
+            shop_name: seller.shopName,
+            shop_location: seller.location,
+            shop_type_id: seller.selectedType,
+            status_id: 1,
+            profile_id: seller.profile_id
+        }
+        return this.http.post(`${this.baseUrl}seller`,seller_form)
+    }
+
+    fetchProfileDetail(profile) {
+        console.log("Profile from user service: ",profile)
+        var role = profile.role.role_name.toLowerCase();
+        return this.http.get(`${this.baseUrl}`+role+`/profile/`+profile.profile_id);
+
+    }
 
 
 

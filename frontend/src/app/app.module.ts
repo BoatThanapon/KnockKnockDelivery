@@ -15,6 +15,10 @@ import { ResponseResetComponent } from './components/password/response-reset/res
 import { AuthService } from './services/auth.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
+import { ManageShopComponent } from './components/manage-shop/manage-shop.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { ShopsComponent } from './components/shops/shops.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { CreateProfileComponent } from './components/create-profile/create-profi
     RequestResetComponent,
     ResponseResetComponent,
     DashboardComponent,
-    CreateProfileComponent
+    CreateProfileComponent,
+    ManageShopComponent,
+    ShopComponent,
+    ShopsComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,

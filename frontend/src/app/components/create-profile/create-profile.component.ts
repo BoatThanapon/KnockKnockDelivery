@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-profile',
@@ -8,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class CreateProfileComponent implements OnInit {
 
   private create_profile_id;
+  private user_id;
   private isCreateBuyer: Boolean;
   private isCreateSeller: Boolean;
   private isCreateDeliver: Boolean;
@@ -19,6 +22,8 @@ export class CreateProfileComponent implements OnInit {
     type: [{ model: '1' }, { model: '2' }, { model: '3' }],
     selectedType:null,
     shopImg: null,
+    profile_id: null,
+    status_id:1,
   }
 
   buyerForm = {
@@ -38,7 +43,9 @@ export class CreateProfileComponent implements OnInit {
 
 
 
-  constructor() { }
+  constructor(    
+    private userService: UserService,
+  ) { }
 
   ngOnInit() {
     this.isCreateBuyer = false;
@@ -49,7 +56,6 @@ export class CreateProfileComponent implements OnInit {
 
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
-    console.log("this.create_profile_id", this.create_profile_id)
     if (this.create_profile_id == 2) {
       this.isCreateSeller = true;
     }
@@ -64,7 +70,6 @@ export class CreateProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.sellerForm)
 
   }
 
@@ -78,6 +83,19 @@ export class CreateProfileComponent implements OnInit {
   
       reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+
+  createSeller() {
+    this.sellerForm.profile_id = localStorage.getItem("user_id")
+    this.userService.createSeller(this.sellerForm).subscribe(
+      data => {
+        console.log("response from create seller",data)
+      },
+      error => console.log(error)
+    )
+
+
   }
 
 }

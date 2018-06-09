@@ -9,7 +9,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
+import { ManageShopComponent } from './components/manage-shop/manage-shop.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { ShopsComponent } from './components/shops/shops.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+
 
 const routes: Routes = [
   {
@@ -38,8 +43,27 @@ const routes: Routes = [
     canActivate: [IsLoggedInService]
   },
   {
+    path: 'shop',
+    component: ShopComponent,
+    canActivate: [IsLoggedInService]
+  },  {
+    path: 'shops',
+    component: ShopsComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
     path: 'create-profile',
     component: CreateProfileComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'manage-shop',
+    component: ManageShopComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'manage-shop/create-product',
+    component: CreateProductComponent,
     canActivate: [IsLoggedInService]
   },
   {

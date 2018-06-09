@@ -72,7 +72,7 @@ export class AuthService {
 
   setUserProfile(data) {
     console.log(data)
-    localStorage.setItem('user_id', data.user.id);
+    localStorage.setItem('user_id', data.user.user_id);
 
 
   }
