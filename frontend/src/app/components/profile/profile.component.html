@@ -1,3 +1,58 @@
-<p>
-  profile works!
-</p>
+<div class="loader-container">
+  <div class="loader" [hidden]="isShow"></div>
+</div>
+<div class="container" [hidden]="!isShow">
+  <div class="card card-container w3-display-middle">
+    <div class="w3-row-padding">
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Seller</div>
+          <div *ngIf="validSeller">
+            <div class="card-body w3-center">
+              <p>Display Seller profile detail</p>
+            </div>
+            <div class="card-footer">
+              <a href="/manage-shop" class="btn btn-success btn-block">Enter</a>
+            </div>
+          </div>
+          <div class="card-body w3-center" *ngIf="!validSeller">
+            <button class="btnPlus">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Buyer</div>
+          <div *ngIf="validBuyer">
+            <div class="card-body w3-center">
+              <p>Display Buyer profile detail</p>
+            </div>
+            <div class="card-footer">
+              <a href="/shops" class="btn btn-success btn-block">Enter</a>
+            </div>
+          </div>
+          <div class="card-body w3-center" *ngIf="!validBuyer">
+            <button class="btn btnPlus">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="w3-third">
+        <div class="card">
+          <div class="card-header">Deliver</div>
+          <div *ngIf="validDeliver">
+            <div class="card-body w3-center">
+              <p>Display deliver profile detail</p>
+            </div>
+            <div class="card-footer">
+              <a href="/" class="btn btn-success btn-block">Enter</a>
+            </div>
+          </div>
+
+          <div class="card-body w3-center" *ngIf="!validDeliver">
+            <button class="btnPlus" (click)="createProfile(4)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
