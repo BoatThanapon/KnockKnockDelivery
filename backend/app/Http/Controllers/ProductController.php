@@ -67,7 +67,7 @@ class ProductController extends Controller
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;
         $product->unit_in_stock = $request->unit_in_stock;
-        $product->product_available = $request->product_available;
+        $product->product_status_id = 1;
         $product->product_category_id = $request->product_category_id;
         $product->seller_id = $seller_id;
 
@@ -86,7 +86,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function updateProduct(ProductRequest $request, $product_id)
+    public function updateProduct(ProductRequest $request, $seller_id ,$product_id)
     {
         if($product_id <= 0)
         {
@@ -105,7 +105,7 @@ class ProductController extends Controller
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;
         $product->unit_in_stock = $request->unit_in_stock;
-        $product->product_available = $request->product_available;
+        $product->product_status_id = $request->product_status_id;
         $product->product_category_id = $request->product_category_id;
         $product->seller_id = $request->seller_id;
 

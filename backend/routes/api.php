@@ -28,8 +28,8 @@ Route::group([
     Route::put('seller/{profile_id}', 'SellerController@updateSeller');
     
     Route::get('seller/{seller_id}/products', 'ProductController@getProductsBySellerId');
-    Route::post('seller/{seller_id}/product/create', 'ProductController@createProduct');
-    Route::put('seller/product/{product_id}', 'ProductController@updateProduct');
+    Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
+    Route::put('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
     Route::delete('seller/product/{product_id}', 'ProductController@deleteProduct');
 });
 

@@ -39,7 +39,7 @@ class SellerController extends Controller
             return response()->json('Bad Request', 400);
         }
 
-        $seller = $this->seller->with('shoptype','status')->where('profile_id', $profile_id)->get();
+        $seller = $this->seller->with('shoptype','profile_status')->where('profile_id', $profile_id)->get();
         if($seller->isEmpty())
         {
             return response()->json(['message' => 'Seller not found'], 404);
@@ -77,7 +77,7 @@ class SellerController extends Controller
         $seller->shop_name = $request->shop_name;
         $seller->shop_type_id = $request->shop_type_id;
         $seller->shop_location = $request->shop_location;
-        $seller->status_id = 1;
+        $seller->profile_status_id = 1;
         $seller->profile_id = $profile->profile_id;
         $seller->shop_latitude = $request->shop_latitude;
         $seller->shop_longitude = $request->shop_longitude;
@@ -121,13 +121,13 @@ class SellerController extends Controller
         $seller->shop_name = $request->shop_name;
         $seller->shop_type_id = $request->shop_type_id;
         $seller->shop_location = $request->shop_location;
-        if ($request->status_id == null)
+        if ($request->profile_status_id == null)
         {
-            $seller->status_id = 1;
+            $seller->profile_status_id = 1;
         }
         else
         {
-            $seller->status_id = $request->status_id;
+            $seller->profile_status_id = $request->profile_status_id;
         }
         $seller->shop_latitude = $request->shop_latitude;
         $seller->shop_longitude = $request->shop_longitude;   

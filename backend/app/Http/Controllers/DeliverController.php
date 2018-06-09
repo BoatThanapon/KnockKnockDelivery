@@ -35,7 +35,7 @@ class DeliverController extends Controller
             return response()->json(['message' =>'Bad Request'], 400);
         }
 
-        $deliver = $this->deliver->with('status','profile')->where('profile_id', $profile_id)->get();
+        $deliver = $this->deliver->with('profile_status','profile')->where('profile_id', $profile_id)->get();
         if($deliver->isEmpty())
         {
             return response()->json(['message' => 'Seller not found'], 404);
@@ -73,7 +73,7 @@ class DeliverController extends Controller
         $deliver->deliver_lastname = $request->deliver_lastname;
         $deliver->dateOfBirth = date($request->dateOfBirth);
         $deliver->telephone_number = $request->telephone_number;
-        $deliver->status_id = 1;
+        $deliver->profile_status_id = 1;
         $deliver->profile_id = $profile->profile_id;
 
         $saveDeliver = $deliver->save();
@@ -106,13 +106,13 @@ class DeliverController extends Controller
         $deliver->deliver_lastname = $request->deliver_lastname;
         $deliver->dateOfBirth = date($request->dateOfBirth);
         $deliver->telephone_number = $request->telephone_number;
-        if ($request->status_id == null)
+        if ($request->profile_status_id == null)
         {
-            $deliver->status_id = 1;
+            $deliver->profile_status_id = 1;
         }
         else
         {
-            $deliver->status_id = $request->status_id;
+            $deliver->profile_status_id = $request->profile_status_id;
         }
 
         $deliver->save();

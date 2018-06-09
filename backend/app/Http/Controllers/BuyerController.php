@@ -37,7 +37,7 @@ class BuyerController extends Controller
             return response()->json('Bad Request', 400);
         }
 
-        $buyer = $this->buyer->with('status')->where('profile_id', $profile_id)->get();
+        $buyer = $this->buyer->with('profile_status')->where('profile_id', $profile_id)->get();
         if($buyer->isEmpty())
         {
             return response()->json(['message' => 'Buyer not found'], 404);
@@ -74,7 +74,7 @@ class BuyerController extends Controller
         $buyer->buyer_firstname = $request->buyer_firstname;
         $buyer->buyer_lastname = $request->buyer_lastname;
         $buyer->telephone_number = $request->telephone_number;
-        $buyer->status_id = 1;
+        $buyer->profile_status_id = 1;
         $buyer->profile_id = $profile->profile_id;
 
         $buyer->save();
@@ -106,13 +106,13 @@ class BuyerController extends Controller
         $buyer->buyer_lastname = $request->buyer_lastname;
         $buyer->telephone_number = $request->telephone_number;
         
-        if ($request->status_id == null)
+        if ($request->profile_status_id == null)
         {
-            $buyer->status_id = 1;
+            $buyer->profile_status_id = 1;
         }
         else
         {
-            $buyer->status_id = $request->status_id;
+            $buyer->profile_status_id = $request->profile_status_id;
         }
 
         $buyer->save();
