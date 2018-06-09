@@ -13,30 +13,42 @@ use App\User;
 
 class ProfileController extends Controller
 {
+    private $profile;
+    private $user;
+
+    public function __construct(Profile $profile, User $user)
+    {
+        $this->profile = $profile;
+        $this->user = $user;
+    }
+
     public function getProfilesByUserId($user_id)
     {
-        $user = User::find($user_id);
+        if($user_id <= 0)
+        {
+            return response()->json(['message' =>'Bad Request'], 400);
+        }        
+        
+        $user = $this->user->find($user_id);
         
         if (!$user)
             return response()->json(['message' => 'User not found'], 404);
 
-        $profiles = Profile::with('role')->where('user_id', $user_id)->get();
+        $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
         return ProfileResource::collection($profiles);
     }
 
     public function createProfile(CreateProfileRequest $request)
     {
-        $profiles = Profile::with('role')->where('user_id', $request->user_id)->get();
-
-        $profilesCount = intval(Profile::with('role')->where('user_id', $request->user_id)->count());
+        $profiles = $this->profile->with('role')->where('user_id', $request->user_id)->get();
         $roleProfileCount = intval($profiles->where('role_id', $request->role_id)->count());
 
-        if( $profilesCount > 3 || $roleProfileCount > 1 )
+        if( $profiles->count() > 3 || $roleProfileCount > 1 )
         {
             return response()->json('Error', 500);
         }
 
-        $profile = Profile::create($request->all());
+        $profile = $this->profile->create($request->all());
 
         if(!$profile)
         {
@@ -51,4 +63,6 @@ class ProfileController extends Controller
             201
         );
     }
+
+
 }

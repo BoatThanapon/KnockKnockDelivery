@@ -4,20 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Buyer extends Model
+class Deliver extends Model
 {
-
-    protected $primaryKey = 'buyer_id';
-
-    public $timestamps = false;
+    protected $primaryKey = 'deliver_id';
 
     protected $fillable = [
-        'buyer_firstname',
-        'buyer_lastname',
+        'deliver_firstname',
+        'deliver_lastname',
+        'dateOfBirth',
         'telephone_number',
-        'status_id',
-        'user_id'
+        'user_id',
     ];
+
+    protected $hidden = [
+        'status_id'
+    ];
+    
+    public $timestamps = false;
 
     public function status()
     {

@@ -14,9 +14,9 @@ class Seller extends Model
         'shop_location',
         'shop_type_id',
         'status_id',
-        'profile_id',
         'shop_latitude',
-        'shop_longitude'
+        'shop_longitude',
+        'user_id'
     ];
 
     public $timestamps = false;
