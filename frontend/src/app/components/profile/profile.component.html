@@ -9,14 +9,16 @@
           <div class="card-header">Seller</div>
           <div *ngIf="validSeller">
             <div class="card-body w3-center">
-              <p>Display Seller profile detail</p>
+              <p><b>{{sellerProfile.shop_name}}</b></p>
+              <p>{{sellerProfile.shop_type.shop_type_name}}</p>
+              <p>{{sellerProfile.shop_location}}</p>             
             </div>
             <div class="card-footer">
-              <a href="/manage-shop" class="btn btn-success btn-block">Enter</a>
+              <a (click)="enterManageShop(sellerProfile)" class="btn btn-success btn-block">Enter</a>
             </div>
           </div>
           <div class="card-body w3-center" *ngIf="!validSeller">
-            <button class="btnPlus">+</button>
+            <button class="btn btnPlus">+</button>
           </div>
         </div>
       </div>
@@ -25,7 +27,7 @@
           <div class="card-header">Buyer</div>
           <div *ngIf="validBuyer">
             <div class="card-body w3-center">
-              <p>Display Buyer profile detail</p>
+              <p><b>{{buyerProfile.buyer_firstname}} {{buyerProfile.buyer_lastname}}</b></p>          
             </div>
             <div class="card-footer">
               <a href="/shops" class="btn btn-success btn-block">Enter</a>
@@ -41,15 +43,16 @@
           <div class="card-header">Deliver</div>
           <div *ngIf="validDeliver">
             <div class="card-body w3-center">
-              <p>Display deliver profile detail</p>
-            </div>
+              <p><b>{{deliverProfile.deliver_firstname}} {{deliverProfile.deliver_lastname}}</b></p>          
+          
+             </div>
             <div class="card-footer">
               <a href="/" class="btn btn-success btn-block">Enter</a>
             </div>
           </div>
 
           <div class="card-body w3-center" *ngIf="!validDeliver">
-            <button class="btnPlus" (click)="createProfile(4)">+</button>
+            <button class="btn btnPlus" (click)="createProfile(4)">+</button>
           </div>
         </div>
       </div>

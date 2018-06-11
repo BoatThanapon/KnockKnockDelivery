@@ -1,9 +1,8 @@
 <div class="w3-row" id="container">
-
   <div class="header">
     <div class="w3-container">
       <h1>
-        <b>Knock Knock Shop</b>
+        <b>{{seller.shop_name}}</b>
       </h1>
 
       <!-- <div class="w3-bottombar w3-padding-16" id="myTopnav">
@@ -22,7 +21,9 @@
       </div> -->
       <!-- Add on  -->
       <div class="topnav" id="myTopfilter">
-        <a (click)="onSelectAllProducts()">ALL PRODUCTS</a>
+        <a id="filter">Filter: </a>
+        <a (click)="onSelectAllProducts()">
+          <i class="fa fa-inbox w3-margin-right"></i>ALL PRODUCTS</a>
         <a (click)="onSelectAvailableProducts()">
           <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
         <a (click)="onSelectOutOfStockProduct()">
@@ -43,47 +44,40 @@
   </div>
 
   <div *ngIf="isAllProducts">
-    <!-- First Photo Grid-->
-    <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book pro</b>
-            <i class="available"> [Available]</i>
-          </p>
-          <p>Price 50000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
-        </div>
-        <button style=" border-radius:0" onclick="document.getElementById('id01').style.display='block'" class="btn btn-warning btn-block">Edit</button>
-      </div>
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book air</b>
-            <i class="outOfStock"> [Out of Stock]</i>
-          </p>
-          <p>Price 30000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
-        </div>
-        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
-      </div>
-      <div class="w3-third w3-container">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book pro</b>
-          </p>
-          <p>Price 50000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
-        </div>
-        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
+    <div class="loader-container">
+      <div class="loader" *ngIf="!isLoad"></div>
+    </div>
+    <div class="table-container" *ngIf="isLoad">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Product Price</th>
+            <th>Unit In Stock</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.product_id }}</td>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.product_description }}</td>
+            <td>{{ product.product_price }}</td>
+            <td>{{ product.unit_in_stock }}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-info">Info</button>
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
 
-      </div>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -99,8 +93,11 @@
   </div>
 
   <div *ngIf="isAddProduct">
+    <div class="loader-container">
+      <div class="loader" *ngIf="!isLoad"></div>
+    </div>
     <div class="w3-row-padding w3-container">
-      <app-create-product></app-create-product>
+      <app-create-product *ngIf="isLoad"></app-create-product>
     </div>
   </div>
 

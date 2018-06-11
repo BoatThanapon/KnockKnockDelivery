@@ -20,6 +20,9 @@ import { ShopComponent } from './components/shop/shop.component';
 import { ShopsComponent } from './components/shops/shops.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 
+import { DataTablesModule } from 'angular-datatables';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +45,7 @@ import { CreateProductComponent } from './components/create-product/create-produ
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    DataTablesModule
   ],
   providers: [
     AuthService,

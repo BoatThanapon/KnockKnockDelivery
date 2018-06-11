@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SellerService } from '../../services/seller.service';
 
 @Component({
     selector: 'app-manage-shop',
@@ -7,16 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageShopComponent implements OnInit {
 
-    private isAllProducts:boolean;
-    private isAvailableProducts:boolean;
-    private isOutOfStockProducts:boolean;
-    private isAddProduct:boolean;
-    private isShopHistory:boolean;
-    private isEditShop:boolean;
+    private isAllProducts: boolean;
+    private isAvailableProducts: boolean;
+    private isOutOfStockProducts: boolean;
+    private isAddProduct: boolean;
+    private isShopHistory: boolean;
+    private isEditShop: boolean;
+    private isLoad: boolean;
 
 
+    private seller;
+    private products;
 
-    constructor() { }
+    dtOptions: DataTables.Settings = {};
+
+    constructor(
+        private sellerService: SellerService,
+    ) { }
 
     ngOnInit() {
         this.isAllProducts = true;
@@ -25,6 +33,29 @@ export class ManageShopComponent implements OnInit {
         this.isAddProduct = false;
         this.isShopHistory = false;
         this.isEditShop = false;
+        this.isLoad = false;
+
+        this.dtOptions = {
+            pagingType: 'full_numbers'
+        };
+        this.onSetUpPage();
+
+
+    }
+
+
+    onSetUpPage() {        
+
+        this.seller = JSON.parse(localStorage.getItem("seller"));
+        console.log("onSetUpPage this. seller: ", this.seller);
+        this.sellerService.getAllProducts(this.seller).subscribe( 
+            data => {
+                this.products = data.data;
+                this.isLoad = true;
+
+            },
+            error => console.log(error)
+        )       
 
 
     }
@@ -97,4 +128,6 @@ export class ManageShopComponent implements OnInit {
         this.isEditShop = true;
 
     }
+
+    
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SellerService } from '../../services/seller.service';
+
 
 
 @Component({
@@ -8,18 +10,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class CreateProductComponent implements OnInit {
 
-
-  form = {
+  private isLoad: boolean;
+  private form = {
     product_name: null,
     product_type: null,
     product_price: null,
     product_catagory: null,
+    selected_catagory: null,
     product_image: null,
-    product_description:null
-
+    product_description:null,
+    product_unit_amount: null,
   }
-
-  error = []
+  private catagory;
+  private seller;
+  private error = []
 
   fileToUpload: File = null;
 
@@ -28,14 +32,22 @@ export class CreateProductComponent implements OnInit {
   @ViewChild("mycanvas") mycanvas;
 
 
-  constructor() { }
+  constructor(
+    private sellerService: SellerService,
+  ) { }
 
   ngOnInit() {
-  }
+    this.isLoad = false
+    this.seller = JSON.parse(localStorage.getItem("seller"));
+    this.sellerService.getCategories().subscribe(
+      response => {
+        console.log("response from catagory: ",response)
+        this.catagory = response.data
+        this.isLoad = true
 
-  onCreate() {
-    console.log(this.form)
-
+      },
+      error => console.log("response from catagory: ",error)
+    )
   }
 
   preview(e: any): void {
@@ -61,7 +73,38 @@ export class CreateProductComponent implements OnInit {
 
   }
 
-  clear() {
+  selectChange(id: any) {
+    console.log("selectChange",id)    
+    // this.form.selected_catagory = this.form[$event];
+  }  
+  
+  onCreate() {
+    console.log("onCreate")
+    console.log("form: ",this.form)  
+
+    var tempForm = 
+    {
+      product_name: this.form.product_name,
+      product_description: this.form.product_description,
+      product_price: parseInt(this.form.product_price),
+      unit_in_stock: parseInt(this.form.product_unit_amount),
+      product_category_id: parseInt(this.form.selected_catagory)
+    }
+
+    console.log("tempForm: ",tempForm)  
+
+
+    this.sellerService.createProduct(tempForm,this.seller).subscribe(
+      response =>     console.log("response onCreate: ",response),
+      error =>     console.log("error: ",error)  
+
+    )
+
+
+
+  }
+
+  onClear() {
     console.log("clear")
     this.form.product_name = '';
     this.form.product_type = '';

@@ -11,8 +11,41 @@ export class SellerService {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    
+
+
+  }
+
+  getAllProducts(seller) {
+    return this.http.get<Product>(`${this.baseUrl}seller/` + seller.seller_id + `/products`)
+  }
+
+  getCategories() {
+    return this.http.get(`${this.baseUrl}categories/`)
+  }
+
+  createProduct(product,seller) {
+    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id + `/product`, product)
 
   }
 
 
 }
+
+
+export interface Product {
+  data: [{
+    product_id: null,
+    product_name: "",
+    product_description: "",
+    product_price: "",
+    unit_in_stock: null,
+    product_available: null,
+    category: {
+      category_id: "",
+      category_name: ""
+    }
+  }]
+}
+
+
