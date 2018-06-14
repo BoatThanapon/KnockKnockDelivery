@@ -42,7 +42,7 @@ export class CreateProductComponent implements OnInit {
     this.sellerService.getCategories().subscribe(
       response => {
         console.log("response from catagory: ",response)
-        this.catagory = response.data
+        this.catagory = response['data']
         this.isLoad = true
 
       },
