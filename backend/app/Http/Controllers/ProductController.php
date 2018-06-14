@@ -33,7 +33,7 @@ class ProductController extends Controller
             return response()->json(['message' =>'Bad Request'], 400);
         }   
 
-        $product = $this->product->with('category', 'seller')->where('product_id', $product_id)->get();
+        $product = $this->product->with('category', 'seller', 'product_status')->where('product_id', $product_id)->get();
         if($product->isEmpty())
         {
             return response()->json(['message' =>'Product not found'], 404);
