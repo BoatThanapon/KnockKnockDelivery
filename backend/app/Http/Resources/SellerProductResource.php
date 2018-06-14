@@ -20,7 +20,6 @@ class SellerProductResource extends JsonResource
             'product_description' => $this->product_description,
             'product_price' => $this->product_price,
             'unit_in_stock' => $this->unit_in_stock,
-            'product_available' => $this->product_available,
             'category' => [
                 'category_id' => $this->category->category_id,
                 'category_name' => $this->category->category_name               
