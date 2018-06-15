@@ -44,6 +44,15 @@ export class CreateProductComponent implements OnInit {
     this.seller = JSON.parse(localStorage.getItem("seller"));
     this.catagory = JSON.parse(localStorage.getItem("product_catagory"));
 
+    // this.sellerService.getShopCategories().subscribe(
+    //   response => {
+    //     console.log("response from catagory: ",response)
+    //     this.catagory = response['data']
+    //     this.isLoad = true
+
+    //   },
+    //   error => console.log("response from catagory: ",error)
+    // )
   }
 
   preview(e: any): void {
