@@ -23,6 +23,11 @@ class ProductController extends Controller
     {
         $products = $this->product->all();
 
+        foreach ($products as $item)
+        {
+            $item->product_price = number_format($item->product_price, 2, '.', ',');
+        }
+
         return ProductResource::collection($products);
     }
 
@@ -39,6 +44,11 @@ class ProductController extends Controller
             return response()->json(['message' =>'Product not found'], 404);
         }
 
+        foreach ($product as $item)
+        {
+            $item->product_price = number_format($item->product_price, 2, '.', ',');
+        }
+
         return ProductResource::collection($product);
     }
 
@@ -50,6 +60,11 @@ class ProductController extends Controller
         }
         
         $sellerProduct = $this->product->where('seller_id', $seller_id)->get();
+
+        foreach ($sellerProduct as $item)
+        {
+            $item->product_price = number_format($item->product_price, 2, '.', ',');
+        }
         
         return SellerProductResource::collection($sellerProduct);
     }
