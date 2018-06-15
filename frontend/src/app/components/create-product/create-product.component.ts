@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
 
 
@@ -10,6 +10,8 @@ import { SellerService } from '../../services/seller.service';
 })
 export class CreateProductComponent implements OnInit {
 
+  // @Input() name: String;
+
   private isLoad: boolean;
   private form = {
     product_name: null,
@@ -18,9 +20,10 @@ export class CreateProductComponent implements OnInit {
     product_catagory: null,
     selected_catagory: null,
     product_image: null,
-    product_description:null,
+    product_description: null,
     product_unit_amount: null,
   }
+  private dafault_catagory: Number;
   private catagory;
   private seller;
   private error = []
@@ -39,15 +42,8 @@ export class CreateProductComponent implements OnInit {
   ngOnInit() {
     this.isLoad = false
     this.seller = JSON.parse(localStorage.getItem("seller"));
-    this.sellerService.getCategories().subscribe(
-      response => {
-        console.log("response from catagory: ",response)
-        this.catagory = response.data
-        this.isLoad = true
+    this.catagory = JSON.parse(localStorage.getItem("product_catagory"));
 
-      },
-      error => console.log("response from catagory: ",error)
-    )
   }
 
   preview(e: any): void {
@@ -74,15 +70,20 @@ export class CreateProductComponent implements OnInit {
   }
 
   selectChange(id: any) {
-    console.log("selectChange",id)    
+    console.log("selectChange", id)
     // this.form.selected_catagory = this.form[$event];
-  }  
+  }
   
+  onCatagorySelected(event) {
+    console.log("onCatagorySelected", event)
+    this.form.selected_catagory = parseInt(event);
+  }
+
   onCreate() {
     console.log("onCreate")
-    console.log("form: ",this.form)  
+    console.log("form: ", this.form)
 
-    var tempForm = 
+    var tempForm =
     {
       product_name: this.form.product_name,
       product_description: this.form.product_description,
@@ -91,16 +92,14 @@ export class CreateProductComponent implements OnInit {
       product_category_id: parseInt(this.form.selected_catagory)
     }
 
-    console.log("tempForm: ",tempForm)  
+    console.log("tempForm: ", tempForm)
 
 
-    this.sellerService.createProduct(tempForm,this.seller).subscribe(
-      response =>     console.log("response onCreate: ",response),
-      error =>     console.log("error: ",error)  
+    this.sellerService.createProduct(tempForm, this.seller).subscribe(
+      response => console.log("response onCreate: ", response),
+      error => console.log("error: ", error)
 
     )
-
-
 
   }
 

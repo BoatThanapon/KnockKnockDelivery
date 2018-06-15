@@ -48,48 +48,20 @@
       <div class="loader" *ngIf="!isLoad"></div>
     </div>
     <div class="table-container" *ngIf="isLoad">
-      <table datatable [dtOptions]="dtOptions" class="row-border hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Product Price</th>
-            <th>Unit In Stock</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products">
-            <td>{{ product.product_id }}</td>
-            <td>{{ product.product_name }}</td>
-            <td>{{ product.product_description }}</td>
-            <td>{{ product.product_price }}</td>
-            <td>{{ product.unit_in_stock }}</td>
-            <td>
-              <div class="btn-group">
-                <button type="button" class="btn btn-info">Info</button>
-                <button type="button" class="btn btn-warning">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-
-              </div>
-
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <app-table-data [products]="products"></app-table-data>
     </div>
   </div>
 
   <div *ngIf="isAvailableProducts">
-    <div class="w3-row-padding w3-container">
-      <p>isAvailableProducts</p>
+    <div class="table-container">
+      <app-table-data [products]="availableProducts"></app-table-data>
     </div>
   </div>
 
   <div *ngIf="isOutOfStockProducts">
-    <p>isOutOfStockProducts</p>
-
+    <div class="table-container">
+      <app-table-data [products]="outOfStockProducts"></app-table-data>
+    </div>
   </div>
 
   <div *ngIf="isAddProduct">
@@ -107,8 +79,7 @@
   </div>
 
   <div *ngIf="isEditShop">
-    <p>isEditShop</p>
-
+    <app-edit-shop></app-edit-shop>
   </div>
 
 
