@@ -108,6 +108,10 @@ export class ManageShopComponent implements OnInit {
         }
     }
 
+    isSelected() {
+        return false
+    }
+
     onSelectAllProducts() {
         this.isAllProducts = true;
         this.isAvailableProducts = false;

@@ -1,4 +1,11 @@
-<div class="w3-row" id="container">
+<div>
+  <div class="loader-container">
+    <div class="loader" *ngIf="!isLoad"></div>
+  </div>
+</div>
+<div class="w3-row" id="container" *ngIf="isLoad">
+
+
   <div class="header">
     <div class="w3-container">
       <h1>
@@ -22,17 +29,17 @@
       <!-- Add on  -->
       <div class="topnav" id="myTopfilter">
         <a id="filter">Filter: </a>
-        <a (click)="onSelectAllProducts()">
+        <a (click)="onSelectAllProducts()" [style.background-color]="isAllProducts ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-inbox w3-margin-right"></i>ALL PRODUCTS</a>
-        <a (click)="onSelectAvailableProducts()">
+        <a (click)="onSelectAvailableProducts()" [style.background-color]="isAvailableProducts ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
-        <a (click)="onSelectOutOfStockProduct()">
+        <a (click)="onSelectOutOfStockProduct()" [style.background-color]="isOutOfStockProducts ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a>
-        <a (click)="onSelectAddProduct()">
+        <a (click)="onSelectAddProduct()" [style.background-color]="isAddProduct ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</a>
-        <a (click)="onSelectShopHistory()">
+        <a (click)="onSelectShopHistory()" [style.background-color]="isShopHistory ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</a>
-        <a (click)="onSelectEditShop()">
+        <a (click)="onSelectEditShop()" [style.background-color]="isEditShop ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
         <a href="javascript:void(0);" class="icon" (click)="toogle()">
           <i class="fa fa-angle-down"></i>
@@ -44,10 +51,8 @@
   </div>
 
   <div *ngIf="isAllProducts">
-    <div class="loader-container">
-      <div class="loader" *ngIf="!isLoad"></div>
-    </div>
-    <div class="table-container" *ngIf="isLoad">
+
+    <div class="table-container">
       <app-table-data [products]="products"></app-table-data>
     </div>
   </div>
