@@ -112,11 +112,11 @@ class SellerController extends Controller
     {
         $seller = $this->seller->where('seller_id', $seller_id)->first();
 
-        if($seller_id->count() == 0)
+        if($seller === null)
         {
             return response()->json(['message'=>'Seller not found'], 404);
         }
-     
+
         $seller->seller_name = $request->seller_name;
         $seller->shop_name = $request->shop_name;
         $seller->shop_type_id = $request->shop_type_id;
@@ -130,8 +130,13 @@ class SellerController extends Controller
             $seller->profile_status_id = $request->profile_status_id;
         }
         $seller->shop_latitude = $request->shop_latitude;
-        $seller->shop_longitude = $request->shop_longitude;   
-        $seller->save();
+        $seller->shop_longitude = $request->shop_longitude;
+
+        $saveSeller = $seller->save();
+        if(!$saveSeller)
+        {
+            return response()->json(['message'=>'Seller not save'], 400);
+        }
         
         return response()->json(
             [
