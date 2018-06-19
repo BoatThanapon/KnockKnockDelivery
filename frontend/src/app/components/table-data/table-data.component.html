@@ -51,6 +51,8 @@
           <p>
             <strong>Product Price: </strong>{{ product_price }}</p>
           <p>
+            <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
+          <p>
             <strong>Product in stock: </strong>{{ unit_in_stock }}</p>
           <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
         </div>
@@ -71,7 +73,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form #editProductForm=ngForm (ngSubmit)="onCreate()">
+          <form #editProductForm=ngForm>
             <div class="form-group">
               <label for="input-id">Product id</label>
               <input type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
@@ -84,9 +86,23 @@
             </div>
 
             <div class="form-group">
+                <label for="input-price">Product Price</label>
+                <input type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
+                  required>
+              </div>
+
+            <div class="form-group">
               <label for="input-price">Product Amount Unit</label>
               <input type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
                 required>
+            </div>
+
+            <div class="form-group">
+              <label for="selectCatagory">Product Catagory</label>
+              <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
+                (ngModelChange)="onCatagorySelected($event)" required>
+                <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+              </select>
             </div>
 
             <div class="form-group">
@@ -94,12 +110,15 @@
               <textarea type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
                 required></textarea>
             </div>
-
           </form>
+          <div *ngIf="isEdit">
+            <p style="color:Green">Product has been edit</p>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning" (click)="onEdit()">Save changes</button>
+          <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()">Save changes</button>
         </div>
       </div>
     </div>
@@ -117,16 +136,15 @@
         <div class="modal-body">
           <p>Delete {{ product_name }} ??</p>
           <div *ngIf="isDelete">
-              <p style="color:red" >Product has been delete</p>
-            </div>
+            <p style="color:red">Product has been delete</p>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-

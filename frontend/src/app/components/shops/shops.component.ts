@@ -11,19 +11,30 @@ import { Router } from '@angular/router';
 })
 export class ShopsComponent implements OnInit {
 
+  private products;
+  private isLoad;
+
+
   constructor(
     private BuyerService: BuyerService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.isLoad = true;
     this.getAllProducts();
 
   }
 
   getAllProducts() {
     this.BuyerService.getAllProducts().subscribe(
-      response => console.log("getAllProducts: ",response)
+      response => {
+        console.log("getAllProducts: ",response.data);
+        this.products = response.data;
+        this.isLoad = false;
+
+
+      }
       ,
       error => console.log(error)
     )
