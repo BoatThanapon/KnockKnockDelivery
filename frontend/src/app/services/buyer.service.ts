@@ -16,6 +16,10 @@ export class BuyerService {
     return this.http.get<Product>(`${this.baseUrl}products`)
 
   }
+
+  getProductCategories() {
+    return this.http.get<productCategory>(`${this.baseUrl}categories`)
+  }
 }
 
 export interface Product {
@@ -31,6 +35,13 @@ export interface Product {
       category_name: null
     }
   }]
+}
+
+export interface productCategory {
+  message: null,
+  data: [
+    { category_id: null, category_name: "" }]
+
 }
 
 

@@ -5,12 +5,21 @@
   <div *ngIf="!isLoad">
     <div class="row" id="searchBox">
       <div class="col-sm-12 col-md-6 col-centered">
-        <div class="input-group mb-6">
-          <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group mb-6" id="search">
+          <input type="text" class="form-control input-lg" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Search...</button>
+            <button class="btn btn-warning btn-lg" type="button"><i class="fa fa-search"></i></button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="w3-container">
+      <div class="w3-col" id="catagory_container">
+        <p id="catagory" *ngFor="let catagory of product_catagory">  {{catagory.category_name}}</p>
+      </div>
+      <div class="w3-col w3-green" style="width:80%">
+          <img  src="assets/img/mac-image.jpg" alt="">
       </div>
     </div>
 

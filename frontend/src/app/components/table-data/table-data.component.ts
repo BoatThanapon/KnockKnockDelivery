@@ -16,6 +16,7 @@ export class TableDataComponent implements OnInit {
 
   private isDelete;
   private isEdit;
+  private isClick:boolean = false;
   private product_id;
   private product_name;
   private product_description;
@@ -23,7 +24,8 @@ export class TableDataComponent implements OnInit {
   private unit_in_stock;
   private product_available;
   private selected_catagory;
-  private error;
+  private error:boolean = false;
+  private errorMessage:String;
   private seller;
   private catagory;
   private dafault_catagory: Number;
@@ -86,6 +88,7 @@ export class TableDataComponent implements OnInit {
 
   onEdit() {
     console.log("onEdit");
+    this.isClick = !this.isClick;
     var product = {
       product_name: this.product_name,
       product_description: this.product_description,
@@ -101,10 +104,16 @@ export class TableDataComponent implements OnInit {
     this.sellerService.updateProduct(this.product_id,product,this.seller).subscribe(
       response => { 
         console.log("response onEdit: ", response);
+        this.isClick = !this.isClick;
         this.isEdit = true;
-      },
-      error => console.log("error: ", error)
 
+      },
+      error => {
+        this.isClick = !this.isClick;
+        this.error = true;
+        this.errorMessage = error
+        console.log("error: ", error)
+      }
     )
 
   }

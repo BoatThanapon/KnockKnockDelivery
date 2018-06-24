@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-shops',
   templateUrl: './shops.component.html',
@@ -12,16 +13,17 @@ import { Router } from '@angular/router';
 export class ShopsComponent implements OnInit {
 
   private products;
-  private isLoad;
+  private isLoad: boolean = true;
+  private product_catagory;
 
 
   constructor(
     private BuyerService: BuyerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.isLoad = true;
+    this.isLoad = !this.isLoad;
     this.getAllProducts();
 
   }
@@ -29,15 +31,25 @@ export class ShopsComponent implements OnInit {
   getAllProducts() {
     this.BuyerService.getAllProducts().subscribe(
       response => {
-        console.log("getAllProducts: ",response.data);
+        console.log("getAllProducts: ", response.data);
         this.products = response.data;
-        this.isLoad = false;
-
-
-      }
-      ,
+        this.getProductCatagory();
+      },
       error => console.log(error)
     )
+
+  }
+
+  getProductCatagory() {
+    this.BuyerService.getProductCategories().subscribe(
+      response => {
+        console.log("getProductCatagory: ", response.data);
+        this.product_catagory = response.data;
+        // this.isLoad = !this.isLoad;
+      },
+      error => console.log(error)
+    )
+
 
   }
 

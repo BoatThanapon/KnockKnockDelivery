@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
-import { } from '@types/googlemaps';
+// import { } from '@types/googlemaps';
 
 
 @Component({
@@ -8,8 +8,8 @@ import { } from '@types/googlemaps';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
+  // @ViewChild('gmap') gmapElement: any;
+  // map: google.maps.Map;
 
 
 
@@ -23,12 +23,12 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    var mapProp = {
-      center: new google.maps.LatLng(43.059026, -89.295515),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    // var mapProp = {
+    //   center: new google.maps.LatLng(43.059026, -89.295515),
+    //   zoom: 15,
+    //   mapTypeId: google.maps.MapTypeId.ROADMAP
+    // };
+    // this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
   }
 
   onSubmit() {
