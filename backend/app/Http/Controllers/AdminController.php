@@ -40,21 +40,20 @@ class AdminController extends Controller
         return AdminResource::collection($admins);
     }
 
-    public function createAdmin(AdminRequest $request){
-        $user = $this->user::find($request->user_id);
-        if($user === null)
-        {
-            return response()->json([
-                'message' => 'User not found'
-            ], 404 );
-        }
+    public function createAdmin(Request $request){
 
-        $checkRole = $this->admin::where('user_id', $request->user_id)->count();
-        if($checkRole > 0)
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $saveUser = $user->save();
+            if(!$saveUser)
         {
-            return response()->json([
-                'message' => 'this role already exists in your profiles'
-            ], 400 );
+            return response()->json(['message' =>'Bad Request'], 400);
+        }
+        else
+        {
+           ($saveUser);
         }
 
         $admin = new Admin();
@@ -62,7 +61,7 @@ class AdminController extends Controller
         $admin->admin_lastname = $request->admin_lastname;
         $admin->telephone_number = $request->telephone_number;
         $admin->citizen_id = $request->citizen_id;
-        $admin->user_id = $request->user_id;
+        $admin->user_id = $user->user_id;
 
         $saveAdmin = $admin->save();
         if(!$saveAdmin)
