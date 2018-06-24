@@ -7,6 +7,7 @@ use App\User;
 use App\Seller;
 use App\Buyer;
 use App\Deliver;
+use App\Profile;
 use Illuminate\Http\Request;
 use App\Http\Resources\AdminResource as AdminResource;
 use App\Http\Resources\AdminCollection;
@@ -42,26 +43,20 @@ class AdminController extends Controller
 
     public function createAdmin(Request $request){
 
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = $request->password;
-            $saveUser = $user->save();
-            if(!$saveUser)
-        {
-            return response()->json(['message' =>'Bad Request'], 400);
-        }
-        else
-        {
-           ($saveUser);
-        }
+
+        $profile = new Profile();
+        $profile->user_id = $request->user_id;
+        $profile->role_id = 1;
+
+        $profile->save();
+
 
         $admin = new Admin();
         $admin->admin_firstname = $request->admin_firstname;
         $admin->admin_lastname = $request->admin_lastname;
         $admin->telephone_number = $request->telephone_number;
         $admin->citizen_id = $request->citizen_id;
-        $admin->user_id = $user->user_id;
+        $admin->profile_id = $profile->profile_id;
 
         $saveAdmin = $admin->save();
         if(!$saveAdmin)
