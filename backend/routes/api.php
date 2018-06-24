@@ -71,6 +71,7 @@ Route::group([
     'middleware' => 'CORS',
 ], function ($router) {
     Route::get('admins', 'AdminController@getAdmins');
+    Route::get('admin/profile/{profile_id}', 'AdminController@getAdminByProfileId');
     Route::post('admin', 'AdminController@createAdmin');
     Route::post('searchUsers', 'AdminController@searchUsers');
     Route::put('admin/{admin_id}', 'AdminController@updateAdmin');

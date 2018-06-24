@@ -34,11 +34,24 @@ class AdminController extends Controller
         $this->deliver = $deliver;
     }
 
-    public function getAdmins()
+    public function getAdminByProfileId($profile_id)
     {
-        $admins = $this->admin::all();
+        if($profile_id <= 0)
+        {
+            return response()->json('Bad Request', 400);
+        }
 
-        return AdminResource::collection($admins);
+        $admin = $this->admin->where('profile_id', $profile_id)->get();
+        if($admin->isEmpty())
+        {
+            return response()->json(['message' => 'Admin not found'], 404);
+        }
+    
+        return response()->json([
+            'message' => 'Successfully',
+            'result' => $admin
+        ]);
+    
     }
 
     public function createAdmin(Request $request){
