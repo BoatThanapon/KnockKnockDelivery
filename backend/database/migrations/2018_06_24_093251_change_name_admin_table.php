@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropProductAvailableAndAddProductStatus extends Migration
+class ChangeNameAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class DropProductAvailableAndAddProductStatus extends Migration
      */
     public function up()
     {
-        Schema::table('products', function(Blueprint $table){
-            $table->dropColumn('product_status_id');
-        });
+        Schema::rename('admin', 'admins');
     }
 
     /**
@@ -25,6 +23,6 @@ class DropProductAvailableAndAddProductStatus extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('admin');
     }
 }

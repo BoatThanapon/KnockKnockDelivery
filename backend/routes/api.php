@@ -65,3 +65,14 @@ Route::group([
     Route::get('products', 'ProductController@getProducts');
     Route::get('product/{product_id}', 'ProductController@getProductByProductId');
 });
+
+Route::group([
+    // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
+], function ($router) {
+    Route::get('admins', 'AdminController@getAdmins');
+    Route::post('admin', 'AdminController@createAdmin');
+    Route::post('searchUsers', 'AdminController@searchUsers');
+    Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
+    Route::put('adminUpdateStatusUser', 'AdminController@adminUpdateStatusUser');
+});

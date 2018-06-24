@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropProductAvailableAndAddProductStatus2 extends Migration
+class AddUserIdToAdmins extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class DropProductAvailableAndAddProductStatus2 extends Migration
      */
     public function up()
     {
-        Schema::table('products', function(Blueprint $table){
-            $table->unsignedInteger('product_status_id');
-
-            $table->foreign('product_status_id')->references('product_status_id')->on('product_statuses');
+        Schema::table('admins', function($table) {
+            $table->integer('user_id');
         });
     }
 
@@ -27,6 +25,8 @@ class DropProductAvailableAndAddProductStatus2 extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('admins', function($table) {
+            $table->dropColumn('user_id');
+        });
     }
 }
