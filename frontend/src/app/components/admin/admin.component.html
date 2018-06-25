@@ -1,0 +1,36 @@
+<div class="loader-container">
+  <div class="loader" [hidden]="isLoad"></div>
+</div>
+<div [hidden]="!isLoad">
+  <div class="container" [hidden]="isMenu">
+    <div class="card card-container w3-display-middle">
+      <div class="w3-row-padding">
+        <div class="row">
+          <div class="col">
+            <div class="btn btn-info button-left" (click)="userInSystem()">
+              <p class="w3-display-middle">User in system</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="btn btn-info button-right" (click)="holdingUser()">
+              <p class="w3-display-middle">Holding user</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!isMenu">
+    <div [hidden]="isHolding">
+      <div class="w3-container" id="holding-container">
+          <p>Holding user</p>
+      </div>
+    </div>
+    <div [hidden]="!isHolding">
+      <div class="w3-container" id="system-container">
+          <p>User in system</p>
+
+      </div>
+    </div>
+  </div>
+</div>
