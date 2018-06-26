@@ -58,7 +58,7 @@ export class ProfileComponent implements OnInit {
             console.log("idx: ",idx);
             console.log("this.userProfile: ",this.userProfile.data.length)
             if(profile.role.role_id == 1) {
-              this.adminProfile = await this.fetchProfileDetail(profile);
+              // this.adminProfile = await this.fetchProfileDetail(profile);
               this.isAdmin = !this.isAdmin;
             }
 

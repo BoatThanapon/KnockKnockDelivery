@@ -11,7 +11,13 @@ export class AdminComponent implements OnInit {
   private isMenu:boolean = false;
   private isHolding:boolean = false;
 
-  constructor() { }
+  roles: string[];
+  selectedRole: string;
+
+  constructor() {
+    this.roles = ["Buyer", "Seller", "Deliver"]
+
+   }
 
   ngOnInit() {
     this.isLoad =!this.isLoad;
@@ -30,5 +36,7 @@ export class AdminComponent implements OnInit {
 
 
   }
+
+
 
 }
