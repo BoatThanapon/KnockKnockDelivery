@@ -98,8 +98,8 @@
 
 
 .btnPlus {
-  width: 150px;
-  height: 250px;
+  width: 250px;
+  height: 100px;
   font-size: 64px;
   background-color: rgba(201, 199, 199, 0.5);
   /* border-color: gray; */
