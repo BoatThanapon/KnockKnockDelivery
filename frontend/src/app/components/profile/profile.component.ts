@@ -108,8 +108,11 @@ export class ProfileComponent implements OnInit {
     console.log('enterManageShop')
     localStorage.setItem("seller",JSON.stringify(sellerProfile));
     this.router.navigateByUrl('/manage-shop')
+  }
 
-    
+  enterShops() {
+    this.router.navigateByUrl('/shops')
+
   }
 
 

@@ -16,6 +16,12 @@ export class ShopsComponent implements OnInit {
   private isLoad: boolean = true;
   private product_catagory;
 
+  private form = {
+    product_name: null,
+    product_description: null,
+    product_price:null
+  }
+
 
   constructor(
     private BuyerService: BuyerService,
@@ -51,6 +57,18 @@ export class ShopsComponent implements OnInit {
     )
 
 
+  }
+
+  openInfo(product){
+    console.log("onClick product: ",product)
+    this.form.product_name= product.product_name,
+    this.form.product_description= product.product_description,
+    this.form.product_price=product.product_price
+  }
+
+  addToCart(product) {
+    console.log("addToCart: ",product)
+    // localStorage.setItem("cart",product);
   }
 
 }
