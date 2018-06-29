@@ -18,7 +18,7 @@ Route::group([
     'middleware' => 'CORS',
 ], function ($router) {
     Route::get('user/{user_id}/profiles', 'ProfileController@getProfilesByUserId');
-    Route::post('profile', 'ProfileController@createProfile');    
+    Route::post('profile', 'ProfileController@createProfile');
 });
 
 Route::group([
@@ -30,7 +30,7 @@ Route::group([
     Route::get('shoptypes', 'ShopTypeController@getShopTypes');
     Route::post('seller', 'SellerController@createSeller');
     Route::put('seller/{profile_id}', 'SellerController@updateSeller');
-    
+
     Route::get('seller/{seller_id}/products', 'ProductController@getProductsBySellerId');
     Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
     Route::put('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
@@ -76,4 +76,12 @@ Route::group([
     Route::post('searchUsers', 'AdminController@searchUsers');
     Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
     Route::put('adminUpdateStatusUser', 'AdminController@adminUpdateStatusUser');
+});
+
+// order
+Route::group([
+    // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
+], function ($router) {
+    Route::get('orders', 'OrderController@getListOrders');
 });
