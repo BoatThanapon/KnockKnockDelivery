@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
+import { SellerService } from '../../services/seller.service';
+
 import { Router } from '@angular/router';
 
 
@@ -15,6 +17,7 @@ export class ShopsComponent implements OnInit {
   private products;
   private isLoad: boolean = true;
   private product_catagory;
+  private shops;
 
   private form = {
     product_name: null,
@@ -25,6 +28,8 @@ export class ShopsComponent implements OnInit {
 
   constructor(
     private BuyerService: BuyerService,
+    private SellerService: SellerService,
+
     private router: Router
   ) { }
 
@@ -52,11 +57,23 @@ export class ShopsComponent implements OnInit {
         console.log("getProductCatagory: ", response.data);
         this.product_catagory = response.data;
         // this.isLoad = !this.isLoad;
+        this.getAllShops();
       },
       error => console.log(error)
     )
 
 
+  }
+
+
+  getAllShops() {
+    this.SellerService.getAllShops().subscribe(
+      response => {
+        console.log("getAllShops: ", response.data);
+        this.shops = response.data;
+      },
+      error => console.log(error)
+    )
   }
 
   openInfo(product){

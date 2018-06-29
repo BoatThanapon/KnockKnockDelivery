@@ -69,7 +69,25 @@
 
     <div class="w3-container w3-white" id="before-footer">
       <p>Our shop</p>
-
+      <div class="w3-container w3-padding">
+        <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
+          <div class="w3-container w3-quarter">
+            <div class="card">
+              <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+              <div class="card-body">
+                <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
+                <p class="card-text" id="description">{{shop.shop_location}}</p>
+                <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p>
+                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(shop)">Detail</a>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w3-padding-32">
+        <button class="btn btn-outline-info btn-block">See More</button>
+      </div>
     </div>
 
     <!-- Contact Section -->
