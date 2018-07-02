@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
 
   private isShow: boolean = false;
+  private isCheckOut: boolean = false;
   private cart;
 
   constructor(
@@ -32,7 +33,7 @@ export class CartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       if (this.cart[i].product_name == product.product_name) {
         this.cart.splice(i, 1);
-        localStorage.setItem("cart",JSON.stringify(this.cart));
+        localStorage.setItem("cart", JSON.stringify(this.cart));
         this.getCart();
       }
     }
@@ -54,6 +55,16 @@ export class CartComponent implements OnInit {
 
   calculatePrice(product) {
 
+  }
+
+  checkOut() {
+    console.log("check out")
+    this.isCheckOut = !this.isCheckOut;
+  }
+
+  cancel() {
+    console.log("cancel")
+    this.isCheckOut = !this.isCheckOut;
   }
 
 }

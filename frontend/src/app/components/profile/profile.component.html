@@ -38,17 +38,17 @@
                   <p>Create Buyer profile</p>
                 </div>
               </div>
-              <div class="col-12 w3-display-container" id="menu-button" *ngIf="validDeliver">
+              <div class="col-12 w3-display-container" id="menu-button" *ngIf="validDeliver" (click)="enterDeliver()">
                   <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg3">
                   <div class="w3-padding-large">
-                    <p><b>Deliver</b></p>
+                    <p><b>Shipper</b></p>
                     <p>{{deliverProfile.deliver_firstname}}</p>
                   </div>
                 </div>
                 <div class="col-12 w3-display-container" id="menu-top" *ngIf="!validDeliver" (click)="createProfile(4)">
                   <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
                   <div class="w3-padding-large">
-                    <p>Create Deliver profile</p>
+                    <p>Create Shipper profile</p>
                   </div>
                 </div>
             </div>

@@ -118,6 +118,10 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  enterDeliver() {
+    this.router.navigateByUrl('/deliver')
+  }
+
 
 
 

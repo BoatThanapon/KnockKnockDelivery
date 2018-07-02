@@ -17,7 +17,7 @@ export class ShopsComponent implements OnInit {
   private products;
   private product_catagory;
   private shops;
-  private isShow: boolean = false;
+  private isShow: boolean = true;
   private cart_num = 0;
 
 
@@ -37,7 +37,6 @@ export class ShopsComponent implements OnInit {
   constructor(
     private BuyerService: BuyerService,
     private SellerService: SellerService,
-
     private router: Router
   ) { }
 
@@ -78,7 +77,7 @@ export class ShopsComponent implements OnInit {
       response => {
         console.log("getAllShops: ", response.data);
         this.shops = response.data;
-        // this.isShow = !this.isShow;    
+        this.isShow = !this.isShow;    
 
       },
       error => console.log(error)
@@ -101,6 +100,7 @@ export class ShopsComponent implements OnInit {
 
   goToShop(shop) {
     console.log("onClick goToShop: ",shop)
+    this.router.navigateByUrl('/shop')
 
   }
 
