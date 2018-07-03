@@ -15,6 +15,10 @@ import { ShopsComponent } from './components/shops/shops.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { CartComponent } from './components/cart/cart.component';
+import { DeliverComponent } from './components/deliver/deliver.component';
+
+
 
 
 
@@ -52,6 +56,16 @@ const routes: Routes = [
   {
     path: 'shops',
     component: ShopsComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'deliver',
+    component: DeliverComponent,
     canActivate: [IsLoggedInService]
   },
   {

@@ -28,6 +28,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
+import { DeliverComponent } from './components/deliver/deliver.component';
 
 
 
@@ -50,7 +51,8 @@ import { CartComponent } from './components/cart/cart.component';
     TableDataComponent,
     EditShopComponent,
     AdminComponent,
-    CartComponent
+    CartComponent,
+    DeliverComponent
   ],
   imports: [
     BrowserModule,

@@ -20,8 +20,7 @@ class CreateProfilesTable extends Migration
 
             $table->foreign('user_id')
                   ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+                  ->on('users');
 
             $table->foreign('role_id')
                   ->references('role_id')
