@@ -71,6 +71,33 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+    public function editUser(Request $request, $user_id)
+    {
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'identity_no' => 'required|size:13',
+            'telephone_number' => 'required|min:9|max:10',
+        ]);
+
+        $user = $this->user->where('user_id', $user_id)->first();
+        if($user === null)
+        {
+            return response()->json(['message' => 'User not found'],400);
+        }
+
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->identity_no = $request->identity_no;
+        $user->telephone_number = $request->telephone_number;
+
+        $user->save();
+        return response()->json([
+            'message' => 'Successfully',
+            'user' => $user
+        ],200);;
+    }
+
     /**
      * Refresh a token.
      *
