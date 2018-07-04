@@ -25,7 +25,7 @@ class SellerController extends Controller
 
     public function getSellers()
     {
-        $sellers = $this->seller->where('profile_status_id',1)->get();
+        $sellers = $this->seller->where('profile_status_id',2)->get();
 
         return SellerResource::collection($sellers);
     }
