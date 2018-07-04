@@ -123,6 +123,10 @@ export class AdminComponent implements OnInit {
             id: element.seller_id,
             name: element.seller_name,
             status: element.profile_status.profile_status_name,
+            profile_id: element.profile_id,
+            rold_id:2
+
+
           }
 
           this.display_users[index] = temp;
@@ -138,6 +142,9 @@ export class AdminComponent implements OnInit {
             id: element.buyer_id,
             name: element.buyer_firstname + ' ' + element.buyer_lastname,
             status: element.profile_status.profile_status_name,
+            profile_id: element.profile_id,
+            rold_id:3
+
           }
 
           this.display_users[index] = temp;
@@ -152,6 +159,9 @@ export class AdminComponent implements OnInit {
             id: element.deliver_id,
             name: element.deliver_firstname + ' ' + element.deliver_lastname,
             status: element.profile_status.profile_status_name,
+            profile_id: element.profile_id,
+            rold_id:4
+
           }
 
           this.display_users[index] = temp;
@@ -166,6 +176,7 @@ export class AdminComponent implements OnInit {
   }
 
   onClickApprove(user) {
+    console.log("[USER] : ",user);
     this.selected_user = user;
   }
 
@@ -174,6 +185,12 @@ export class AdminComponent implements OnInit {
   }
 
   approve() {
+    console.log("[Approve] : ",this.selected_user);
+    this.adminService.updateUserStatus(this.selected_user.role_id,this.selected_user.profile_id)
+      .subscribe(
+        response => console.log("[Response] update user status : ",response),
+        error => console.log("[Error] update user status :", error)
+    )
 
   }
 

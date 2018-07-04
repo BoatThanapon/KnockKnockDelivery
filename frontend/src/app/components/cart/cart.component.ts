@@ -12,6 +12,8 @@ export class CartComponent implements OnInit {
 
   private isShow: boolean = false;
   private isCheckOut: boolean = false;
+  private waiting: boolean = true;
+  
   private cart;
 
   constructor(

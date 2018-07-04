@@ -34,10 +34,11 @@ export class AdminService {
 
   updateUserStatus(role_id,uid) {
     let body = {
-      "role_id": role_id,
-      "profile_status_user_id": 1
+      id:uid,
+      role_id: role_id,
+      profile_status_user_id: 2
     }
-    return  this.http.put(`${this.baseUrl}admin/updatestatus/profile/`+uid, body)
+    return  this.http.post(`${this.baseUrl}admin/updatestatus/`, body)
 
   }
 

@@ -126,8 +126,9 @@ export class ShopsComponent implements OnInit {
 
   setCartNum(){
     let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log("Cart lenght: ",cart.length)
-    this.cart_num = cart.length;
+    if(cart != null) {
+      this.cart_num = cart.length;
+    }
 
   }
 

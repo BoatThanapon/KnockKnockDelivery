@@ -34,15 +34,29 @@
       </div>
     </div>
 
-    <div class="card card-container w3-display-middle" [hidden]="!isCheckOut">
-      <div class="card-header">Waiting shipper</div>
-      <div class="card-body">
-        <h2>Waiting...</h2>
-      </div>
-      <div class="card-footer d-flex justify-content-end">
+
+    <div [hidden]="!isCheckOut">
+      <div class="card card-container w3-display-middle" [hidden]="!waiting">
+        <div class="card-header">Waiting shipper</div>
+        <div class="card-body">
+          <h2>Waiting...</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
           <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="card card-container w3-display-middle" [hidden]="waiting">
+        <div class="card-header">Accept</div>
+        <div class="card-body">
+          <h2>Shipper detail</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+          <button class="btn btn-danger" (click)="cancel()">Ok</button>
+        </div>
       </div>
     </div>
+
 
 
   </div>
