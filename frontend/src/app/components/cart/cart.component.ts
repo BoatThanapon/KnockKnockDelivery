@@ -26,6 +26,9 @@ export class CartComponent implements OnInit {
 
   getCart() {
     this.cart = JSON.parse(localStorage.getItem("cart"));
+    this.cart.forEach((element,index) => {
+        this.cart[index].amount = 1
+    });
     console.log("Cart : ", this.cart)
 
   }
