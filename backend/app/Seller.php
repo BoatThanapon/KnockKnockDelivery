@@ -9,12 +9,12 @@ class Seller extends Model
     protected $primaryKey = 'seller_id';
 
     protected $fillable = [
-        'seller_name',
         'shop_name',
         'shop_location',
-        'shop_type_id',
-        'profile_status_id',
-        'user_id'
+        'shop_logo_image',
+        'shop_latitude',
+        'shop_longitude',
+        'shop_type_id'
     ];
 
     public $timestamps = false;

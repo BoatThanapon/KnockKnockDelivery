@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DeliverResource extends JsonResource
+class ShipperResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,13 @@ class DeliverResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'deliver_id' => $this->deliver_id,
-            'deliver_firstname' => $this->deliver_firstname,
-            'deliver_lastname' => $this->deliver_lastname,
-            'birthOfDate' => $this->birthOfDate,
-            'telephone_number' => $this->telephone_number,
+            'shipper_id' => $this->shipper_id,
+            'bank_account' => [
+                'bank_account_id' => $this->bank_account->bank_account_id,
+                'bank_account_name' => $this->bank_account->bank_account_name
+            ],
+            'bank_account_no' => $this->bank_account_no,
+            'shipper_transfer_slip' => "/storage/shipper/".$this->shipper_transfer_slip,
             'profile_status' => [
                 'profile_status_id' => $this->profile_status->profile_status_id,
                 'profile_status_name' => $this->profile_status->profile_status_name

@@ -14,68 +14,61 @@ Route::group([
 });
 
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('user/{user_id}/profiles', 'ProfileController@getProfilesByUserId');
-    Route::post('profile', 'ProfileController@createProfile');
+    Route::get('masterData', 'MasterDataController@getMasterDate');
 });
 
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('sellers', 'SellerController@getSellers');
+    Route::get('user/{user_id}/profiles', 'ProfileController@getProfilesByUserId');
+});
+
+Route::group([
+    'middleware' => ['auth:api','CORS'],
+], function ($router) {
     Route::get('seller/profile/{profile_id}', 'SellerController@getSellerByProfileId');
-    Route::get('shoptypes', 'ShopTypeController@getShopTypes');
     Route::post('seller', 'SellerController@createSeller');
-    Route::put('seller/{profile_id}', 'SellerController@updateSeller');
+    Route::post('seller/{seller_id}', 'SellerController@updateSeller');
 
     Route::get('seller/{seller_id}/products', 'ProductController@getProductsBySellerId');
     Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
-    Route::put('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
+    Route::post('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
     Route::delete('seller/product/{product_id}', 'ProductController@deleteProduct');
 });
 
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('buyers', 'BuyerController@getBuyers');
     Route::get('buyer/profile/{profile_id}', 'BuyerController@getBuyerByProfileId');
     Route::post('buyer', 'BuyerController@createBuyer');
     Route::put('buyer/{buyer_id}', 'BuyerController@updateBuyer');
 });
 
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('delivers', 'DeliverController@getDelivers');
-    Route::get('deliver/profile/{profile_id}', 'DeliverController@getDeliverByProfileId');
-    Route::post('deliver', 'DeliverController@createDeliver');
-    Route::put('deliver/{deliver_id}', 'DeliverController@updateDeliver');
+    Route::get('shipper/profile/{profile_id}', 'ShipperController@getShipperByProfileId');
+    Route::post('shipper', 'ShipperController@createShipper');
+    Route::post('shipper/{shipper_id}', 'ShipperController@updateDeliver');
 });
 
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('categories', 'CategoryController@getCategories');
+    Route::get('admin/{user_id}', 'AdminController@getAdminByUserId');
+    Route::post('search/users', 'AdminController@searchUsers');
+    // Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
+    Route::post('admin/updatestatus', 'AdminController@adminUpdateStatusUser');
+});
+
+
+Route::group([
+    'middleware' => ['auth:api','CORS'],
+], function ($router) {
     Route::get('products', 'ProductController@getProducts');
     Route::get('product/{product_id}', 'ProductController@getProductByProductId');
-});
-
-Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
-], function ($router) {
-    Route::get('admins', 'AdminController@getAdmins');
-    Route::get('admin/profile/{profile_id}', 'AdminController@getAdminByProfileId');
-    Route::post('admin', 'AdminController@createAdmin');
-    Route::post('search-user', 'AdminController@searchUsers');
-    Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
-    Route::put('admin/updatestatus/profile/{profile_id}', 'AdminController@adminUpdateStatusUser');
 });
 
 // order

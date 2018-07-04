@@ -6,108 +6,79 @@ use App\Admin;
 use App\User;
 use App\Seller;
 use App\Buyer;
-use App\Deliver;
+use App\Shipper;
 use App\Profile;
 use Illuminate\Http\Request;
 use App\Http\Resources\AdminResource as AdminResource;
 use App\Http\Resources\AdminCollection;
 use App\Http\Resources\SellerResource as SellerResource;
 use App\Http\Resources\BuyerResource as BuyerResource;
-use App\Http\Resources\DeliverResource as DeliverResource;
-
-use App\Http\Requests\AdminRequest;
-
-
+use App\Http\Resources\ShipperResource as ShipperResource;
 
 class AdminController extends Controller
 {
-    
+
     private $user;
     private $admin;
+    private $seller;
+    private $buyer;
+    private $shipper;
+    private $profile;
 
-    public function __construct(Admin $admin, User $user, Seller $seller , Buyer $buyer, Deliver $deliver)
+    public function __construct(Admin $admin, User $user, Seller $seller , Buyer $buyer, Shipper $shipper,Profile $profile)
     {
         $this->admin = $admin;
         $this->user = $user;
         $this->seller = $seller;
         $this->buyer = $buyer;
-        $this->deliver = $deliver;
+        $this->shipper = $shipper;
+        $this->profile = $profile;
     }
 
-    public function getAdminByProfileId($profile_id)
+    public function getAdminByUserId($user_id)
     {
-        if($profile_id <= 0)
+        if($user_id <= 0)
         {
             return response()->json('Bad Request', 400);
         }
 
-        $admin = $this->admin->where('profile_id', $profile_id)->get();
-        if($admin->isEmpty())
+        $admin = $this->profile->with('user', 'role')->where('user_id', $user_id)->first();
+        if($admin === null)
         {
             return response()->json(['message' => 'Admin not found'], 404);
         }
-    
+
         return response()->json([
             'message' => 'Successfully',
-            'result' => $admin
+            'data' => [
+                'profile_id' => $admin->profile_id,
+                'user' => $admin->user,
+                'role' => $admin->role
+            ]
         ]);
-    
     }
 
-//    public function createAdmin(Request $request){
-//        $profile = new Profile();
-//        $profile->user_id = $request->user_id;
-//        $profile->role_id = 1;
-//
-//        $profile->save();
-//
-//
-//        $admin = new Admin();
-//        $admin->admin_firstname = $request->admin_firstname;
-//        $admin->admin_lastname = $request->admin_lastname;
-//        $admin->telephone_number = $request->telephone_number;
-//        $admin->citizen_id = $request->citizen_id;
-//        $admin->profile_id = $profile->profile_id;
-//
-//        $saveAdmin = $admin->save();
-//        if(!$saveAdmin)
-//        {
-//            return response()->json(['message' =>'Bad Request'], 400);
-//        }
-//        else
-//        {
-//            $saveAdmin;
-//        }
-//
-//        return response()->json([
-//            'message' => 'Successfully',
-//            'result' => $admin
-//        ]);
-//    }
-
-
     public function searchUsers(Request $request){
-        $role_id = $request->input('role_id');
-        $profile_status_user_id = $request->input('profile_status_user_id');
+        $role_id = $request->role_id;
+        $profile_status_id= $request->profile_status_id;
 
         if ($role_id == 2){
-            $seller = $this->seller::where('profile_status_id',$profile_status_user_id)->get();
+            $seller = $this->seller->where('profile_status_id',$profile_status_id)->get();
             return SellerResource::collection($seller);
         }
         else if ($role_id == 3){
-            $buyer = $this->buyer::where('profile_status_id',$profile_status_user_id)->get();
+            $buyer = $this->buyer->where('profile_status_id',$profile_status_id)->get();
             return BuyerResource::collection($buyer);
         }
         else if ($role_id == 4){
-            $deliver = $this->deliver::where('profile_status_id',$profile_status_user_id)->get();
-            return DeliverResource::collection($deliver);
+            $shipper = $this->shipper::where('profile_status_id',$profile_status_id)->get();
+            return ShipperResource::collection($shipper);
         }else{
             return response()->json(['message' =>'Bad Request'], 400);
         }
-
     }
 
-    public function updateAdmin(AdminRequest $request, $admin_id){
+    public function updateAdmin(Request $request, $admin_id){
 
         if($admin_id < 0)
         {
@@ -137,43 +108,56 @@ class AdminController extends Controller
 
     }
 
-    public function adminUpdateStatusUser(Request $request, $profile_id){
-        $role_id = $request->input('role_id');
-        $profile_status_id = $request->input('profile_status_id');
+    public function adminUpdateStatusUser(Request $request){
+        $id = $request->id;
+        $role_id = $request->role_id;
+        $profile_status_id = $request->profile_status_id;
 
         if ($role_id == 2){
-            $seller = Seller::where('seller_id',$profile_id)->first();
+            $seller = $this->seller->where('seller_id',$id)->first();
+            if ($seller === null) {
+                return response()->json(['message' => 'Seller not found'], 404);
+            }
             $seller->profile_status_id = $profile_status_id;
             $seller->save();
 
+            $seller->shop_logo_image = "/storage/seller/".$seller->shop_logo_image;
             return response()->json(
-                [ 
+                [
                     'message' => 'Successfully',
                     'result' => $seller
                 ]
             );
         }
         else if ($role_id == 3){
-            $buyer = Buyer::where('buyer_id',$id)->first();
+            $buyer = $this->buyer->where('buyer_id',$id)->first();
+            if ($buyer === null) {
+                return response()->json(['message' => 'Buyer not found'], 404);
+            }
+
             $buyer->profile_status_id = $profile_status_id;
             $buyer->save();
 
             return response()->json(
-                [ 
+                [
                     'message' => 'Successfully',
                     'result' => $buyer
                 ]
             );
         }
         else if ($role_id == 4){
-            $deliver = Deliver::where('deliver_id',$id)->first();
-            $deliver->profile_status_id = $profile_status_id;
-            $deliver->save();
+            $shipper = $this->shipper->where('shipper_id', $id)->first();
+            if ($shipper === null) {
+                return response()->json(['message' => 'Shipper not found'], 404);
+            }
+
+            $shipper->profile_status_id = $profile_status_id;
+            $shipper->save();
 
             return response()->json(
-                [ 
+                [
                     'message' => 'Successfully',
-                    'result' => $deliver
+                    'result' => $shipper
                 ]
             );
         }else{
@@ -182,5 +166,5 @@ class AdminController extends Controller
 
     }
 
-    
+
 }

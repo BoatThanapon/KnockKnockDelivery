@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\SignUpRequest;
 use App\User;
 
 class AuthController extends Controller
@@ -28,14 +27,23 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password wrong'], 401);
+            return response()->json(['error' => 'Login attempt failed'], 401);
         }
 
         return $this->respondWithToken($token);
     }
 
-    public function signup(SignUpRequest $request)
+    public function signup(Request $request)
     {
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'identity_no' => 'required|size:13',
+            'telephone_number' => 'required|min:9|max:10',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|max:20|confirmed'
+        ]);
+
         $this->user->create($request->all());
         return $this->login($request);
     }

@@ -4,23 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Deliver extends Model
+class Shipper extends Model
 {
-    protected $primaryKey = 'deliver_id';
+    protected $primaryKey = 'shipper_id';
 
     protected $fillable = [
-        'deliver_firstname',
-        'deliver_lastname',
-        'dateOfBirth',
-        'telephone_number',
-        'user_id',
+        'bank_account_no',
+        'shipper_transfer_slip',
+        'bank_account_id',
     ];
 
-    protected $hidden = [
-        'profile_status_id'
-    ];
-    
     public $timestamps = false;
+
+    public function bank_account()
+    {
+        return $this->belongsTo('App\BankAccount','bank_account_id', 'bank_account_id');
+    }
 
     public function profile_status()
     {
