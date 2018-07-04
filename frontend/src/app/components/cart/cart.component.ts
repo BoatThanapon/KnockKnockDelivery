@@ -24,6 +24,11 @@ export class CartComponent implements OnInit {
 
   getCart() {
     this.cart = JSON.parse(localStorage.getItem("cart"));
+    this.cart.forEach((element,index) => {
+        this.cart[index].amount =1;
+        this.cart[index].master_price = element.product_price;
+
+      });
     console.log("Cart : ", this.cart)
 
   }
@@ -46,15 +51,34 @@ export class CartComponent implements OnInit {
   }
 
   decrease(product) {
-
+    console.log("[Product] ",product)
+    this.cart.forEach(element => {
+      if(element.product_id == product.product_id) {
+        element.amount -=1;
+        this.calculatePrice(product)
+      }
+    });
   }
 
   increase(product) {
+    console.log("[Product] ",product)
+    this.cart.forEach(element => {
+      if(element.product_id == product.product_id) {
+        element.amount +=1;
+        this.calculatePrice(product)
 
+      }
+    });
   }
 
   calculatePrice(product) {
+        this.cart.forEach(element => {
+      if(element.product_id == product.product_id) {
 
+        element.product_price = element.master_price*element.amount
+
+      }
+    });
   }
 
   checkOut() {

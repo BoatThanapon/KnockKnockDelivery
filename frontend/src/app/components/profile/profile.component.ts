@@ -46,49 +46,77 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  async getUserProfile() {
-    var id = localStorage.getItem('user_id');
-    this.userService.getUserProfile(id).subscribe(
-      data => {
-        this.userProfile = data;
-        if (this.userProfile.data.length != 0) {
-          console.log("this.userProfile", this.userProfile.data);
 
-          this.userProfile.data.forEach(async (profile,idx) => {
-            console.log("idx: ",idx);
-            console.log("this.userProfile: ",this.userProfile.data.length)
-            if(profile.role.role_id == 1) {
-              // this.adminProfile = await this.fetchProfileDetail(profile);
-              this.isAdmin = !this.isAdmin;
-            }
-            if (profile.role.role_id == 2) {
-              this.sellerProfile = await this.fetchProfileDetail(profile)
-              console.log("sellerProfile: ", this.sellerProfile)
+  getUserProfile() {
+    var id = localStorage.getItem('user_id');
+
+    this.userService.getUserProfile(id).subscribe(
+          response => {
+            console.log("[Response] ",response.data)
+            if(response.data.seller != null) {
+              this.sellerProfile = response.data.seller
               this.validSeller = true;
             }
-            if (profile.role.role_id == 3) {
-              this.buyerProfile = await this.fetchProfileDetail(profile)
-              console.log("buyerProfile: ", this.buyerProfile)
+            if(response.data.buyer != null) {
+              this.buyerProfile = response.data.buyer
               this.validBuyer = true;
             }
-            if (profile.role.role_id == 4) {
-              this.deliverProfile = await this.fetchProfileDetail(profile)
-              console.log("deliverProfile: ", this.deliverProfile)
+            if(response.data.shipper != null) {
+              this.deliverProfile = response.data.shipper
               this.validDeliver = true;
             }
-            if ((idx+1) == this.userProfile.data.length) {
-              this.callback();
-            }        
-          })
-        }
-        else{
-          console.log("Empty profile")
-          this.isShow = true;
-        }
-      },
-      error => console.log(error)
-    )
+
+            this.isShow = true;
+
+          },
+          error => {
+            console.log("[Error] ",error)
+          });
   }
+
+  // async getUserProfile() {
+  //   var id = localStorage.getItem('user_id');
+  //   this.userService.getUserProfile(id).subscribe(
+  //     data => {
+  //       this.userProfile = data;
+  //       if (this.userProfile.data.length != 0) {
+  //         console.log("this.userProfile", this.userProfile.data);
+
+  //         this.userProfile.data.forEach(async (profile,idx) => {
+  //           console.log("idx: ",idx);
+  //           console.log("this.userProfile: ",this.userProfile.data.length)
+  //           if(profile.role.role_id == 1) {
+  //             // this.adminProfile = await this.fetchProfileDetail(profile);
+  //             this.isAdmin = !this.isAdmin;
+  //           }
+  //           if (profile.role.role_id == 2) {
+  //             this.sellerProfile = await this.fetchProfileDetail(profile)
+  //             console.log("sellerProfile: ", this.sellerProfile)
+  //             this.validSeller = true;
+  //           }
+  //           if (profile.role.role_id == 3) {
+  //             this.buyerProfile = await this.fetchProfileDetail(profile)
+  //             console.log("buyerProfile: ", this.buyerProfile)
+  //             this.validBuyer = true;
+  //           }
+  //           if (profile.role.role_id == 4) {
+  //             this.deliverProfile = await this.fetchProfileDetail(profile)
+  //             console.log("deliverProfile: ", this.deliverProfile)
+  //             this.validDeliver = true;
+  //           }
+  //           if ((idx+1) == this.userProfile.data.length) {
+  //             this.callback();
+  //           }        
+  //         })
+  //       }
+  //       else{
+  //         console.log("Empty profile")
+  //         this.isShow = true;
+  //       }
+  //     },
+  //     error => console.log(error)
+  //   )
+  // }
 
   callback() {
     this.isShow = true;

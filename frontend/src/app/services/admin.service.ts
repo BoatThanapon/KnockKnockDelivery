@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -8,6 +9,13 @@ import { HttpClient } from '@angular/common/http';
 export class AdminService {
 
   private baseUrl = 'http://localhost:8000/api/';
+  private UAT = localStorage.getItem('UAT')
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+ this.UAT
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -29,7 +37,7 @@ export class AdminService {
   }
 
   searchUsers(body) {
-    return  this.http.post<users>(`${this.baseUrl}search-user`, body)
+    return  this.http.post<users>(`${this.baseUrl}search-user`, body,this.httpOptions)
   }
 
   updateUserStatus(role_id,uid) {
@@ -37,7 +45,7 @@ export class AdminService {
       "role_id": role_id,
       "profile_status_user_id": 1
     }
-    return  this.http.put(`${this.baseUrl}admin/updatestatus/profile/`+uid, body)
+    return  this.http.put(`${this.baseUrl}admin/updatestatus/profile/`+uid, body,this.httpOptions)
 
   }
 

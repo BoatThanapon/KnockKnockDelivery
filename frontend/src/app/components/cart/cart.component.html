@@ -19,8 +19,8 @@
             <div>
               <p>
                 <span>
-                  <button class="btn btn-default" (click)="decrease(product)">-</button>
-                  1
+                  <button class="btn btn-default" (click)="decrease(product)" [disabled]="product.amount == 1">-</button>
+                  {{product.amount}}
                 </span>
                 <button class="btn btn-default" (click)="increase(product)">+</button>
               </p>

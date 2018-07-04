@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { SellerService } from '../../services/seller.service';
+import { UserService } from '../../services/user.service';
+
+
 
 import { Router } from '@angular/router';
 
@@ -24,7 +27,8 @@ export class ShopsComponent implements OnInit {
   private form = {
     product_name: null,
     product_description: null,
-    product_price:null
+    product_price:null,
+    product_id:null
   }
 
   private shop = {
@@ -37,6 +41,7 @@ export class ShopsComponent implements OnInit {
   constructor(
     private BuyerService: BuyerService,
     private SellerService: SellerService,
+    private UserService: UserService,
     private router: Router
   ) { }
 
@@ -51,24 +56,38 @@ export class ShopsComponent implements OnInit {
       response => {
         console.log("getAllProducts: ", response.data);
         this.products = response.data;
-        this.getProductCatagory();
+        // this.getProductCatagory();
+        this.getAllMasterData();
       },
       error => console.log(error)
     )
 
   }
 
-  getProductCatagory() {
-    this.BuyerService.getProductCategories().subscribe(
+  // getProductCatagory() {
+  //   this.BuyerService.getProductCategories().subscribe(
+  //     response => {
+  //       console.log("getProductCatagory: ", response.data);
+  //       this.product_catagory = response.data;
+  //       this.getAllShops();
+  //     },
+  //     error => console.log(error)
+  //   )
+
+
+  // }
+
+  getAllMasterData() {
+    this.UserService.getMasterData().subscribe(
       response => {
-        console.log("getProductCatagory: ", response.data);
-        this.product_catagory = response.data;
-        this.getAllShops();
+        console.log("getAllMasterData: ", response.data.product_category);
+        this.product_catagory = response.data.product_category;
+        // this.getAllShops();
+        this.isShow = !this.isShow;    
+
       },
       error => console.log(error)
     )
-
-
   }
 
 
@@ -88,7 +107,9 @@ export class ShopsComponent implements OnInit {
     console.log("onClick product: ",product)
     this.form.product_name= product.product_name,
     this.form.product_description= product.product_description,
-    this.form.product_price=product.product_price
+    this.form.product_price=product.product_price,
+    this.form.product_id=product.product_id
+
   }
 
   openShopInfo(shop){
@@ -126,8 +147,10 @@ export class ShopsComponent implements OnInit {
 
   setCartNum(){
     let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log("Cart lenght: ",cart.length)
-    this.cart_num = cart.length;
+    if(cart != null) {
+          this.cart_num = cart.length;
+
+    } 
 
   }
 
