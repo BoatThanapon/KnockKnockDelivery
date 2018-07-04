@@ -23,6 +23,13 @@ class SellerController extends Controller
         $this->user = $user;
     }
 
+    public function getSellers()
+    {
+        $sellers = $this->seller->where('profile_status_id',1)->get();
+
+        return SellerResource::collection($sellers);
+    }
+
     public function getSellerByProfileId($profile_id)
     {
         if ($profile_id <= 0) {

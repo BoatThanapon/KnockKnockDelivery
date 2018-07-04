@@ -29,6 +29,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:api','CORS'],
 ], function ($router) {
+    Route::get('sellers', 'SellerController@getSellers');
     Route::get('seller/profile/{profile_id}', 'SellerController@getSellerByProfileId');
     Route::post('seller', 'SellerController@createSeller');
     Route::post('seller/{seller_id}', 'SellerController@updateSeller');
