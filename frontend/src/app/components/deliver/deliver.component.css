@@ -74,3 +74,22 @@
 #list-container {
   padding-top: 10px;
 }
+
+
+/* Cart CSS */
+#user {
+  padding-top:25px; 
+  font-size: 32px;
+  color: white;
+  background-color: #003E52
+
+}
+
+#user:hover {
+  cursor: pointer;
+
+}
+
+
+
+

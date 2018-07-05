@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DeliverService } from '../../services/deliver.service';
+
 
 @Component({
   selector: 'app-deliver',
@@ -7,13 +9,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeliverComponent implements OnInit {
 
-  constructor() { }
+  private deliver_profile = [];
+  private isShow:boolean = true;
+  private isUpdate:boolean = false;
+
+  constructor(
+    private deliverService: DeliverService,
+
+  ) { }
 
   ngOnInit() {
+    this.getProfile();
   }
 
   openOrderInfo() {
     
+  }
+
+  getProfile() {
+    let id = localStorage.getItem('seller_id');
+    this.deliverService.getDeliverByProfileId(id)
+    .subscribe(
+      response => {
+        console.log("[response] ",response)
+        this.deliver_profile = response.data;
+        this.isShow = !this.isShow
+      },
+      error => {
+        console.log("[response] ",error)
+
+      }
+    )
+  }
+
+  openProfile() {
+    console.log("[Deliver profile]")
   }
 
 }

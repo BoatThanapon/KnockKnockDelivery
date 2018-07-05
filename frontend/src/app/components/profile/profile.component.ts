@@ -120,7 +120,10 @@ export class ProfileComponent implements OnInit {
 
   callback() {
     this.isShow = true;
+  }
 
+  editBuyer() {
+    console.log("Edit buyer")
   }
 
   createProfile(id) {
@@ -147,6 +150,7 @@ export class ProfileComponent implements OnInit {
   }
 
   enterDeliver() {
+    localStorage.setItem('seller_id',this.deliverProfile.profile_id)
     this.router.navigateByUrl('/deliver')
   }
 

@@ -27,10 +27,18 @@ export class NavbarComponent implements OnInit {
 
   logout(event: MouseEvent) {
     event.preventDefault()
-    this.authService.logOut()
-    this.authService.removeToken()
-    this.authService.changeAuthStatus(false)
-    this.router.navigateByUrl('/login')
+
+
+    this.authService.logOut().subscribe(
+      response => {
+        console.log("[Response] ",response)
+        this.authService.removeToken()
+        this.authService.changeAuthStatus(false)
+        this.router.navigateByUrl('/login')
+      },error => {
+        console.log("[Error] ",error)
+      })
+
   }
 
   w3_open() {

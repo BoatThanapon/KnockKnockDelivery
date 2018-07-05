@@ -18,7 +18,6 @@ export class AuthService {
 
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json,multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
       'Authorization': 'Bearer '+ this.UAT,
       'Accept':'application/json, text/plain, */*',
 
@@ -30,6 +29,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+
   signup(data) {
     return this.http.post(`${this.baseUrl}/signup`, data)
   }
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   logOut() {
-    return this.http.post(`${this.baseUrl}/logout`,this.httpOptions)
+    return this.http.post(`${this.baseUrl}/logout`,{},this.httpOptions)
 
   }
 
