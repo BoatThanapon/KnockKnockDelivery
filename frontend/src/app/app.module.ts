@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,ApplicationRef  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DeliverComponent } from './components/deliver/deliver.component';
+
+import { AgmCoreModule } from '@agm/core';
+
 
 
 
@@ -62,7 +65,10 @@ import { DeliverComponent } from './components/deliver/deliver.component';
     AppRoutingModule,
     DataTablesModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD8_WlnDzwcvmKpKTn_Zgc4FpGh1lBKQD8'
+    })
   ],
   providers: [
     AuthService,

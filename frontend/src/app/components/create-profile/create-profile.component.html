@@ -1,23 +1,13 @@
-<div class="loader-container">
-  <div class="loader" [hidden]="!isShow"></div>
+<div class="loader-container"[hidden]="!isShow">
+  <div class="loader" ></div>
 </div>
 <div class="container" [hidden]="isShow">
   <div *ngIf="isCreateSeller">
-    <div class="w3-row">
       <div class="w3-container w3-display-middle">
         <div class="card">
           <div class="card-header">Create Seller Profile</div>
           <div class="card-body">
             <form #createSellerForm=ngForm (ngSubmit)="createSeller()">
-
-              <div class="form-group">
-                <label for="input-name">Seller Name</label>
-                <input type="text" name="name" class="form-control" id="input-name" placeholder="Seller Name" [(ngModel)]="sellerForm.sellerName"
-                  required/>
-                <span class="text-danger" [hidden]="!error.sellerName">
-                  {{error.sellerName}}
-                </span>
-              </div>
 
               <div class="form-group">
                 <label for="input-shop-name">Shop Name</label>
@@ -30,8 +20,9 @@
 
               <div class="form-group">
                 <label for="input-Type">Shop Type</label>
-                <select class="form-control" name="type" id="input-Type" [(ngModel)]="sellerForm.selectedType">
-                  <option *ngFor="let item of shopCatagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
+                <select class="form-control" name="type" id="input-Type"  #selectType="ngModel" [(ngModel)]="sellerForm.selectedType">
+                  <option disabled selected hidden [ngValue]="undefined"> Select Shop Type</option>
+                  <option *ngFor="let item of shopCatagory" [ngValue]="item.shop_type_id">{{item.shop_type_name}}</option>
                 </select>
                 <span class="text-danger" [hidden]="!error.type">
                   {{error.type}}
@@ -48,7 +39,7 @@
               </div>
 
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="input-image">Shop Image</label><br>
                 <input  type="file" name="shop-image"  id="input-image" (change)="readImageUrl($event)" [(ngModel)]="sellerForm.shopImg"
                 accept="image/*" required>
@@ -58,7 +49,7 @@
                 <div>
                 <img id="imagePriview" [src]="sellerForm.shopImg" />                
               </div>
-              </div>
+              </div> -->
 
               
 
@@ -68,7 +59,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
   <div *ngIf="isCreateBuyer">
     <div class="w3-row">

@@ -11,7 +11,9 @@ export class DashboardComponent implements OnInit {
   // @ViewChild('gmap') gmapElement: any;
   // map: google.maps.Map;
 
-
+  title: string = 'My first AGM project';
+  lat: number = 51.678418;
+  lng: number = 7.809007;
 
   form = {
     Name: null,

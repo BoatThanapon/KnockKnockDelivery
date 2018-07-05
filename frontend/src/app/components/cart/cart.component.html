@@ -1,10 +1,10 @@
-<div class="loader-container">
-  <div class="loader" [hidden]="!isShow"></div>
+<div class="loader-container"[hidden]="!isShow">
+  <div class="loader" ></div>
 </div>
 <div class="w3-row" id="container" [hidden]="isShow">
   <div class="container">
 
-    <div class="card card-container w3-display-middle" [hidden]="isCheckOut">
+    <div class="card card-container w3-display-middle" [hidden]="!isCheckOut">
       <div class="card-header">Cart</div>
       <div class="card-body">
         <div class="row" id="inner" *ngFor="let product of cart;let i = index">
@@ -34,15 +34,29 @@
       </div>
     </div>
 
-    <div class="card card-container w3-display-middle" [hidden]="!isCheckOut">
-      <div class="card-header">Waiting shipper</div>
-      <div class="card-body">
-        <h2>Waiting...</h2>
+    <div class="w3-display-middle" [hidden]="isCheckOut">
+      <div class="card card-container" [hidden]="!isWarting">
+        <div class="card-header">Waiting shipper</div>
+        <div class="card-body">
+          <h2>Waiting...</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </div>
       </div>
-      <div class="card-footer d-flex justify-content-end">
-          <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+
+      <div class="card card-container" [hidden]="isWarting">
+        <div class="card-header">Get shipper</div>
+        <div class="card-body">
+          <h2>Shipper detail</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-success" >Ok</button>
+        </div>
       </div>
     </div>
+
+
 
 
   </div>

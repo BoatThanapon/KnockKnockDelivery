@@ -16,7 +16,7 @@ export class CreateProfileComponent implements OnInit {
   private isCreateBuyer: Boolean = false;
   private isCreateSeller: Boolean = false;
   private isCreateDeliver: Boolean = false;
-  isShow: boolean = false;
+  private isShow: boolean = true;
 
   sellerForm = {
     sellerName: null,
@@ -55,23 +55,23 @@ export class CreateProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.validateCreateProfile();
+    this.fetchMasterType();
   }
 
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
       this.isShow = !this.isShow;   
-      this.sellerService.getShopCategories().subscribe(
-        Response => {
-          this.isShow = !this.isShow;   
-          console.log("Response from get catagory: ",Response.data);
-          this.shopCatagory = Response.data;
-        },
-        error => {
-          console.log("[Error] from get catagory: ",error);
-        }
-      )
+      // this.sellerService.getShopCategories().subscribe(
+      //   Response => {
+      //     this.isShow = !this.isShow;   
+      //     console.log("Response from get catagory: ",Response.data);
+      //     this.shopCatagory = Response.data;
+      //   },
+      //   error => {
+      //     console.log("[Error] from get catagory: ",error);
+      //   }
+      // )
       this.isCreateSeller = !this.isCreateSeller;
     }
     else if (this.create_profile_id == 3) {
@@ -82,6 +82,19 @@ export class CreateProfileComponent implements OnInit {
     }
 
 
+  }
+
+  fetchMasterType(){
+    this.userService.getMasterData().subscribe(
+      Response => {
+        console.log("[Response] ",Response)
+        this.shopCatagory = Response.data.shop_type;
+        this.validateCreateProfile();
+
+
+      },
+      error => console.log("[Error] ",error)
+    )
   }
 
   onSubmit() {

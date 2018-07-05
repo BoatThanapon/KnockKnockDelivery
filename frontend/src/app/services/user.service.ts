@@ -16,8 +16,10 @@ export class UserService {
 
     private httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+ this.UAT
+          'Content-Type': 'application/json,multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+          'Authorization': 'Bearer '+ this.UAT,
+          'Accept':'application/json, text/plain, */*',
+
         })
       };
 

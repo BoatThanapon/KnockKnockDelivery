@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-
+ 
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
 
   private isShow: boolean = false;
-  private isCheckOut: boolean = false;
+  private isCheckOut: boolean = true;
+  private isWarting: boolean = true;
+
   private cart;
 
   constructor(
