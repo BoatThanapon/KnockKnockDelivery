@@ -46,6 +46,14 @@ class ProfileController extends Controller
         }
 
         $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
+        if($profiles[0]->role->role_id == 1)
+        {
+            return response()->json([
+                'message' => 'Successfully',
+                'data' => $profiles[0]
+            ]);
+        }
+
         $seller = new Seller();
         $buyer = new Buyer();
         $shipper = new Shipper();
