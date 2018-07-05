@@ -18,15 +18,25 @@ export class CreateProfileComponent implements OnInit {
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
 
+
   sellerForm = {
-    sellerName: null,
-    shopName: null,
-    location: null,
-    type:null,
-    selectedType:null,
-    shopImg: null,
-    profile_id: null,
-    status_id:1,
+    shop_name: null,
+    shop_location: null,
+    shop_type_id:null,
+    user_id:null,
+    shop_logo_image: null,
+    shop_latitude:null,
+    shop_longitude:null
+  }
+
+  form = { 
+    shop_name: '_',
+    shop_location: 'Chiang Mai',
+    shop_latitude: '134.343',
+    shop_longitude: '34.4234234',
+    shop_type_id: '1',
+    user_id: '3',
+    shop_logo_image: undefined 
   }
 
   private shopCatagory;
@@ -101,21 +111,26 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  readImageUrl(event:any) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+  // readImageUrl(event:any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
   
-      reader.onload = (event:any) => {
-        this.sellerForm.shopImg = event.target.result;
-      }
+  //     reader.onload = (event:any) => {
+  //       this.sellerForm.shopImg = event.target.result;
+  //     }
   
-      reader.readAsDataURL(event.target.files[0]);
-    }
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   }
+  // }
+
+  onCatagorySelected(event) {
+    console.log("onCatagorySelected", event)
+    this.sellerForm.shop_type_id = parseInt(event);
   }
 
-
   createSeller() {
-    this.sellerForm.profile_id = localStorage.getItem("user_id")
+    console.log("[This Seller] ",this.sellerForm)
+    this.sellerForm.user_id = localStorage.getItem("user_id")
     this.userService.createSeller(this.sellerForm).subscribe(
       data => {
         console.log("response from create seller",data)

@@ -4,23 +4,23 @@
 <div class="container" [hidden]="isShow">
   <div *ngIf="isCreateSeller">
       <div class="w3-container w3-display-middle">
-        <div class="card">
+        <div class="card w3-margin-top">
           <div class="card-header">Create Seller Profile</div>
           <div class="card-body">
             <form #createSellerForm=ngForm (ngSubmit)="createSeller()">
 
               <div class="form-group">
                 <label for="input-shop-name">Shop Name</label>
-                <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shopName"
+                <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shop_name"
                   required>
                 <span class="text-danger" [hidden]="!error.shopName">
                   {{error.shopName}}
                 </span>
               </div>
-
+              
               <div class="form-group">
                 <label for="input-Type">Shop Type</label>
-                <select class="form-control" name="type" id="input-Type"  #selectType="ngModel" [(ngModel)]="sellerForm.selectedType">
+                <select class="form-control" name="type" id="input-Type"  #selectType="ngModel" (ngModelChange)="onCatagorySelected($event)" [(ngModel)]="sellerForm.selectedType">
                   <option disabled selected hidden [ngValue]="undefined"> Select Shop Type</option>
                   <option *ngFor="let item of shopCatagory" [ngValue]="item.shop_type_id">{{item.shop_type_name}}</option>
                 </select>
@@ -31,10 +31,27 @@
 
               <div class="form-group">
                 <label for="input-localtion">Location</label>
-                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.location"
+                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.shop_location"
                   required></textarea>
                 <span class="text-danger" [hidden]="!error.location">
                   {{error.location}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-lat">Shop Latitude</label>
+                <input type="number" name="lat" class="form-control" id="input-lat" placeholder="Latitude" [(ngModel)]="sellerForm.shop_latitude">
+                <span class="text-danger" [hidden]="!error.lat">
+                  {{error.lat}}
+                </span>
+              </div>
+
+
+              <div class="form-group">
+                <label for="input-long">Shop Longtitude</label>
+                <input type="number" name="long" class="form-control" id="input-long" placeholder="Longtitude" [(ngModel)]="sellerForm.shop_longitude">
+                <span class="text-danger" [hidden]="!error.long">
+                  {{error.long}}
                 </span>
               </div>
 
