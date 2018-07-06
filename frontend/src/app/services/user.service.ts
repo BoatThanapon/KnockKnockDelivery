@@ -12,12 +12,12 @@ export class UserService {
 
     private user_id;
     private baseUrl = 'http://localhost:8000/api/';
-    private UAT = localStorage.getItem('UAT')
+    private UAT = this.setUAT();
 
     private httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json,multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
-          'Authorization': 'Bearer '+ this.UAT,
+          'Authorization': 'Bearer '+ this.setUAT(),
           'Accept':'application/json, text/plain, */*',
 
         })
@@ -26,9 +26,14 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-
-
+        
     }
+
+    setUAT() {
+        return localStorage.getItem('UAT')
+    }
+
+
 
     getUserProfile(id) {
         return this.http.get<user>(`${this.baseUrl}user/` + id + `/profiles`,this.httpOptions)
