@@ -29,7 +29,7 @@
 
           <div class="form-group">
             <label for="input-email">Identity No.</label>
-            <input type="number" ng-maxlength="13" name="identity_no" class="form-control" id="input-identity_no" placeholder="Identity no." [(ngModel)]="form.identity_no" required>
+            <input type="text" name="identity_no" class="form-control" id="input-identity_no" placeholder="Identity no." [(ngModel)]="form.identity_no" required>
             <span class="text-danger" [hidden]="!error.identity_no">
               {{error.identity_no}}
             </span>

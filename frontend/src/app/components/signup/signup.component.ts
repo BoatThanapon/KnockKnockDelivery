@@ -46,8 +46,9 @@ export class SignupComponent implements OnInit {
       this.isShow = !this.isShow;   
       this.error['password'] = 'Password and confirm password not match';
     }
-    else if(this.form.password.length) {
-
+    else if(this.form.identity_no.length<13) {
+      this.isShow = !this.isShow;   
+      this.error['identity_no'] = 'Identity no must more than 13 digit';
     }
     else{
       this.authService.signup(this.form).subscribe(
