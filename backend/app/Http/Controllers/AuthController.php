@@ -13,7 +13,7 @@ class AuthController extends Controller
 
     public function __construct(User $user)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup', 'logout']]);
         $this->user = $user;
     }
 

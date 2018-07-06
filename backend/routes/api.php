@@ -10,9 +10,11 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::put('user/{user_id}','AuthController@editUser');
     Route::post('me', 'AuthController@me');
-    Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
-    Route::post('resetPassword', 'ChangePasswordController@process');
+
 });
+
+Route::post('auth/sendPasswordResetLink', 'ResetPasswordController@sendEmail');
+Route::post('auth/resetPassword', 'ChangePasswordController@process');
 
 Route::group([
     'middleware' => ['auth:api','CORS'],
