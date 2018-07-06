@@ -59,12 +59,27 @@ class ProfileController extends Controller
         $shipper = new Shipper();
         foreach($profiles as $item)
         {
-            if($item->role->role_id == 2)
-                $seller = $this->seller->where('profile_id', $item->profile_id)->where('profile_status_id', 2)->first();
-            if($item->role->role_id == 3)
-                $buyer = $this->buyer->where('profile_id', $item->profile_id)->where('profile_status_id', 2)->first();
-            if($item->role->role_id == 4)
-                $shipper = $this->shipper->where('profile_id', $item->profile_id)->where('profile_status_id', 2)->first();
+            if($item->role->role_id == 2){
+                $seller = $this->seller->where('profile_status_id', 2)->first();
+            }
+
+            if($item->role->role_id == 3){
+                $buyer = $this->buyer->where('profile_status_id', 2)->first();
+            }
+
+            if($item->role->role_id == 4){
+                $shipper = $this->shipper->where('profile_status_id', 2)->first();
+            }
+        }
+
+        if ($seller->count() > 1)
+        {
+            $seller->shop_logo_image = "/storage/seller/".$seller->shop_logo_image;
+        }
+
+        if($shipper->count() > 1)
+        {
+            $shipper->shipper_transfer_slip = '/storage/shipper/'.$shipper->shipper_transfer_slip;
         }
 
         return response()->json([

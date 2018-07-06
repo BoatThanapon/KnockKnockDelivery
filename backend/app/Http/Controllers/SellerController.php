@@ -14,7 +14,6 @@ class SellerController extends Controller
     private $profile;
     private $seller;
     private $user;
-    private $sellerPhoto;
 
     public function __construct(Seller $seller, Profile $profile, User $user)
     {
@@ -36,7 +35,7 @@ class SellerController extends Controller
             return response()->json('Bad Request', 400);
         }
 
-        $seller = $this->seller->with('shoptype', 'profile_status')->where('profile_id', $profile_id)->get();
+        $seller = $this->seller->with('profile_status')->where('profile_id', $profile_id)->get();
         if ($seller->isEmpty()) {
             return response()->json(['message' => 'Seller not found'], 404);
         }
@@ -51,7 +50,6 @@ class SellerController extends Controller
             'shop_location' => 'required|max:199',
             'shop_latitude' => 'required',
             'shop_longitude' => 'required',
-            'shop_type_id' => 'required',
             'shop_logo_image' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'user_id' => 'required'
         ]);
@@ -97,7 +95,6 @@ class SellerController extends Controller
         $seller->shop_latitude = $request->shop_latitude;
         $seller->shop_longitude = $request->shop_longitude;
         $seller->shop_logo_image = $fileNameToStore;
-        $seller->shop_type_id = $request->shop_type_id;
         $seller->profile_status_id = 1;
         $seller->profile_id = $profile->profile_id;
 
@@ -123,7 +120,6 @@ class SellerController extends Controller
             'shop_location' => 'required|max:199',
             'shop_latitude' => 'required',
             'shop_longitude' => 'required',
-            'shop_type_id' => 'required',
             'shop_logo_image' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'profile_status_id' => 'required',
         ]);
@@ -155,7 +151,6 @@ class SellerController extends Controller
         if ($request->hasFile('shop_logo_image')) {
             $seller->shop_logo_image = $fileNameToStore;
         }
-        $seller->shop_type_id = $request->shop_type_id;
         $seller->profile_status_id = $seller->profile_status_id;
 
         $seller->save();

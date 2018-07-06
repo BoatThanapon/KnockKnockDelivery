@@ -21,10 +21,6 @@ class SellerResource extends JsonResource
             'shop_latitude' => $this->shop_latitude,
             'shop_longitude' => $this->shop_longitude,
             'shop_logo_image' => "/storage/seller/".$this->shop_logo_image,
-            'shop_type' => [
-                'shop_type_id' => $this->shoptype->shop_type_id,
-                'shop_type_name' => $this->shoptype->shop_type_name
-            ],
             'profile_status' => [
                 'profile_status_id' => $this->profile_status->profile_status_id,
                 'profile_status_name' => $this->profile_status->profile_status_name
