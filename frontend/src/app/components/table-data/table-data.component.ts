@@ -28,7 +28,9 @@ export class TableDataComponent implements OnInit {
   private errorMessage:String;
   private seller;
   private catagory;
+  private product_image;
   private dafault_catagory: Number;
+  private baseUrl = 'http://localhost:8000';
 
 
   constructor(
@@ -40,7 +42,8 @@ export class TableDataComponent implements OnInit {
   ngOnInit() {
     console.log("ngOnInit table-data: ", this.products);
     this.seller = JSON.parse(localStorage.getItem("seller"));
-    this.catagory = JSON.parse(localStorage.getItem("product_catagory"));
+    let masterData = JSON.parse(localStorage.getItem('masterData'))
+    this.catagory = masterData.product_category;
 
     this.isDelete = false;
     this.isEdit = false;
@@ -53,10 +56,13 @@ export class TableDataComponent implements OnInit {
     this.product_price = data.product_price;
     this.unit_in_stock = data.unit_in_stock;
     this.product_available = data.product_available;
+    this.product_image = this.baseUrl+data.product_image_1
+    console.log("this.product_image ",this.product_image)
+
     this.catagory.forEach((element, idx) => {
-      if (element.category_id == data.category.category_id) {
+      if (element.product_category_id == data.product_category.product_category_id) {
         this.dafault_catagory = idx + 1;
-        this.selected_catagory = data.category.category_name;
+        this.selected_catagory = data.product_category.product_category_name;
       }
     });
   }

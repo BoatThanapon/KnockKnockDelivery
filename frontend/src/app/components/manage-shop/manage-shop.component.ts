@@ -34,8 +34,7 @@ export class ManageShopComponent implements OnInit {
     ngOnInit() {
         this.onSetUpPage();
         this.getAllProducts();
-        // this.getShopCatagory();
-        this.getProductCategories();
+        
     }
 
 
@@ -52,8 +51,10 @@ export class ManageShopComponent implements OnInit {
             response => {
                 this.products = response.data;
                 // console.log("response from getAllProducts: ", response.data)
-                this.setIsAvailableProduct();
                 this.isLoad = !this.isLoad;
+                this.getProductCategories();
+                
+                
 
 
             },
@@ -62,19 +63,12 @@ export class ManageShopComponent implements OnInit {
     }
 
     getProductCategories() {
-        // this.sellerService.getProductCategories().subscribe(
-        //     response => {
-        //         // console.log("response from catagory: ", response)
-        //         this.catagory = response.data;
-        //         localStorage.setItem("product_catagory", JSON.stringify(this.catagory));
-
-        //     },
-        //     error => console.log("response from catagory: ", error)
-        // )
 
         this.masterData = JSON.parse(localStorage.getItem('masterData'))
         this.catagory = this.masterData.product_category;
         console.log("this.catagory: ", this.catagory)
+        this.setIsAvailableProduct();
+        
 
 
 
@@ -82,14 +76,17 @@ export class ManageShopComponent implements OnInit {
 
     getShopCatagory() {
         this.sellerService.getShopCategories().subscribe(
-            response => localStorage.setItem("shop_catagory", JSON.stringify(response.data)),
+            response => {
+               localStorage.setItem("shop_catagory", JSON.stringify(response.data));
+
+            },
             error => console.log(error)
         )
 
     }
 
     setIsAvailableProduct() {
-        this.products.forEach(element => {
+        this.products.forEach((element,index) => {
             // console.log("setIsAvailableProduct element: ",element)
             if(element.unit_in_stock == 0){
                 this.outOfStockProducts.push(element);
@@ -98,7 +95,7 @@ export class ManageShopComponent implements OnInit {
                 this.availableProducts.push(element);
 
             }
-        });
+        })
     }
 
     toogle() {
