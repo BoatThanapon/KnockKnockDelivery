@@ -86,7 +86,6 @@ class BuyerController extends Controller
     {
         $this->validate($request, [
             'buyer_location' => 'required|max:199',
-            'profile_status_id' => 'required',
         ]);
 
         $buyer = $this->buyer->where('buyer_id', $buyer_id)->first();
@@ -95,7 +94,6 @@ class BuyerController extends Controller
         }
 
         $buyer->buyer_location = $request->buyer_location;
-        $buyer->profile_status_id = $request->profile_status_id;
 
         $buyer->save();
 

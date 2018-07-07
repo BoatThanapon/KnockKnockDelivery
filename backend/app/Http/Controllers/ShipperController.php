@@ -108,7 +108,6 @@ class ShipperController extends Controller
             'bank_account_id' => 'required',
             'bank_account_no' => 'required|min:8|max:20',
             'shipper_transfer_slip' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
-            'profile_status_id' => 'required',
         ]);
 
         $shipper = $this->shipper->where('shipper_id', $shipper_id)->first();
@@ -138,7 +137,6 @@ class ShipperController extends Controller
         if ($request->hasFile('shipper_transfer_slip')) {
             $shipper->shipper_transfer_slip = $fileNameToStore;
         }
-        $shipper->profile_status_id = $shipper->profile_status_id;
 
         $saveShipper = $shipper->save();
         $shipper->shipper_transfer_slip = "/storage/shipper/".$shipper->shipper_transfer_slip;

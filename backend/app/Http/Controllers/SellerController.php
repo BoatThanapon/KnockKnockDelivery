@@ -121,7 +121,6 @@ class SellerController extends Controller
             'shop_latitude' => 'required',
             'shop_longitude' => 'required',
             'shop_logo_image' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
-            'profile_status_id' => 'required',
         ]);
 
         $seller = $this->seller->where('seller_id', $seller_id)->first();
@@ -151,7 +150,6 @@ class SellerController extends Controller
         if ($request->hasFile('shop_logo_image')) {
             $seller->shop_logo_image = $fileNameToStore;
         }
-        $seller->profile_status_id = $seller->profile_status_id;
 
         $seller->save();
         $seller->shop_logo_image = "/storage/seller/".$seller->shop_logo_image;
