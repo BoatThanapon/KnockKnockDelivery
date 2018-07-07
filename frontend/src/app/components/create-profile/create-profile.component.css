@@ -16,6 +16,10 @@
 
   }
 
+  agm-map {
+    height: 300px;
+  }
+
   
 .loader-container {
   display: inline-block;

@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { SellerService } from '../../services/seller.service';
 
 import { Router } from '@angular/router';
+declare var google: any;
 
 @Component({
   selector: 'app-create-profile',
@@ -17,6 +18,10 @@ export class CreateProfileComponent implements OnInit {
   private isCreateSeller: Boolean = false;
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
+  latitude: number = 18.847882;
+  longtitude: number = 99.006974;
+  accuracy?: number;
+  
 
 
   sellerForm = {
@@ -66,12 +71,70 @@ export class CreateProfileComponent implements OnInit {
   constructor(    
     private userService: UserService,
     private sellerService: SellerService,
+    
+    
 
-  ) { }
+  ) {
+    // if (navigator)
+    // {
+    // navigator.geolocation.getCurrentPosition( pos => {
+    //     this.longtitude = +pos.coords.longitude;
+    //     this.latitude = +pos.coords.latitude;
+    //     this.sellerForm.shop_latitude = +pos.coords.latitude;
+    //     this.sellerForm.shop_longitude = +pos.coords.longitude;
+    //   });
+    // }
+    this.getGeoLocation();
+   }
 
   ngOnInit() {
     this.fetchMasterType();
     this.setBankAccount();
+  }
+
+  getGeoLocation(){
+    if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
+
+        navigator.geolocation.getCurrentPosition(position=> {
+          this.latitude = position.coords.latitude;
+          this.longtitude = position.coords.longitude;
+          this.sellerForm.shop_latitude = position.coords.latitude;
+          this.sellerForm.shop_longitude = position.coords.longitude;
+          let geocoder = new google.maps.Geocoder();
+          let latlng = new google.maps.LatLng(this.latitude, this.longtitude);
+          let request = {
+            location: latlng
+          };   
+
+          geocoder.geocode(request,  (results, status) => {     
+
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0] != null) {
+               let city = results[0].address_components[results[0].address_components.length-4].short_name;                      
+
+               this.sellerForm.shop_location = city;
+
+
+              } else {
+                alert("No address available");
+              }
+            }
+});
+
+        }, error => {
+          console.log(error);
+        }, options);
+    }
+  }
+
+  onChooseLocation(event) {
+    this.latitude = event.coords.lat;
+    this.longtitude = event.coords.lng;
+    this.sellerForm.shop_latitude = event.coords.lat;
+    this.sellerForm.shop_longitude = event.coords.lng;
   }
 
   validateCreateProfile() {
