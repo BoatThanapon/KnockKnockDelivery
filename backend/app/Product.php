@@ -12,7 +12,6 @@ class Product extends Model
         'product_name',
         'product_description',
         'product_price',
-        'unit_in_stock',
         'product_image_1',
         'product_image_2',
         'product_image_3',

@@ -75,7 +75,6 @@ class ProductController extends Controller
             'product_name' => 'required|max:100',
             'product_description' => 'required|max:199',
             'product_price' => 'required',
-            'unit_in_stock' => 'required',
             'product_image_1' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'product_image_2' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'product_image_3' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
@@ -91,7 +90,6 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;
-        $product->unit_in_stock = $request->unit_in_stock;
         $product->product_status_id = 1;
         $product->product_category_id = $request->product_category_id;
         $product->seller_id = $seller->seller_id;
@@ -153,7 +151,6 @@ class ProductController extends Controller
             'product_name' => 'required|max:100',
             'product_description' => 'required|max:199',
             'product_price' => 'required',
-            'unit_in_stock' => 'required',
             'product_image_1' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'product_image_2' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'product_image_3' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
@@ -169,7 +166,6 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;
-        $product->unit_in_stock = $request->unit_in_stock;
         $product->product_status_id = $request->product_status_id ;
         $product->product_category_id = $request->product_category_id;
 
