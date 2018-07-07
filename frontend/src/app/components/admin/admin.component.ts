@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
 
   private isLoad: boolean = true;
   private isMenu: boolean = false;
-  private isHolding: boolean = false;
+  private isHolding: boolean = true;
 
   private roles: string[];
   private selectedRole: string;

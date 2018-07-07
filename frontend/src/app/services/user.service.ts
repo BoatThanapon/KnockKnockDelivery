@@ -88,9 +88,13 @@ export interface user {
     data: {
         seller:null,
         buyer:null,
-        shipper:null
+        shipper:null,
+        role:{
+            role_id:null
+        }
     },
-    message:null
+    message:null,
+    
 }
 
 export interface masterData {
