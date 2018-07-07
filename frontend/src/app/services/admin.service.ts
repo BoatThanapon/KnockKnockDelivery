@@ -37,7 +37,7 @@ export class AdminService {
   }
 
   searchUsers(body) {
-    return  this.http.post<users>(`${this.baseUrl}search-user`, body,this.httpOptions)
+    return  this.http.post<users>(`${this.baseUrl}search/users`, body,this.httpOptions)
   }
 
   updateUserStatus(role_id,uid) {

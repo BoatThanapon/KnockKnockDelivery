@@ -86,9 +86,13 @@ export class CreateProfileComponent implements OnInit {
     }
     else if (this.create_profile_id == 3) {
       this.isCreateBuyer = !this.isCreateBuyer;
+      this.isShow = !this.isShow;   
+
     }
     else if (this.create_profile_id == 4) {
       this.isCreateDeliver = !this.isCreateDeliver;
+      this.isShow = !this.isShow;   
+
     }
 
 
