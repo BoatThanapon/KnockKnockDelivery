@@ -132,9 +132,8 @@ export class AdminComponent implements OnInit {
           console.log("element ",element)
 
           let temp = {
-            id: element.seller_id,
-            name: element.shop_name,
-            location: element.shop_location,
+            id: element.buyer_id,
+            location: element.buyer_location,
             status: element.profile_status.profile_status_name,
           }
 
@@ -152,7 +151,8 @@ export class AdminComponent implements OnInit {
           console.log("element buyer",element)
 
           let temp = {
-            id: element.buyer_id,
+            id: element.seller_id,
+            name: element.name,
             location: element.buyer_location,
             status: element.profile_status.profile_status_name,
           }
@@ -169,8 +169,9 @@ export class AdminComponent implements OnInit {
       else if (this.selectedRole == 'Deliver') {
         this.userInsystem['deliver'].forEach((element, index) => {
           let temp = {
-            id: element.deliver_id,
-            name: element.deliver_firstname + ' ' + element.deliver_lastname,
+            id: element.shipper_id,
+            bank_account_no: element.bank_account_no,
+            bank_account_name: element.bank_account.bank_account_name,
             status: element.profile_status.profile_status_name,
           }
 
@@ -191,7 +192,8 @@ export class AdminComponent implements OnInit {
         this.holdingUsers['seller'].forEach((element, index) => {
           let temp = {
             id: element.seller_id,
-            name: element.seller_name,
+            name: element.shop_name,
+            location: element.shop_location,
             status: element.profile_status.profile_status_name,
           }
 
@@ -226,8 +228,9 @@ export class AdminComponent implements OnInit {
       else if (this.selectedRole == 'Deliver') {
         this.holdingUsers['deliver'].forEach((element, index) => {
           let temp = {
-            id: element.deliver_id,
-            name: element.deliver_firstname + ' ' + element.deliver_lastname,
+            id: element.shipper_id,
+            bank_account_no: element.bank_account_no,
+            bank_account_name: element.bank_account.bank_account_name,
             status: element.profile_status.profile_status_name,
           }
           this.display_users[index] = temp;
