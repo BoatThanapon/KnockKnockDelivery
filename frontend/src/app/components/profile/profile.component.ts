@@ -54,12 +54,7 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserProfile(id).subscribe(
           response => {
             console.log("[Response] ",response.data)
-            if(response.data.role.role_id != undefined) {
-
-              this.adminProfile =  response.data;
-              this.isAdmin = !this.isAdmin;
-            }
-            else {
+         
               if(response.data.seller != []) {
                 this.sellerProfile = response.data.seller
                 this.validSeller = true;
@@ -72,7 +67,11 @@ export class ProfileComponent implements OnInit {
                 this.deliverProfile = response.data.shipper
                 this.validDeliver = true;
               }
-            }
+              else {
+                this.adminProfile =  response.data;
+                this.isAdmin = !this.isAdmin;
+              }
+            
             
            
              
