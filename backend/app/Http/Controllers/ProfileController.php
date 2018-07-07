@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ProfileResource;
-use App\Http\Resources\ProfileCollection;
-use App\Http\Requests\CreateProfileRequest;
-use App\Profile;
-use App\User;
-use App\Seller;
 use App\Buyer;
+use App\Http\Controllers\Controller;
+use App\Profile;
+use App\Seller;
 use App\Shipper;
+use App\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -22,7 +18,7 @@ class ProfileController extends Controller
     private $buyer;
     private $shipper;
 
-    public function __construct(Profile $profile, User $user, Seller $seller, Buyer $buyer, Shipper $shipper )
+    public function __construct(Profile $profile, User $user, Seller $seller, Buyer $buyer, Shipper $shipper)
     {
         $this->profile = $profile;
         $this->user = $user;
@@ -33,57 +29,55 @@ class ProfileController extends Controller
 
     public function getProfilesByUserId($user_id)
     {
-        if($user_id <= 0)
-        {
-            return response()->json(['message' =>'Bad Request'], 400);
+        if ($user_id <= 0) {
+            return response()->json(['message' => 'Bad Request'], 400);
         }
 
         $user = $this->user->find($user_id);
 
-        if (!$user)
-        {
+        if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
         $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
 
-        if($profiles->count() !== 0)
-        {
-            if($profiles[0]->role->role_id == 1)
-            {
+        if ($profiles->count() !== 0) {
+            if ($profiles[0]->role->role_id == 1) {
                 return response()->json([
                     'message' => 'Successfully',
-                    'data' => $profiles[0]
+                    'data' => $profiles[0],
                 ]);
             }
         }
 
-        $seller = new Seller();
-        $buyer = new Buyer();
-        $shipper = new Shipper();
-        foreach($profiles as $item)
-        {
-            if($item->role->role_id == 2){
+        $seller = null;
+        $buyer = null;
+        $shipper = null;
+        foreach ($profiles as $item) {
+            if ($item->role->role_id == 2) {
                 $seller = $this->seller->where('profile_status_id', 2)->first();
+                if ($seller === null) {
+                    $seller = null;
+                } else {
+                    $seller->shop_logo_image = "/storage/seller/" . $seller->shop_logo_image;
+                }
             }
 
-            if($item->role->role_id == 3){
+            if ($item->role->role_id == 3) {
                 $buyer = $this->buyer->where('profile_status_id', 2)->first();
+                if ($buyer === null) {
+                    $buyer = null;
+                }
             }
 
-            if($item->role->role_id == 4){
+            if ($item->role->role_id == 4) {
                 $shipper = $this->shipper->where('profile_status_id', 2)->first();
+                if ($shipper === null) {
+                    $shipper = null;
+                } else {
+                    $shipper->shipper_transfer_slip = "/storage/shipper/" . $shipper->shipper_transfer_slip;
+                }
             }
-        }
-
-        if ($seller->count() > 2)
-        {
-            $seller->shop_logo_image = "/storage/seller/".$seller->shop_logo_image;
-        }
-
-        if($shipper->count() > 1)
-        {
-            $shipper->shipper_transfer_slip = '/storage/shipper/'.$shipper->shipper_transfer_slip;
         }
 
         return response()->json([
@@ -91,82 +85,68 @@ class ProfileController extends Controller
             'data' => array(
                 'seller' => $seller,
                 'buyer' => $buyer,
-                'shipper' => $shipper
-            )
+                'shipper' => $shipper,
+            ),
         ]);
     }
 
-    public function deleteProfile(Request $request ,$profile_id)
+    public function deleteProfile(Request $request, $profile_id)
     {
-        if($profile_id <= 0)
-        {
-            return response()->json(['message' => 'Bad request'], 400 );
+        if ($profile_id <= 0) {
+            return response()->json(['message' => 'Bad request'], 400);
         }
 
         $role_id = $request->role_id;
 
-        if($role_id === 2)
-        {
+        if ($role_id === 2) {
             $seller = $this->seller->find($profile_id);
 
-            if($seller === null)
-            {
-                return response()->json(['message' => 'Seller not found'], 404 );
+            if ($seller === null) {
+                return response()->json(['message' => 'Seller not found'], 404);
             }
 
             $profile = $this->profile->find($profile_id);
-            if($profile === null)
-            {
-                return response()->json(['message' => 'Profile not found'], 404 );
+            if ($profile === null) {
+                return response()->json(['message' => 'Profile not found'], 404);
             }
 
             $seller->delete();
             $profile->delete();
 
             return response()->json(['message' => 'Successfully']);
-        }
-        else if ($role_id === 3)
-        {
+        } else if ($role_id === 3) {
             $buyer = $this->buyer->find($profile_id);
 
-            if($buyer === null)
-            {
-                return response()->json(['message' => 'Buyer not found'], 404 );
+            if ($buyer === null) {
+                return response()->json(['message' => 'Buyer not found'], 404);
             }
 
             $profile = $this->profile->find($profile_id);
-            if($profile === null)
-            {
-                return response()->json(['message' => 'Profile not found'], 404 );
+            if ($profile === null) {
+                return response()->json(['message' => 'Profile not found'], 404);
             }
 
             $buyer->delete();
             $profile->delete();
 
             return response()->json(['message' => 'Successfully']);
-        }
-        else if($role_id === 4)
-        {
+        } else if ($role_id === 4) {
             $shipper = $this->shipper->find($profile_id);
 
-            if($deliver === null)
-            {
-                return response()->json(['message' => 'Deliver not found'], 404 );
+            if ($deliver === null) {
+                return response()->json(['message' => 'Deliver not found'], 404);
             }
 
             $profile = $this->profile->find($profile_id);
-            if($profile === null)
-            {
-                return response()->json(['message' => 'Profile not found'], 404 );
+            if ($profile === null) {
+                return response()->json(['message' => 'Profile not found'], 404);
             }
 
             $shipper->delete();
             $profile->delete();
 
             return response()->json(['message' => 'Successfully']);
-        }
-        else
-        {
+        } else {
             return response()->json(['message' => 'Role not found']);
         }
 
