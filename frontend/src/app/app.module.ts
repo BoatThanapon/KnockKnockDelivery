@@ -55,7 +55,7 @@ import { AgmCoreModule } from '@agm/core';
     EditShopComponent,
     AdminComponent,
     CartComponent,
-    DeliverComponent
+    DeliverComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +67,7 @@ import { AgmCoreModule } from '@agm/core';
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyD8_WlnDzwcvmKpKTn_Zgc4FpGh1lBKQD8'
+      apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8'
     })
   ],
   providers: [
