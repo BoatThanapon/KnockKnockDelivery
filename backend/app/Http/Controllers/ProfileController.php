@@ -41,19 +41,27 @@ class ProfileController extends Controller
 
         $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
 
-        if ($profiles->count() !== 0) {
-            if ($profiles[0]->role->role_id == 1) {
-                return response()->json([
-                    'message' => 'Successfully',
-                    'data' => $profiles[0],
-                ]);
-            }
-        }
+        // if ($profiles->count() !== 0) {
+        //     if ($profiles[0]->role->role_id == 1) {
+        //         return response()->json([
+        //             'message' => 'Successfully',
+        //             'data' => $profiles[0],
+        //         ]);
+        //     }
+        // }
 
+        $admin = null;
         $seller = null;
         $buyer = null;
         $shipper = null;
         foreach ($profiles as $item) {
+            if ($item->role->role_id == 1) {
+                $admin = $item;
+                if ($admin === null) {
+                    $admin = null;
+                }
+            }
+
             if ($item->role->role_id == 2) {
                 $seller = $this->seller->where('profile_status_id', 2)->first();
                 if ($seller === null) {
@@ -86,6 +94,7 @@ class ProfileController extends Controller
                 'seller' => $seller,
                 'buyer' => $buyer,
                 'shipper' => $shipper,
+                'admin' => $admin
             ),
         ]);
     }
