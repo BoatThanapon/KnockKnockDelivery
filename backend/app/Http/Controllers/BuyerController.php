@@ -39,7 +39,7 @@ class BuyerController extends Controller
     public function createBuyer(Request $request)
     {
         $this->validate($request, [
-            'buyer_location' => 'required|max:199',
+            'buyer_address' => 'required|max:199',
             'user_id' => 'required',
         ]);
 
@@ -64,7 +64,7 @@ class BuyerController extends Controller
         $profile->save();
 
         $buyer = new Buyer();
-        $buyer->buyer_location = $request->buyer_location;
+        $buyer->buyer_address = $request->buyer_address;
         $buyer->profile_status_id = 1;
         $buyer->profile_id = $profile->profile_id;
 
@@ -85,7 +85,7 @@ class BuyerController extends Controller
     public function updateBuyer(Request $request, $buyer_id)
     {
         $this->validate($request, [
-            'buyer_location' => 'required|max:199',
+            'buyer_address' => 'required|max:199',
         ]);
 
         $buyer = $this->buyer->where('buyer_id', $buyer_id)->first();
@@ -93,7 +93,7 @@ class BuyerController extends Controller
             return response()->json('Buyer not found', 404);
         }
 
-        $buyer->buyer_location = $request->buyer_location;
+        $buyer->buyer_address = $request->buyer_address;
 
         $buyer->save();
 

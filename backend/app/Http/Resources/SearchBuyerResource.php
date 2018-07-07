@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\User;
 
-class BuyerResource extends JsonResource
+class SearchBuyerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,7 +22,8 @@ class BuyerResource extends JsonResource
                 'profile_status_id' => $this->profile_status->profile_status_id,
                 'profile_status_name' => $this->profile_status->profile_status_name
             ],
-            'profile_id' => $this->profile_id
+            'profile_id' => $this->profile_id,
+            'user' => User::getUserByProfileId($this->profile_id)
         ];
     }
 }
