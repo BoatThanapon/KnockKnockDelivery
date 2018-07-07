@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
-  private isShow: boolean = false;
+  // private isShow: boolean = false;
   private isCheckOut: boolean = true;
   private isWarting: boolean = true;
 
@@ -32,7 +32,6 @@ export class CartComponent implements OnInit {
 
       });
     console.log("Cart : ", this.cart)
-
   }
 
   deleteProduct(product) {
@@ -55,7 +54,7 @@ export class CartComponent implements OnInit {
   decrease(product) {
     console.log("[Product] ",product)
     this.cart.forEach(element => {
-      if(element.product_id == product.product_id) {
+      if(element.product_name == product.product_name) {
         element.amount -=1;
         this.calculatePrice(product)
       }
@@ -65,7 +64,7 @@ export class CartComponent implements OnInit {
   increase(product) {
     console.log("[Product] ",product)
     this.cart.forEach(element => {
-      if(element.product_id == product.product_id) {
+      if(element.product_name == product.product_name) {
         element.amount +=1;
         this.calculatePrice(product)
 
@@ -75,7 +74,7 @@ export class CartComponent implements OnInit {
 
   calculatePrice(product) {
         this.cart.forEach(element => {
-      if(element.product_id == product.product_id) {
+      if(element.product_name == product.product_name) {
 
         element.product_price = element.master_price*element.amount
 

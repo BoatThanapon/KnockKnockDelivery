@@ -55,6 +55,17 @@ export class UserService {
         return this.http.post(`${this.baseUrl}seller`, seller_form,this.httpOptions)
     }
 
+    createDeliver(deliver) {
+        var deliver_form = {
+            bank_account_id: deliver.bank_account_id,
+            bank_account_no: deliver.bank_account_no,
+            shipper_transfer_slip: null,
+            user_id: deliver.user_id,
+
+        }
+        return this.http.post(`${this.baseUrl}shipper`, deliver_form,this.httpOptions)
+    }
+
     async fetchProfileDetail(profile) {
         var role = profile.role.role_name.toLowerCase();
         const response = await this.http.get<Profile>(`${this.baseUrl}` + role + `/profile/` + profile.profile_id,this.httpOptions).toPromise();
@@ -89,9 +100,7 @@ export interface user {
         seller:null,
         buyer:null,
         shipper:null,
-        role:{
-            role_id:null
-        }
+        admin:null
     },
     message:null,
     

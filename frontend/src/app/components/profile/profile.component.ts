@@ -11,15 +11,16 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  private validSeller: Boolean;
-  private validBuyer: Boolean;
-  private validDeliver: Boolean;
+  private validSeller: Boolean= true;
+  private validBuyer: Boolean= true;
+  private validDeliver: Boolean= true;
+  
   private isAdmin:Boolean = false;
-  private isShow: Boolean;
+  private isShow: Boolean= false;
 
-  private isSellerProfile: Boolean;
-  private isBuyerProfile: Boolean;
-  private isDeliverProfile: Boolean;
+  private isSellerProfile: Boolean= true;
+  private isBuyerProfile: Boolean= true;
+  private isDeliverProfile: Boolean= true;
 
   private adminProfile;
   private userProfile;
@@ -34,13 +35,13 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isShow = false;
-    this.validSeller = false;
-    this.validBuyer = false;
-    this.validDeliver = false;
-    this.isSellerProfile = false;
-    this.isBuyerProfile = false;
-    this.isDeliverProfile = false;
+    // this.isShow = false;
+    // this.validSeller = false;
+    // this.validBuyer = false;
+    // this.validDeliver = false;
+    // this.isSellerProfile = false;
+    // this.isBuyerProfile = false;
+    // this.isDeliverProfile = false;
     this.getMasterData();
 
 
@@ -54,29 +55,36 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserProfile(id).subscribe(
           response => {
             console.log("[Response] ",response.data)
-         
-              if(response.data.seller != []) {
-                this.sellerProfile = response.data.seller
-                this.validSeller = true;
-              }
-              if(response.data.buyer != []) {
-                this.buyerProfile = response.data.buyer
-                this.validBuyer = true;
-              }
-              if(response.data.shipper != []) {
-                this.deliverProfile = response.data.shipper
-                this.validDeliver = true;
-              }
-              else {
+              let seller = response.data.seller;
+              let buyer = response.data.buyer;
+              let shipper = response.data.shipper;
+              let admin = response.data.admin;
+
+              // console.log("[length] ",Object.keys(seller).length
+
+              if(admin != null) {
                 this.adminProfile =  response.data;
                 this.isAdmin = !this.isAdmin;
+              }          
+              if(seller  != null) {
+                console.log("[Response seller] ",response.data.seller)
+                this.sellerProfile = response.data.seller
+                this.validSeller = !this.validSeller;
               }
-            
-            
-           
+              if(buyer != null) {
+                console.log("[Response buyer] ",response.data.buyer)
+
+                this.buyerProfile = response.data.buyer
+                this.validBuyer = !this.validBuyer;
+              }
+              if(shipper != null ) {
+                console.log("[Response shipper] ",response.data.shipper)
+
+                this.deliverProfile = response.data.shipper
+                this.validDeliver = !this.validDeliver;
+              }
              
             
-
             this.isShow = true;
 
           },

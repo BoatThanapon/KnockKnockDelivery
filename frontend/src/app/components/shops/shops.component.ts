@@ -22,19 +22,23 @@ export class ShopsComponent implements OnInit {
   private shops;
   private isShow: boolean = true;
   private cart_num = 0;
+  private baseUrl = 'http://localhost:8000';
+
 
 
   private form = {
     product_name: null,
     product_description: null,
     product_price:null,
-    product_id:null
+    product_id:null,
+    product_image_1:null
   }
 
   private shop = {
     shop_name: null,
-    shop_type: null,
-    shop_location:null
+    shop_location:null,
+    shop_logo_image:null,
+    seller_id:null
   }
 
 
@@ -46,9 +50,8 @@ export class ShopsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllProducts();
     this.setCartNum();
-
+    this.getAllProducts();
   }
 
   getAllProducts() {
@@ -56,7 +59,6 @@ export class ShopsComponent implements OnInit {
       response => {
         console.log("getAllProducts: ", response.data);
         this.products = response.data;
-        // this.getProductCatagory();
         this.getAllMasterData();
       },
       error => console.log(error)
@@ -64,26 +66,13 @@ export class ShopsComponent implements OnInit {
 
   }
 
-  // getProductCatagory() {
-  //   this.BuyerService.getProductCategories().subscribe(
-  //     response => {
-  //       console.log("getProductCatagory: ", response.data);
-  //       this.product_catagory = response.data;
-  //       this.getAllShops();
-  //     },
-  //     error => console.log(error)
-  //   )
-
-
-  // }
 
   getAllMasterData() {
     this.UserService.getMasterData().subscribe(
       response => {
         console.log("getAllMasterData: ", response.data.product_category);
         this.product_catagory = response.data.product_category;
-        // this.getAllShops();
-        this.isShow = !this.isShow;    
+        this.getAllShops();
 
       },
       error => console.log(error)
@@ -109,18 +98,24 @@ export class ShopsComponent implements OnInit {
     this.form.product_description= product.product_description,
     this.form.product_price=product.product_price,
     this.form.product_id=product.product_id
+    this.form.product_image_1 = product.product_image_1
 
   }
 
   openShopInfo(shop){
     console.log("onClick shop: ",shop)
-    this.shop.shop_name = shop.shop_name,
-    this.shop.shop_type = shop.shop_type.shop_type_name,
+    this.shop.shop_name = shop.shop_name
     this.shop.shop_location = shop.shop_location
+    this.shop.shop_logo_image = shop.shop_logo_image
+    this.shop.seller_id = shop.seller_id;
+
+
+
   }
 
   goToShop(shop) {
     console.log("onClick goToShop: ",shop)
+    localStorage.setItem("seller_id",this.shop.seller_id)
     this.router.navigateByUrl('/shop')
 
   }
@@ -147,16 +142,27 @@ export class ShopsComponent implements OnInit {
 
   setCartNum(){
     let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log("cart: ",cart);
+
     if(cart != null) {
           this.cart_num = cart.length;
-
     } 
+    else if(cart == {}) {
+      this.cart_num = 0;
+
+    }
 
   }
 
   goToCart() {
     let cart = JSON.parse(localStorage.getItem("cart"));
+
     console.log("Cart : ",cart)
+
+    if(cart == null) {
+      localStorage.setItem("cart","");
+    }
+
     this.router.navigateByUrl('/cart')
 
 

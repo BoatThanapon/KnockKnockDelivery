@@ -29,6 +29,21 @@ export class CreateProfileComponent implements OnInit {
     shop_longitude:null
   }
 
+  buyerForm = {
+    buyer_location: null,
+    user_id: null,
+  }
+
+  deliverForm = {
+    bank_account_id: null,
+    bank_account_no: null,
+    shipper_transfer_slip: null,
+    user_id: null,
+
+  }
+
+  
+
   form = { 
     shop_name: '_',
     shop_location: 'Chiang Mai',
@@ -40,18 +55,8 @@ export class CreateProfileComponent implements OnInit {
   }
 
   private shopCatagory;
+  private bankAcc;
 
-  buyerForm = {
-    buyerName: null,
-    location: null,
-  }
-
-  deliverForm = {
-    name: null,
-    email: null,
-    password: null,
-    password_confirmation: null
-  }
 
 
   error = []
@@ -66,6 +71,7 @@ export class CreateProfileComponent implements OnInit {
 
   ngOnInit() {
     this.fetchMasterType();
+    this.setBankAccount();
   }
 
   validateCreateProfile() {
@@ -115,17 +121,15 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  // readImageUrl(event:any) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
-  
-  //     reader.onload = (event:any) => {
-  //       this.sellerForm.shopImg = event.target.result;
-  //     }
-  
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   }
-  // }
+  setBankAccount() {
+    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
+  }
+
+  onBankSelected(event) {
+    console.log("onBankSelected", event)
+    this.deliverForm.bank_account_id = parseInt(event);
+  }
+
 
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)
@@ -142,6 +146,28 @@ export class CreateProfileComponent implements OnInit {
       error => console.log(error)
     )
 
+  }
+
+  createDeliver() {
+    console.log("[This deliver] ",this.deliverForm)
+    this.deliverForm.user_id = localStorage.getItem("user_id")
+    this.userService.createDeliver(this.deliverForm).subscribe(
+      data => {
+        console.log("response from create deliver",data)
+      },
+      error => console.log(error)
+    )
+  }
+
+  createBuyer() {
+    console.log("[This Buyer] ",this.buyerForm)
+    this.buyerForm.user_id = localStorage.getItem("user_id")
+    this.userService.createSeller(this.buyerForm).subscribe(
+      data => {
+        console.log("response from create buyer",data)
+      },
+      error => console.log(error)
+    )
 
   }
 

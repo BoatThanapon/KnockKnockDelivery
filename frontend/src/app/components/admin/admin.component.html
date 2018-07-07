@@ -2,6 +2,8 @@
   <div class="loader" [hidden]="isLoad"></div>
 </div>
 <div [hidden]="!isLoad">
+
+  <!-- Menu  -->
   <div class="container" [hidden]="isMenu">
     <div class="card-container w3-display-middle">
       <div id="inner">
@@ -26,15 +28,20 @@
       </div>
     </div>
   </div>
+
+
+<!-- User in system -->
   <div [hidden]="!isMenu">
-    <div [hidden]="isHolding">
+    <div [hidden]="!isHolding">
       <div class="w3-container" id="holding-container">
-        <h1><b>Holding user</b></h1>
+        <h1>
+          <b>User in system</b>
+        </h1>
         <div class="row" id="search">
           <div class="col">
             <select class="form-control" name="selectRole" #selectRole="ngModel" [(ngModel)]="selectedRole">
               <option disabled selected hidden [ngValue]="undefined"> Select role</option>
-              <option *ngFor="let role of roles" [ngValue]="role" >{{role}}</option>
+              <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
             </select>
           </div>
           <div class="col">
@@ -42,7 +49,79 @@
           </div>
         </div>
         <div id="dataTable">
-            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+
+
+
+          <div [hidden]="isBuyer">
+            <table datatable  class="row-border hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ID</th>
+                  <th>Location</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_users;let  i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.location }}</td>
+                  <td></td>
+                  <td>{{ user.status }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div [hidden]="isSeller">
+              <table datatable  class="row-border hover">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Location</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of display_users;let  i = index">
+                      <td>{{ i+1 }}</td>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.location }}</td>
+                      <td></td>
+                      <td>{{ user.status }}</td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+          </div>
+          <div [hidden]="isDeliver">
+
+
+          </div>
+
+
+
+
+
+
+            <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
                 <thead>
                   <tr>
                     <th>No.</th>
@@ -66,54 +145,81 @@
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
         </div>
       </div>
     </div>
-    <div [hidden]="!isHolding">
+
+
+
+
+
+    <!-- Holding User -->
+    <div [hidden]="isHolding">
       <div class="w3-container" id="system-container">
-        <h1><b>User in system</b></h1>
+        <h1>
+          <b>Holding user</b>
+        </h1>
         <div class="row" id="search">
-            <div class="col">
-              <select class="form-control" [(ngModel)]="selectedRole">
-                <option disabled selected hidden [ngValue]="undefined"> Select role</option>
-                <option *ngFor="let role of roles" [ngValue]="selectedRole">{{role}}</option>
-              </select>
-            </div>
-            <div class="col">
-              <button class="btn">Search</button>
-            </div>
+          <div class="col">
+            <select class="form-control" [(ngModel)]="selectedRole" #selectRole="ngModel" (ngModelChange)="onRoleSelected($event)">
+              <option disabled selected hidden [ngValue]="undefined"> Select role</option>
+              <option *ngFor="let role of roles" (click)="onRoleSelected(role)">{{role}}</option>
+            </select>
           </div>
-          <div id="dataTable">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Status</th>  
-                      <th> </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let user of display_users;let  i = index">
-                      <td>{{ i+1 }}</td>
-                      <td>{{ user.id }}</td>
-                      <td>{{ user.name }}</td>
-                      <td>{{ user.email }}</td>
-                      <td>{{ user.status }}</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div class="col">
+            <button class="btn" (click)="searchByRole()">Search</button>
+          </div>
+        </div>
+        <!-- <div id="dataTable">
+
+
+          <div [hidden]="isBuyer">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ID</th>
+                  <th>Location</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_users;let  i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.location }}</td>
+                  <td></td>
+                  <td>{{ user.status }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
+
+          <div [hidden]="isSeller">
+
+
+          </div>
+          <div [hidden]="isDeliver">
+
+
+          </div>
+
+
+
+
+
+
+        </div> -->
       </div>
     </div>
   </div>
@@ -206,7 +312,7 @@
       <div class="modal-body">
         <p>Edit user information</p>
       </div>
-      <div class="modal-footer">        
+      <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Edit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
@@ -214,7 +320,3 @@
     </div>
   </div>
 </div>
-
-
-
-

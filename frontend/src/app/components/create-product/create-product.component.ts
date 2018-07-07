@@ -29,7 +29,7 @@ export class CreateProductComponent implements OnInit {
   private seller;
   private error = []
   private masterData;
-
+  private bankAcc;
   fileToUpload: File = null;
 
   context: CanvasRenderingContext2D;
@@ -82,6 +82,11 @@ export class CreateProductComponent implements OnInit {
   selectChange(id: any) {
     console.log("selectChange", id)
     // this.form.selected_catagory = this.form[$event];
+  }
+
+
+  setBankAccount() {
+    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
   }
   
   onCatagorySelected(event) {
