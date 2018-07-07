@@ -11,9 +11,9 @@ use App\Profile;
 use Illuminate\Http\Request;
 use App\Http\Resources\AdminResource as AdminResource;
 use App\Http\Resources\AdminCollection;
-use App\Http\Resources\SellerResource as SellerResource;
-use App\Http\Resources\BuyerResource as BuyerResource;
-use App\Http\Resources\ShipperResource as ShipperResource;
+use App\Http\Resources\SearchBuyerResource as SearchBuyerResource;
+use App\Http\Resources\SearchShipperResource as SearchShipperResource;
+use App\Http\Resources\SearchSellerResource as SearchSellerResource;
 
 class AdminController extends Controller
 {
@@ -63,16 +63,16 @@ class AdminController extends Controller
         $profile_status_id= $request->profile_status_id;
 
         if ($role_id == 2){
-            $seller = $this->seller->where('profile_status_id',$profile_status_id)->get();
-            return SellerResource::collection($seller);
+            $seller = $this->seller->with('profile_status')->where('profile_status_id',$profile_status_id)->get();
+            return SearchSellerResource::collection($seller);
         }
         else if ($role_id == 3){
             $buyer = $this->buyer->where('profile_status_id',$profile_status_id)->get();
-            return BuyerResource::collection($buyer);
+            return SearchBuyerResource::collection($buyer);
         }
         else if ($role_id == 4){
             $shipper = $this->shipper::where('profile_status_id',$profile_status_id)->get();
-            return ShipperResource::collection($shipper);
+            return SearchShipperResource::collection($shipper);
         }else{
             return response()->json(['message' =>'Bad Request'], 400);
         }
