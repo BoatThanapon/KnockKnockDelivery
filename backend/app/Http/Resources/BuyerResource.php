@@ -16,7 +16,7 @@ class BuyerResource extends JsonResource
     {
         return [
             'buyer_id' => $this->buyer_id,
-            'buyer_location' => $this->buyer_location,
+            'buyer_address' => $this->buyer_address,
             'profile_status' => [
                 'profile_status_id' => $this->profile_status->profile_status_id,
                 'profile_status_name' => $this->profile_status->profile_status_name

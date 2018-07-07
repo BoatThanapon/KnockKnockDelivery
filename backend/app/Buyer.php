@@ -10,7 +10,7 @@ class Buyer extends Model
     protected $primaryKey = 'buyer_id';
 
     protected $fillable = [
-        'buyer_location'
+        'buyer_address'
     ];
 
     public $timestamps = false;
