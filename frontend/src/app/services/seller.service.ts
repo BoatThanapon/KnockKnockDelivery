@@ -24,7 +24,7 @@ export class SellerService {
   }
 
   updateShop(form, seller) {
-    return this.http.put(`${this.baseUrl}seller/` + seller.seller_id, form, this.httpOptions)
+    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id, form, this.httpOptions)
   }
 
   getAllProducts(seller) {

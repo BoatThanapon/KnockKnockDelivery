@@ -110,7 +110,7 @@ export class DeliverComponent implements OnInit {
       bank_account_id:this.form.bank_account_id,
       bank_account_no:this.form.bank_account_no,
       shipper_transfer_slip:null,
-      profile_status_id:this.form.profile_status_id
+      // profile_status_id:this.form.profile_status_id
     }
     this.deliverService.updateDeliver(form,id)
     .subscribe(response => {

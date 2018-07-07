@@ -44,7 +44,7 @@
           </button>
         </div>
         <div class="modal-body">
-
+          <img  class="card-img-top" [src]="product_image" alt="">
           <p>
             <strong>Product ID: </strong>{{ product_id }}</p>
           <p>
@@ -104,7 +104,7 @@
               <label for="selectCatagory">Product Catagory</label>
               <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
                 (ngModelChange)="onCatagorySelected($event)" required>
-                <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+                <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
               </select>
             </div>
 

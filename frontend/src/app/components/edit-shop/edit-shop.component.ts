@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Input, Output,  EventEmitter } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
 
 
@@ -24,9 +24,12 @@ export class EditShopComponent implements OnInit {
   private dafault_catagory: Number;
   private catagory;
   private seller;
+  private masterData;
   private error: boolean = false;
   private errorMessage;
 
+
+  @Output() reloadPage = new EventEmitter();
   @ViewChild("mycanvas") mycanvas;
 
   fileToUpload: File = null;
@@ -40,40 +43,35 @@ export class EditShopComponent implements OnInit {
 
   ngOnInit() {
     this.seller = JSON.parse(localStorage.getItem("seller"));
-    this.getShopCatagory();
+    // this.getShopCatagory();
 
 
   }
 
-  getShopCatagory() {
-    // this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
-    // this.masterData = JSON.parse(localStorage.getItem('masterData'))
-    // this.catagory = this.masterData.product_category;
-    // this.catagory.forEach((element, idx) => {
-    //   if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-    //     this.dafault_catagory = idx + 1;
-    //     this.form.selected_catagory = idx + 1;
-    //     this.setUpPage()
-    //   }
+  // getShopCatagory() {
+  //   // this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
+  //   // this.masterData = JSON.parse(localStorage.getItem('masterData'))
+  //   // this.catagory = this.masterData.product_category;
+  //   // this.catagory.forEach((element, idx) => {
+  //   //   if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+  //   //     this.dafault_catagory = idx + 1;
+  //   //     this.form.selected_catagory = idx + 1;
+  //   //     this.setUpPage()
+  //   //   }
 
-    // });
+  //   // });
+  //   this.masterData = JSON.parse(localStorage.getItem('masterData'))
+  //   this.catagory = this.masterData.product_category;
+  //   this.catagory.forEach((element, idx) => {
+  //     if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+  //       this.dafault_catagory = idx + 1;
+  //       this.form.selected_catagory = idx + 1;
+  //       this.setUpPage()
+  //     }
 
-    this.sellerService.getShopCategories()
-      .subscribe(response => {
-        this.catagory =response.data;
-        this.catagory.forEach((element, idx) => {
-          if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-            this.dafault_catagory = idx + 1;
-            this.form.selected_catagory = idx + 1;
-            this.setUpPage()
-          }
-    
-        });
-      },
-    error => console.log("[Error] ",error))
+  //   });
 
-
-  }
+  // }
 
   setUpPage() {
     this.form.shop_name = this.seller.shop_name;
@@ -114,12 +112,11 @@ export class EditShopComponent implements OnInit {
     this.isClick = !this.isClick;
 
     let temp = {
-      seller_name: this.form.seller_name,
       shop_name: this.form.shop_name,
       shop_location: this.form.shop_location,
-      shop_type_id: this.form.selected_catagory,
-      profile_status_id: 1,
-      profile_id: this.seller.profile_id
+      shop_latitude:1234,
+      shop_longitude:1234,
+      shop_logo_image:null,
     }
     console.log("onSubmit", temp)
 
@@ -129,6 +126,8 @@ export class EditShopComponent implements OnInit {
         console.log("response onSubmit: ", response)
         this.isClick = !this.isClick;
         this.isEdit = !this.isEdit;
+        this.reloadPage.emit(null)
+
       },
       error => { 
         console.log("error onSubmit: ", error) 
