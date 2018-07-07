@@ -41,7 +41,8 @@ export class ProfileComponent implements OnInit {
     this.isSellerProfile = false;
     this.isBuyerProfile = false;
     this.isDeliverProfile = false;
-    this.getUserProfile();
+    this.getMasterData();
+
 
 
   }
@@ -120,6 +121,19 @@ export class ProfileComponent implements OnInit {
 
   callback() {
     this.isShow = true;
+  }
+
+  getMasterData() {
+    this.userService.getMasterData()
+    .subscribe(
+      Response => {
+        localStorage.setItem('masterData', JSON.stringify(Response.data));
+        this.getUserProfile();
+
+      },
+      error => {
+        console.error("[Error] ",error)
+    })
   }
 
   editBuyer() {

@@ -40,6 +40,10 @@ export class AuthService {
 
   logOut() {
     return this.http.post(`${this.baseUrl}/logout`,{},this.httpOptions)
+  }
+
+  refresh() {
+    return this.http.post(`${this.baseUrl}/refresh`, {})
 
   }
 

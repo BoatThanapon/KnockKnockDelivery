@@ -21,6 +21,7 @@ export class ManageShopComponent implements OnInit {
     private products;
     private availableProducts=[];
     private outOfStockProducts=[];
+    private masterData;
 
     private catagory;
 
@@ -33,7 +34,7 @@ export class ManageShopComponent implements OnInit {
     ngOnInit() {
         this.onSetUpPage();
         this.getAllProducts();
-        this.getShopCatagory();
+        // this.getShopCatagory();
         this.getProductCategories();
     }
 
@@ -52,6 +53,8 @@ export class ManageShopComponent implements OnInit {
                 this.products = response.data;
                 // console.log("response from getAllProducts: ", response.data)
                 this.setIsAvailableProduct();
+                this.isLoad = !this.isLoad;
+
 
             },
             error => console.log(error)
@@ -59,16 +62,21 @@ export class ManageShopComponent implements OnInit {
     }
 
     getProductCategories() {
-        this.sellerService.getProductCategories().subscribe(
-            response => {
-                // console.log("response from catagory: ", response)
-                this.catagory = response.data;
-                localStorage.setItem("product_catagory", JSON.stringify(this.catagory));
-                this.isLoad = true;
+        // this.sellerService.getProductCategories().subscribe(
+        //     response => {
+        //         // console.log("response from catagory: ", response)
+        //         this.catagory = response.data;
+        //         localStorage.setItem("product_catagory", JSON.stringify(this.catagory));
 
-            },
-            error => console.log("response from catagory: ", error)
-        )
+        //     },
+        //     error => console.log("response from catagory: ", error)
+        // )
+
+        this.masterData = JSON.parse(localStorage.getItem('masterData'))
+        this.catagory = this.masterData.product_category;
+        console.log("this.catagory: ", this.catagory)
+
+
 
     }
 

@@ -46,15 +46,31 @@ export class EditShopComponent implements OnInit {
   }
 
   getShopCatagory() {
-    this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
-    this.catagory.forEach((element, idx) => {
-      if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-        this.dafault_catagory = idx + 1;
-        this.form.selected_catagory = idx + 1;
-        this.setUpPage()
-      }
+    // this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
+    // this.masterData = JSON.parse(localStorage.getItem('masterData'))
+    // this.catagory = this.masterData.product_category;
+    // this.catagory.forEach((element, idx) => {
+    //   if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+    //     this.dafault_catagory = idx + 1;
+    //     this.form.selected_catagory = idx + 1;
+    //     this.setUpPage()
+    //   }
 
-    });
+    // });
+
+    this.sellerService.getShopCategories()
+      .subscribe(response => {
+        this.catagory =response.data;
+        this.catagory.forEach((element, idx) => {
+          if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+            this.dafault_catagory = idx + 1;
+            this.form.selected_catagory = idx + 1;
+            this.setUpPage()
+          }
+    
+        });
+      },
+    error => console.log("[Error] ",error))
 
 
   }

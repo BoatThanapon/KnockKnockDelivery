@@ -22,12 +22,13 @@ export class CreateProductComponent implements OnInit {
     selected_catagory: null,
     product_image: null,
     product_description: null,
-    product_unit_amount: null,
+    unit_in_stock: null,
   }
   private dafault_catagory: Number;
   private catagory;
   private seller;
   private error = []
+  private masterData;
 
   fileToUpload: File = null;
 
@@ -42,8 +43,8 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit() {
     this.seller = JSON.parse(localStorage.getItem("seller"));
-    this.catagory = JSON.parse(localStorage.getItem("product_catagory"));
-
+    this.masterData = JSON.parse(localStorage.getItem('masterData'))
+    this.catagory = this.masterData.product_category;
     // this.sellerService.getShopCategories().subscribe(
     //   response => {
     //     console.log("response from catagory: ",response)
@@ -99,7 +100,7 @@ export class CreateProductComponent implements OnInit {
       product_name: this.form.product_name,
       product_description: this.form.product_description,
       product_price: parseInt(this.form.product_price),
-      unit_in_stock: parseInt(this.form.product_unit_amount),
+      unit_in_stock: parseInt(this.form.unit_in_stock),
       product_category_id: parseInt(this.form.selected_catagory)
     }
 
@@ -130,7 +131,7 @@ export class CreateProductComponent implements OnInit {
     this.form.product_description = '';
     this.form.product_image = '';
     this.form.selected_catagory = '';
-    this.form.product_unit_amount = '';
+    this.form.unit_in_stock = '';
 
   }
 

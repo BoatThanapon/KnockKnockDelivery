@@ -11,8 +11,10 @@ export class DeliverService {
   private UAT = localStorage.getItem('UAT')
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+ this.UAT
+      'Content-Type': 'application/json,multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+      'Authorization': 'Bearer '+ this.UAT,
+      'Accept':'application/json, text/plain, */*',
+
     })
   };
 
@@ -22,7 +24,6 @@ export class DeliverService {
 
   getDeliverByProfileId(id) {
     return this.http.get<profile>(`${this.baseUrl}shipper/profile/`+id,this.httpOptions)
-
   }
 
   createDeliver(body) {
@@ -30,8 +31,7 @@ export class DeliverService {
   }
 
   updateDeliver(body,id) {
-    return this.http.put(`${this.baseUrl}shipper/`+id,body,this.httpOptions)
-
+    return this.http.post(`${this.baseUrl}shipper/`+id,body,this.httpOptions)
   }
 
 
