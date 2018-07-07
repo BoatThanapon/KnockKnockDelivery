@@ -55,7 +55,7 @@ export class SellerService {
   }
 
   updateProduct(id, product, seller) {
-    return this.http.put(`${this.baseUrl}seller/` + seller.seller_id + `/product/` + id, product,this.httpOptions)
+    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id + `/product/` + id, product,this.httpOptions)
 
   }
 

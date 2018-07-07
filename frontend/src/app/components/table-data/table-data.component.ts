@@ -59,6 +59,7 @@ export class TableDataComponent implements OnInit {
     this.product_image = this.baseUrl+data.product_image_1
     console.log("this.product_image ",this.product_image)
 
+
     this.catagory.forEach((element, idx) => {
       if (element.product_category_id == data.product_category.product_category_id) {
         this.dafault_catagory = idx + 1;
@@ -74,8 +75,10 @@ export class TableDataComponent implements OnInit {
     this.product_price = data.product_price;
     this.unit_in_stock = data.unit_in_stock;
     this.product_available = data.product_available;
+    this.product_image = this.baseUrl+data.product_image_1
+    console.log("this.product_image ",this.product_image)
     this.catagory.forEach((element, idx) => {
-      if (element.category_id == data.category.category_id) {
+      if (element.product_category_id == data.product_category.product_category_id) {
         this.dafault_catagory = idx + 1;
         this.selected_catagory = idx + 1;
       }
@@ -101,7 +104,10 @@ export class TableDataComponent implements OnInit {
       product_price: this.product_price,
       unit_in_stock: this.unit_in_stock,
       product_status_id: 1,
-      product_category_id: this.selected_catagory
+      product_category_id: this.selected_catagory,
+      product_image_1:null,
+      product_image_2:null,
+      product_image_3:null
     }
     console.log("product: ",product);
     console.log("id: ",this.product_id);

@@ -54,15 +54,15 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserProfile(id).subscribe(
           response => {
             console.log("[Response] ",response.data)
-            if(response.data.seller != null) {
+            if(response.data.seller != []) {
               this.sellerProfile = response.data.seller
               this.validSeller = true;
             }
-            if(response.data.buyer != null) {
+            if(response.data.buyer != []) {
               this.buyerProfile = response.data.buyer
               this.validBuyer = true;
             }
-            if(response.data.shipper != null) {
+            if(response.data.shipper != []) {
               this.deliverProfile = response.data.shipper
               this.validDeliver = true;
             }
