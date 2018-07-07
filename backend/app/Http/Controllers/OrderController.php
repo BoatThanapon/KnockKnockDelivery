@@ -51,7 +51,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function updateOrderHolding(Request $request, $order_id)
+    public function updateOrder(Request $request, $order_id)
     {
         $this->validate($request, [
             'order_status_id' => 'required'
@@ -74,8 +74,37 @@ class OrderController extends Controller
             $order->order_status_id = $request->shipper_id;
         }
 
+        if ($request->hasFile('payment_transfer_slip')) {
+            Storage::delete('public/payment_transfer_slip/'.$shipper->shipper_transfer_slip);
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('payment_transfer_slip')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('payment_transfer_slip')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('payment_transfer_slip')->storeAs('public/payment_transfer_slip', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        if($request->hasFile('payment_transfer_slip')){
+            $order->payment_transfer_slip = $request->payment_transfer_slip;
+        }
+
         $order->save();
-        return response()->json();
+
+        if($request->hasFile('payment_transfer_slip')){
+            $order->payment_transfer_slip = "storage/payment_transfer_slip/".$request->payment_transfer_slip;
+        }
+
+        return response()->json([
+            'message' => "Successfully",
+            'order' => $order
+        ]);
     }
 
     public function getListOrdersOfShipper()

@@ -102,7 +102,7 @@ class ShipperController extends Controller
         ]);
     }
 
-    public function updateDeliver(Request $request, $shipper_id)
+    public function updateShipper(Request $request, $shipper_id)
     {
         $this->validate($request, [
             'bank_account_id' => 'required',

@@ -55,7 +55,7 @@ Route::group([
 ], function ($router) {
     Route::get('shipper/profile/{profile_id}', 'ShipperController@getShipperByProfileId');
     Route::post('shipper', 'ShipperController@createShipper');
-    Route::post('shipper/{shipper_id}', 'ShipperController@updateDeliver');
+    Route::post('shipper/{shipper_id}', 'ShipperController@updateShipper');
 });
 
 Route::group([
@@ -77,8 +77,9 @@ Route::group([
 
 // order
 Route::group([
-    // 'middleware' => 'jwt.auth',
-    'middleware' => 'CORS',
+    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('orders', 'OrderController@getListOrders');
+    Route::get('orders', 'OrderController@getListOrdersOfShipper');
+    Route::put('order', 'OrderController@updateOrder');
+    Route::post('order', 'OrderController@createOrder');
 });
