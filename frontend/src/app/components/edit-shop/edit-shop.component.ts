@@ -28,6 +28,9 @@ export class EditShopComponent implements OnInit {
   private masterData;
   private error: boolean = false;
   private errorMessage;
+  title: string = 'My first AGM project';
+  latitude: any;
+  longtitude: any;
 
 
   @Output() reloadPage = new EventEmitter();
@@ -49,6 +52,22 @@ export class EditShopComponent implements OnInit {
     // this.getShopCatagory();
 
 
+  }
+  getGeoLocation(){
+    if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
+
+        navigator.geolocation.getCurrentPosition(position=> {
+          this.latitude = position.coords.latitude;
+          this.longtitude = position.coords.longitude;
+          
+          
+          }, error => {
+            console.log(error);
+          }, options);
+    }
   }
 
   // getShopCatagory() {

@@ -1,132 +1,166 @@
+declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { SellerService } from '../../services/seller.service';
 
+
 import { Router } from '@angular/router';
-declare var google: any;
+
+
 
 @Component({
   selector: 'app-create-profile',
   templateUrl: './create-profile.component.html',
   styleUrls: ['./create-profile.component.css']
 })
+
+
 export class CreateProfileComponent implements OnInit {
 
   private create_profile_id;
+  private bankAcc;
   private user_id;
   private isCreateBuyer: Boolean = false;
   private isCreateSeller: Boolean = false;
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
-  latitude: number = 18.847882;
-  longtitude: number = 99.006974;
-  accuracy?: number;
+  latitude: any;
+  longtitude: any;
+  dir = undefined;
+  options = {
+    suppressMarkers: true,
+  };
 
+  
+
+  
 
 
   sellerForm = {
     shop_name: null,
     shop_location: null,
-    user_id: null,
+    shop_type_id:null,
+    user_id:null,
     shop_logo_image: null,
-    shop_latitude: null,
-    shop_longitude: null
+    shop_latitude:null,
+    shop_longitude:null
   }
 
-  buyerForm = {
-    buyer_location: null,
-    user_id: null,
-  }
-
-  deliverForm = {
-    bank_account_id: null,
-    bank_account_no: null,
-    shipper_transfer_slip: null,
-    user_id: null,
-
-  }
-
-
-
-  form = {
+  form = { 
     shop_name: '_',
     shop_location: 'Chiang Mai',
     shop_latitude: '134.343',
     shop_longitude: '34.4234234',
     shop_type_id: '1',
     user_id: '3',
-    shop_logo_image: undefined
+    shop_logo_image: undefined 
   }
 
   private shopCatagory;
-  private bankAcc;
 
+  buyerForm = {
+    buyerName: null,
+    location: null,
+    user_id:null
+  }
+
+  deliverForm = {
+    name: null,
+    email: null,
+    password: null,
+    password_confirmation: null,
+    user_id:null,
+    bank_account_id:null
+  }
 
 
   error = []
 
 
 
-  constructor(
+  constructor(    
     private userService: UserService,
     private sellerService: SellerService,
     private router: Router,
 
-
+    
+    
 
   ) {
-    // if (navigator)
-    // {
-    // navigator.geolocation.getCurrentPosition( pos => {
-    //     this.longtitude = +pos.coords.longitude;
-    //     this.latitude = +pos.coords.latitude;
-    //     this.sellerForm.shop_latitude = +pos.coords.latitude;
-    //     this.sellerForm.shop_longitude = +pos.coords.longitude;
-    //   });
-    // }
     this.getGeoLocation();
-  }
+    // this.getDirection();
+    // this.initMap();
+   }
 
   ngOnInit() {
     this.fetchMasterType();
-    this.setBankAccount();
   }
 
-  getGeoLocation() {
-    if (navigator.geolocation) {
-      var options = {
-        enableHighAccuracy: true
-      };
+  //  initMap() {
+  //   var uluru = {lat: -25.363, lng: 131.044};
+  //   var map = new google.maps.Map(document.getElementById('map'), {
+  //     zoom: 4,
+  //     center: uluru
+  //   });
+  
+  //   var contentString = '<div id="content">'+
+  //       '<div id="siteNotice">'+
+  //       '</div>'+
+  //       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+  //       '<div id="bodyContent">'+
+  //       '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+  //       'sandstone rock formation in the southern part of the '+
+  //       'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+  //       'south west of the nearest large town, Alice Springs; 450&#160;km '+
+  //       '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+  //       'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+  //       'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+  //       'Aboriginal people of the area. It has many springs, waterholes, '+
+  //       'rock caves and ancient paintings. Uluru is listed as a World '+
+  //       'Heritage Site.</p>'+
+  //       '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+  //       'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+  //       '(last visited June 22, 2009).</p>'+
+  //       '</div>'+
+  //       '</div>';
+  
+  //   var infowindow = new google.maps.InfoWindow({
+  //     content: contentString
+  //   });
+  
+  //   var marker = new google.maps.Marker({
+  //     position: uluru,
+  //     map: map,
+  //     title: 'Uluru (Ayers Rock)'
+  //   });
+  //   marker.addListener('click', function() {
+  //     infowindow.open(map, marker);
+  //   });
+  //   infowindow.open(map, marker);
+  // }
+  // public getDirection() {
+  //   this.dir = {
+  //     origin: { lat: 18.752179139651357, lng: 98.97422075271606 },
+  //     destination: { lat: 18.762179139651357, lng:  98.97522075271606 }
+  //   }
+  // }
+  
 
-      navigator.geolocation.getCurrentPosition(position => {
-        this.latitude = position.coords.latitude;
-        this.longtitude = position.coords.longitude;
-        this.sellerForm.shop_latitude = position.coords.latitude;
-        this.sellerForm.shop_longitude = position.coords.longitude;
-        let geocoder = new google.maps.Geocoder();
-        let latlng = new google.maps.LatLng(this.latitude, this.longtitude);
-        let request = {
-          location: latlng
+  getGeoLocation(){
+    if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
         };
 
-        geocoder.geocode(request, (results, status) => {
-
-          if (status == google.maps.GeocoderStatus.OK) {
-            if (results[0] != null) {
-              let city = results[0].address_components[results[0].address_components.length - 4].short_name;
-
-              this.sellerForm.shop_location = city;
-
-
-            } else {
-              alert("No address available");
-            }
-          }
-        });
-
-      }, error => {
-        console.log(error);
-      }, options);
+        navigator.geolocation.getCurrentPosition(position=> {
+          this.latitude = position.coords.latitude;
+          this.longtitude = position.coords.longitude;
+          this.sellerForm.shop_latitude = position.coords.latitude;
+          this.sellerForm.shop_longitude = position.coords.longitude;
+          
+          }, error => {
+            console.log(error);
+          }, options);
     }
   }
 
@@ -140,7 +174,7 @@ export class CreateProfileComponent implements OnInit {
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
-      this.isShow = !this.isShow;
+      this.isShow = !this.isShow;   
       // this.sellerService.getShopCategories().subscribe(
       //   Response => {
       //     this.isShow = !this.isShow;   
@@ -155,28 +189,29 @@ export class CreateProfileComponent implements OnInit {
     }
     else if (this.create_profile_id == 3) {
       this.isCreateBuyer = !this.isCreateBuyer;
-      this.isShow = !this.isShow;
+      this.isShow = !this.isShow;   
 
     }
     else if (this.create_profile_id == 4) {
       this.isCreateDeliver = !this.isCreateDeliver;
-      this.isShow = !this.isShow;
+      this.isShow = !this.isShow;   
 
     }
 
 
   }
 
-  fetchMasterType() {
+  fetchMasterType(){
     this.userService.getMasterData().subscribe(
       Response => {
-        console.log("[Response] ", Response)
+        console.log("[Response] ",Response)
         this.shopCatagory = Response.data.shop_type;
         this.validateCreateProfile();
+        this.bankAcc = Response.data.bank_account
 
 
       },
-      error => console.log("[Error] ", error)
+      error => console.log("[Error] ",error)
     )
   }
 
@@ -184,24 +219,27 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  setBankAccount() {
-    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
-  }
-
-  onBankSelected(event) {
-    console.log("onBankSelected", event)
-    this.deliverForm.bank_account_id = parseInt(event);
-  }
-
+  // readImageUrl(event:any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
+  
+  //     reader.onload = (event:any) => {
+  //       this.sellerForm.shopImg = event.target.result;
+  //     }
+  
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   }
+  // }
 
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)
-    // this.sellerForm.shop_type_id = parseInt(event);
+    this.sellerForm.shop_type_id = parseInt(event);
   }
 
   createSeller() {
     console.log("[This Seller] ", this.sellerForm)
     let temp = this.sellerForm;
+    this.isShow = !this.isShow
     temp.user_id = localStorage.getItem("user_id")
     console.log("[Temp body] ",temp);
     // this.sellerForm.user_id = localStorage.getItem("user_id")
@@ -209,47 +247,74 @@ export class CreateProfileComponent implements OnInit {
       data => {
         console.log("response from create seller", data);
         alert("Create seller success!!!");
+        this.isShow = !this.isShow
         this.router.navigateByUrl('/profile')
 
       },
       error => {
         console.log(error)
+        this.isShow = !this.isShow
         alert(error.error.message);
       }
     )
 
   }
 
+  onBankSelected(event) {
+    console.log("onBankSelected", event)
+    this.deliverForm.bank_account_id = parseInt(event);
+  }
   createDeliver() {
     console.log("[This deliver] ", this.deliverForm)
-    
+    this.isShow = !this.isShow
+
     this.deliverForm.user_id = localStorage.getItem("user_id")
     this.userService.createDeliver(this.deliverForm).subscribe(
       data => {
         console.log("response from create deliver", data)
+        this.isShow = !this.isShow
         alert("Create deliver success!!!");
         this.router.navigateByUrl('/profile')
-      },
-      error => console.log(error)
-    )
+
+    // console.log("[This Seller] ",this.sellerForm)
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    // this.userService.createSeller(this.sellerForm).subscribe(
+    //   data => {
+    //     console.log("response from create seller",data)
+    //   },
+    //   error => {
+    //     console.log(error)
+    //     this.isShow = !this.isShow
+    //     alert(error.error.message);
+    //   }
+    // )
+  },
+    error => {
+      console.log(error)
+      this.isShow = !this.isShow
+      alert(error.error.message);
+    })
   }
 
   createBuyer() {
     console.log("[This Buyer] ", this.buyerForm)
     let temp = this.buyerForm;
+    this.isShow = !this.isShow
+
     temp.user_id = localStorage.getItem("user_id")
-    this.userService.createBuyer(this.buyerForm).subscribe(
+    this.userService.createBuyer(temp).subscribe(
       data => {
         console.log("response from create buyer", data)
         alert("Create buyer success!!!");
+        this.isShow = !this.isShow
         this.router.navigateByUrl('/profile')
       },
       error => {
         console.log(error)
+        this.isShow = !this.isShow
         alert(error.error.message);
-      }
+      })
 
-    )
 
   }
 
