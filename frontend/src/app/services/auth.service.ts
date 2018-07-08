@@ -70,6 +70,9 @@ export class AuthService {
     localStorage.removeItem('shop_catagory');
     localStorage.removeItem('user_id');
     localStorage.removeItem('cart');
+    localStorage.removeItem('masterData');
+
+    
 
 
 

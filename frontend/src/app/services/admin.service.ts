@@ -22,7 +22,7 @@ export class AdminService {
   getAllUserInSystem(role_id) {
     let body = {
       "role_id": role_id,
-      "profile_status_user_id": 2
+      "profile_status_id": 2
     }
     return this.searchUsers(body)
 
@@ -31,7 +31,7 @@ export class AdminService {
   getAllHoldingUser(role_id) {
     let body = {
       "role_id": role_id,
-      "profile_status_user_id": 1
+      "profile_status_id": 1
     }
     return this.searchUsers(body)
   }
@@ -40,12 +40,8 @@ export class AdminService {
     return  this.http.post<users>(`${this.baseUrl}search/users`, body,this.httpOptions)
   }
 
-  updateUserStatus(role_id,uid) {
-    let body = {
-      "role_id": role_id,
-      "profile_status_user_id": 1
-    }
-    return  this.http.put(`${this.baseUrl}admin/updatestatus/profile/`+uid, body,this.httpOptions)
+  updateUserStatus(body) {
+    return  this.http.post(`${this.baseUrl}admin/updatestatus`, body,this.httpOptions)
 
   }
 

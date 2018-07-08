@@ -2,6 +2,8 @@
   <div class="loader" [hidden]="isLoad"></div>
 </div>
 <div [hidden]="!isLoad">
+
+  <!-- Menu  -->
   <div class="container" [hidden]="isMenu">
     <div class="card-container w3-display-middle">
       <div id="inner">
@@ -26,15 +28,20 @@
       </div>
     </div>
   </div>
+
+
+  <!-- User in system -->
   <div [hidden]="!isMenu">
-    <div [hidden]="isHolding">
+    <div [hidden]="!isHolding">
       <div class="w3-container" id="holding-container">
-        <h1><b>Holding user</b></h1>
+        <h1>
+          <b>User in system</b>
+        </h1>
         <div class="row" id="search">
           <div class="col">
             <select class="form-control" name="selectRole" #selectRole="ngModel" [(ngModel)]="selectedRole">
               <option disabled selected hidden [ngValue]="undefined"> Select role</option>
-              <option *ngFor="let role of roles" [ngValue]="role" >{{role}}</option>
+              <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
             </select>
           </div>
           <div class="col">
@@ -42,67 +49,191 @@
           </div>
         </div>
         <div id="dataTable">
+          <div [hidden]="isBuyer">
             <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Status</th>  
-                    <th> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of display_users;let  i = index">
-                    <td>{{ i+1 }}</td>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }} </td>
-                    <td>{{ user.status }} </td>
-                    <td>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal" (click)="onClickApprove(user)">Approve</button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal" (click)="onClickReject(user)">Reject</button>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_buyer;let  i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.location }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.status }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
+                    </div>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div [hidden]="isSeller">
+            <table datatable class="row-border hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ID</th>
+                  <th>Shop Name</th>
+                  <th>Location</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_seller;let  i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.location }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.status }}</td>
+                  <td>
+                    <!-- <div class="btn-group">
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                    </div> -->
+                    <div class="form-group">
+                        <select class="form-control"  id="selectStatus" #selectStatus="ngModel" [(ngModel)]="user.status" (ngModelChange)="onChangeStatus($event,user)" required>
+                          <!-- <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option> -->
+                          <option  [value]="Approve">Approve</option>
+                          <option  [value]="Block">Block</option>
+  
+                        </select>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div [hidden]="isDeliver">
+            <table datatable class="row-border hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Bank Account No</th>
+                  <th>Bank Account Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_shipper;let  i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.bank_account_no }}</td>
+                  <td>{{ user.bank_account_name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-    <div [hidden]="!isHolding">
+
+
+
+
+
+    <!-- Holding User -->
+    <div [hidden]="isHolding">
       <div class="w3-container" id="system-container">
-        <h1><b>User in system</b></h1>
+        <h1>
+          <b>Holding user</b>
+        </h1>
         <div class="row" id="search">
-            <div class="col">
-              <select class="form-control" [(ngModel)]="selectedRole">
-                <option disabled selected hidden [ngValue]="undefined"> Select role</option>
-                <option *ngFor="let role of roles" [ngValue]="selectedRole">{{role}}</option>
-              </select>
-            </div>
-            <div class="col">
-              <button class="btn">Search</button>
-            </div>
+          <div class="col">
+            <select class="form-control" [(ngModel)]="selectedRole" #selectRole="ngModel" (ngModelChange)="onRoleSelected($event)">
+              <option disabled selected hidden [ngValue]="undefined"> Select role</option>
+              <option *ngFor="let role of roles" (click)="onRoleSelected(role)">{{role}}</option>
+            </select>
           </div>
-          <div id="dataTable">
+          <div class="col">
+            <button class="btn" (click)="searchByRole()">Search</button>
+          </div>
+        </div>
+        <div id="dataTable">
+
+
+          <div [hidden]="isBuyer">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of display_users;let  i = index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.location }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.status }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <div [hidden]="isSeller">
               <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
-                      <th>No.</th>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Status</th>  
-                      <th> </th>
+                        <th>No.</th>
+                        <th>ID</th>
+                        <th>Shop Name</th>
+                        <th>Location</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th> </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let user of display_users;let  i = index">
-                      <td>{{ i+1 }}</td>
-                      <td>{{ user.id }}</td>
-                      <td>{{ user.name }}</td>
-                      <td>{{ user.email }}</td>
-                      <td>{{ user.status }}</td>
+                        <td>{{ i+1 }}</td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.location }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.status }}</td>
                       <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
@@ -112,8 +243,48 @@
                     </tr>
                   </tbody>
                 </table>
+
+          </div>
+          <div [hidden]="isDeliver">
+              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                  <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Bank Account No</th>
+                        <th>Bank Account Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of display_users;let  i = index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.bank_account_no }}</td>
+                        <td>{{ user.bank_account_name }}</td>
+                        <td>{{ user.email }}</td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
+                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
           </div>
 
+
+
+
+
+
+        </div>
       </div>
     </div>
   </div>
@@ -206,7 +377,7 @@
       <div class="modal-body">
         <p>Edit user information</p>
       </div>
-      <div class="modal-footer">        
+      <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Edit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
@@ -214,7 +385,3 @@
     </div>
   </div>
 </div>
-
-
-
-

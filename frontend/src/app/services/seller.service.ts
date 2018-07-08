@@ -27,11 +27,12 @@ export class SellerService {
     return this.http.post(`${this.baseUrl}seller/` + seller.seller_id, form, this.httpOptions)
   }
 
-  getAllProducts(seller) {
-    var temp = this.http.get<Product>(`${this.baseUrl}seller/` + seller.seller_id + `/products`,this.httpOptions)
+  getAllProducts(seller_id) { 
+    var temp = this.http.get<Product>(`${this.baseUrl}seller/` + seller_id + `/products`,this.httpOptions)
     console.log("getAllProducts from service: ", temp)
     return temp
   }
+
 
   getAllShops(){
     return this.http.get<shops>(`${this.baseUrl}sellers/`,this.httpOptions)
