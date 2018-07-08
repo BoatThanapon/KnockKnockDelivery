@@ -45,12 +45,12 @@ export class UserService {
 
     createSeller(seller) {
         var seller_form = {
-            seller_name: seller.sellerName,
-            shop_name: seller.shopName,
-            shop_location: seller.location,
-            shop_type_id: seller.selectedType,
-            status_id: 1,
-            user_id: seller.profile_id
+            user_id: seller.user_id,
+            shop_name: seller.shop_name,
+            shop_longitude: seller.shop_longitude,
+            shop_latitude: seller.shop_latitude,
+            shop_location: seller.shop_location,
+            status_id: seller.user_id
         }
         return this.http.post(`${this.baseUrl}seller`, seller_form,this.httpOptions)
     }
@@ -64,6 +64,14 @@ export class UserService {
 
         }
         return this.http.post(`${this.baseUrl}shipper`, deliver_form,this.httpOptions)
+    }
+
+    createBuyer(buyer) {
+        var buyer_form = {
+            buyer_address: buyer.buyer_location,
+            user_id: buyer.user_id,
+        }
+        return this.http.post(`${this.baseUrl}buyer`, buyer_form,this.httpOptions)
     }
 
     async fetchProfileDetail(profile) {

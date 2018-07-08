@@ -60,19 +60,42 @@ class AdminController extends Controller
 
     public function searchUsers(Request $request){
         $role_id = $request->role_id;
-        $profile_status_id= $request->profile_status_id;
+        $profile_status_id = $request->profile_status_id;
 
+        $sellers = null;
         if ($role_id == 2){
-            $seller = $this->seller->with('profile_status')->where('profile_status_id',$profile_status_id)->get();
-            return SearchSellerResource::collection($seller);
+            if($profile_status_id == 2)
+            {
+                $sellers = $this->seller->with('profile_status')
+                            ->where('profile_status_id',[$profile_status_id,4])
+                            ->get();
+            }else{
+                $sellers = $this->seller->with('profile_status')->where('profile_status_id',$profile_status_id)->get();
+            }
+            return SearchSellerResource::collection($sellers);
         }
         else if ($role_id == 3){
-            $buyer = $this->buyer->where('profile_status_id',$profile_status_id)->get();
-            return SearchBuyerResource::collection($buyer);
+            $buyers = null;
+            if($profile_status_id == 2)
+            {
+                $buyers = $this->buyer->with('profile_status')
+                            ->where('profile_status_id',[$profile_status_id,4])
+                            ->get();
+            }else{
+                $buyers = $this->buyer->where('profile_status_id',$profile_status_id)->get();
+            }
+            return SearchBuyerResource::collection($buyers);
         }
         else if ($role_id == 4){
-            $shipper = $this->shipper::where('profile_status_id',$profile_status_id)->get();
-            return SearchShipperResource::collection($shipper);
+            if($profile_status_id == 2)
+            {
+                $shippers = $this->shipper->with('profile_status')
+                            ->where('profile_status_id',[$profile_status_id,4])
+                            ->get();
+            }else{
+                $shippers = $this->shipper::where('profile_status_id',$profile_status_id)->get();
+            }
+            return SearchShipperResource::collection($shippers);
         }else{
             return response()->json(['message' =>'Bad Request'], 400);
         }

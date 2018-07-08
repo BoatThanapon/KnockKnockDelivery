@@ -46,7 +46,7 @@ export class ManageShopComponent implements OnInit {
     }
 
     getAllProducts() {
-        this.seller = JSON.parse(localStorage.getItem("seller"));
+        this.seller = JSON.parse(localStorage.getItem("seller_id"));
         this.sellerService.getAllProducts(this.seller).subscribe(
             response => {
                 this.products = response.data;
@@ -67,7 +67,7 @@ export class ManageShopComponent implements OnInit {
         this.masterData = JSON.parse(localStorage.getItem('masterData'))
         this.catagory = this.masterData.product_category;
         console.log("this.catagory: ", this.catagory)
-        this.setIsAvailableProduct();
+        // this.setIsAvailableProduct();
         
 
 

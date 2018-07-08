@@ -41,7 +41,7 @@ export class AdminService {
   }
 
   updateUserStatus(body) {
-    return  this.http.post(`${this.baseUrl}admin/updatestatus`, body,this.httpOptions)
+    return  this.http.post<updateUser>(`${this.baseUrl}admin/updatestatus`, body,this.httpOptions)
 
   }
 
@@ -64,4 +64,17 @@ export interface users {
         profile_id: null
     }
 ]
+}
+
+export interface updateUser {
+  message:null,
+  result: 
+    {
+      shipper_id:null,
+      seller_id:null,
+      buyer_id:null,
+      profile_status_id:null
+
+    }
+
 }

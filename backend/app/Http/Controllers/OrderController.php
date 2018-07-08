@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Order;
 use App\Http\Resources\ListOrdersOfShipperResource;
+use App\Order;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -22,7 +22,6 @@ class OrderController extends Controller
             'receiver_location' => 'required|max:199',
             'receiver_latitude' => 'required',
             'receiver_longitude' => 'required',
-            'order_date' => 'required|date',
             'order_total_price' => 'required',
             'service_charge' => 'required',
             'total' => 'required',
@@ -37,7 +36,7 @@ class OrderController extends Controller
         $order->receiver_location = $request->receiver_location;
         $order->receiver_latitude = $request->receiver_latitude;
         $order->receiver_longitude = $request->receiver_longitude;
-        $order->order_date = $request->order_date;
+        $order->order_date = date('Y-m-d');
         $order->order_total_price = $request->order_total_price;
         $order->seller_id = $request->seller_id;
         $order->buyer_id = $request->buyer_id;
@@ -47,35 +46,33 @@ class OrderController extends Controller
 
         return response()->json([
             'message' => 'Successfully',
-            'result' => $order
+            'result' => $order,
         ]);
     }
 
     public function updateOrder(Request $request, $order_id)
     {
         $this->validate($request, [
-            'order_status_id' => 'required'
+            'order_status_id' => 'required',
         ]);
 
         $order = $this->order->where('order_id', $order_id)->first();
-        if($order === null)
-        {
+        if ($order === null) {
             return response()->json([
-                'message' => 'order not found'
+                'message' => 'order not found',
             ], 400);
         }
 
-        if(!is_null($order->shipper_id) || $order->shipper_id !== "")
-        {
+        if (!is_null($order->shipper_id) || $order->shipper_id !== "") {
             $order->shipper_id = $request->shipper_id;
         }
 
-        if(!is_null($order->order_status_id) || $order->order_status_id !== ""){
+        if (!is_null($order->order_status_id) || $order->order_status_id !== "") {
             $order->order_status_id = $request->shipper_id;
         }
 
         if ($request->hasFile('payment_transfer_slip')) {
-            Storage::delete('public/payment_transfer_slip/'.$shipper->shipper_transfer_slip);
+            Storage::delete('public/payment_transfer_slip/' . $shipper->shipper_transfer_slip);
 
             // Get filename with the extension
             $filenameWithExt = $request->file('payment_transfer_slip')->getClientOriginalName();
@@ -91,19 +88,19 @@ class OrderController extends Controller
             $fileNameToStore = 'noimage.jpg';
         }
 
-        if($request->hasFile('payment_transfer_slip')){
+        if ($request->hasFile('payment_transfer_slip')) {
             $order->payment_transfer_slip = $request->payment_transfer_slip;
         }
 
         $order->save();
 
-        if($request->hasFile('payment_transfer_slip')){
-            $order->payment_transfer_slip = "storage/payment_transfer_slip/".$request->payment_transfer_slip;
+        if ($request->hasFile('payment_transfer_slip')) {
+            $order->payment_transfer_slip = "storage/payment_transfer_slip/" . $request->payment_transfer_slip;
         }
 
         return response()->json([
             'message' => "Successfully",
-            'order' => $order
+            'order' => $order,
         ]);
     }
 
@@ -111,6 +108,15 @@ class OrderController extends Controller
     {
         $orders = $this->order->where('order_status_id', 1)->get();
         return ListOrdersOfShipperResource::collection($orders);
+    }
+
+    public function getShopHistoryBySellerId($seller_id)
+    {
+        $shop_history = $this->order->where('order_status_id', 8)->get();
+        return response()->json([
+            'message' => "Successfully",
+            'order' => $order,
+        ]);
     }
 
 }
