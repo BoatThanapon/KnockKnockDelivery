@@ -37,16 +37,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.isShow = false;
-    // this.validSeller = false;
-    // this.validBuyer = false;
-    // this.validDeliver = false;
-    // this.isSellerProfile = false;
-    // this.isBuyerProfile = false;
-    // this.isDeliverProfile = false;
     this.getMasterData();
-
-
 
   }
 

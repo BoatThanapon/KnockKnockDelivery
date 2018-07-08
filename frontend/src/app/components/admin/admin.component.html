@@ -103,18 +103,11 @@
                   <td>{{ user.email }}</td>
                   <td>{{ user.status }}</td>
                   <td>
-                    <!-- <div class="btn-group">
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
-                    </div> -->
-                    <div class="form-group">
-                        <select class="form-control"  id="selectStatus" #selectStatus="ngModel" [(ngModel)]="user.status" (ngModelChange)="onChangeStatus($event,user)" required>
-                          <!-- <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option> -->
-                          <option  [value]="Approve">Approve</option>
-                          <option  [value]="Block">Block</option>
-  
-                        </select>
-                      </div>
+                    <div class="btn-group">
+                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
+                    </div>
+
                   </td>
                 </tr>
               </tbody>
@@ -144,8 +137,8 @@
                   <td>{{ user.email }}</td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
                     </div>
                   </td>
                 </tr>
@@ -203,8 +196,8 @@
                     <td>{{ user.status }}</td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                      <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                      <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
                     </div>
                   </td>
                 </tr>
@@ -236,8 +229,8 @@
                         <td>{{ user.status }}</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                          <button  type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                          <button  type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
                         </div>
                       </td>
                     </tr>
@@ -260,7 +253,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let user of display_users;let  i = index">
+                    <tr *ngFor="let user of display_shipper;let  i = index">
                         <td>{{ i+1 }}</td>
                         <td>{{ user.id }}</td>
                         <td>{{ user.name }}</td>
@@ -269,21 +262,14 @@
                         <td>{{ user.email }}</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="onClickInfo(user)">Info</button>
-                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="onClickEdit(user)">Edit</button>
+                          <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
+                          <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
                         </div>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-
           </div>
-
-
-
-
-
-
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { masterData } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
@@ -29,6 +30,7 @@ export class AdminComponent implements OnInit {
   private display_shipper = [];
 
   private selected_user;
+  private masterData;
 
   dtOptions: DataTables.Settings = {};
 
@@ -43,7 +45,13 @@ export class AdminComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers'
   };
+  this.setMasterData()
 
+  }
+
+
+  setMasterData() {
+    this.masterData = JSON.parse(localStorage.getItem('masterData'));
   }
 
 
@@ -52,7 +60,7 @@ export class AdminComponent implements OnInit {
     this.isMenu = !this.isMenu;
     this.isLoad = !this.isLoad;
     this.isHolding  = !this.isHolding;
-
+    localStorage.setItem('adminSelect',"holdingUser")
     console.log("holdingUser");
     this.adminService.getAllHoldingUser(2).subscribe(
       response => {
@@ -95,6 +103,8 @@ export class AdminComponent implements OnInit {
     this.isMenu = !this.isMenu;
     this.isLoad = !this.isLoad;
     console.log("userInSystem");
+    localStorage.setItem('adminSelect',"userInSystem")
+
     this.adminService.getAllUserInSystem(2).subscribe(
       response => {
         // console.log("[Response 2]: ", response.data);
@@ -236,6 +246,8 @@ export class AdminComponent implements OnInit {
             name: element.shop_name,
             location: element.shop_location,
             status: element.profile_status.profile_status_name,
+            email:element.user.email
+
           }
 
           this.display_seller[index] = temp;
@@ -256,6 +268,8 @@ export class AdminComponent implements OnInit {
             location: element.buyer_location,
             profile_id: element.profile_id,
             status: element.profile_status.profile_status_name,
+            email:element.user.email
+
           }
 
           this.display_buyer[index] = temp;
@@ -269,12 +283,14 @@ export class AdminComponent implements OnInit {
       }
       else if (this.selectedRole == 'Deliver') {
         this.holdingUsers['deliver'].forEach((element, index) => {
+          console.log("[Selected deliver] here!!!");
           let temp = {
             id: element.shipper_id,
             bank_account_no: element.bank_account_no,
             bank_account_name: element.bank_account.bank_account_name,
             status: element.profile_status.profile_status_name,
             profile_id: element.profile_id,
+            email:element.user.email
           }
           this.display_shipper[index] = temp;
 
@@ -290,30 +306,26 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  onChangeStatus(event,user) {
-    console.log("onChangeStatus event ",event)
-    console.log("onChangeStatus user ",user);
-  }
-
-  onClickApprove(user) {
-    this.selected_user = user;
-  }
-
-  onClickReject(user) {
-    this.selected_user = user;
-  }
-
   onClickUpdate(user,status) {
+    let state = localStorage.getItem('adminSelect');
     console.log("[user] ",user)
+    console.log("[state] ",state)
+
     let role_id;
+    let role;
     if(!this.isDeliver) {
       role_id = 4
+      role = 'deliver'
     }
     else if(!this.isSeller) {
       role_id =2
+      role = 'seller'
+
     }
     else if(!this.isBuyer) {
       role_id =3
+      role = 'buyer'
+
     }
     let body = {
       "id": user.id,
@@ -324,7 +336,46 @@ export class AdminComponent implements OnInit {
     this.adminService.updateUserStatus(body)
     .subscribe(response => {
       console.log("[Response] ",response);
-      
+      if(response.message == 'Successfully') {
+        if(state == 'userInSystem'){
+          if(!this.isDeliver) {
+            this.display_shipper.forEach(outer => {
+              if(outer.seller_id = response.result.seller_id) {
+                this.masterData.profile_status.forEach(inner => {
+                  if(inner.profile_status_id == response.result.profile_status_id) {
+                    outer.status = inner.profile_status_name
+                  }
+                });
+              }
+            });
+          }
+          else if(!this.isSeller) {
+            this.display_seller.forEach(outer => {
+              if(outer.seller_id = response.result.seller_id) {
+                this.masterData.profile_status.forEach(inner => {
+                  if(inner.profile_status_id == response.result.profile_status_id) {
+                    outer.status = inner.profile_status_name
+                  }
+                });
+              }
+            });
+          }
+          else if(!this.isBuyer) {
+            this.display_buyer.forEach(outer => {
+              if(outer.seller_id = response.result.seller_id) {
+                this.masterData.profile_status.forEach(inner => {
+                  if(inner.profile_status_id == response.result.profile_status_id) {
+                    outer.status = inner.profile_status_name
+                  }
+                });
+              }
+            });
+          }
+        }
+        else if(state == 'holdingUser') {
+
+        }
+      }
     },
     error => {
       console.log("[Error] ",error);
