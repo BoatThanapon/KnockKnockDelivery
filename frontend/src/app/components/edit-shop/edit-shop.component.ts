@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,Input, Output,  EventEmitter } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -39,10 +40,12 @@ export class EditShopComponent implements OnInit {
 
   constructor(
     private sellerService: SellerService,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
-    this.seller = JSON.parse(localStorage.getItem("seller"));
+    this.seller = JSON.parse(localStorage.getItem("seller_id"));
     // this.getShopCatagory();
 
 
@@ -126,7 +129,12 @@ export class EditShopComponent implements OnInit {
         console.log("response onSubmit: ", response)
         this.isClick = !this.isClick;
         this.isEdit = !this.isEdit;
-        this.reloadPage.emit(null)
+        // this.reloadPage.emit(null)
+        if(response.message == 'Successfully') {
+          alert("Update shop success!!!");
+          this.router.navigateByUrl('/manage-shop')
+        }
+
 
       },
       error => { 

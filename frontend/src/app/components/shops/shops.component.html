@@ -40,7 +40,7 @@
         </div>
     </div> -->
 
-
+<!-- 
     <div class="w3-container" id="btn-container">
       <div class="w3-quarter w3-padding">
         <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
@@ -54,7 +54,7 @@
       <div class="w3-quarter w3-padding">
         <button class="btn btn-primary btn-block" id="btn-Recommend" type="button">Recommend For You</button>
       </div>
-    </div>
+    </div> -->
 
 
 
@@ -104,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="w3-padding-32">
+      <div class="w3-padding-32" [hidden]="shops.length < 12">
         <button class="btn btn-outline-info btn-block">See More</button>
       </div>
     </div>

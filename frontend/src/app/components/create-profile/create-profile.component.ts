@@ -21,17 +21,16 @@ export class CreateProfileComponent implements OnInit {
   latitude: number = 18.847882;
   longtitude: number = 99.006974;
   accuracy?: number;
-  
+
 
 
   sellerForm = {
     shop_name: null,
     shop_location: null,
-    shop_type_id:null,
-    user_id:null,
+    user_id: null,
     shop_logo_image: null,
-    shop_latitude:null,
-    shop_longitude:null
+    shop_latitude: null,
+    shop_longitude: null
   }
 
   buyerForm = {
@@ -47,16 +46,16 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  
 
-  form = { 
+
+  form = {
     shop_name: '_',
     shop_location: 'Chiang Mai',
     shop_latitude: '134.343',
     shop_longitude: '34.4234234',
     shop_type_id: '1',
     user_id: '3',
-    shop_logo_image: undefined 
+    shop_logo_image: undefined
   }
 
   private shopCatagory;
@@ -68,11 +67,12 @@ export class CreateProfileComponent implements OnInit {
 
 
 
-  constructor(    
+  constructor(
     private userService: UserService,
     private sellerService: SellerService,
-    
-    
+    private router: Router,
+
+
 
   ) {
     // if (navigator)
@@ -85,48 +85,48 @@ export class CreateProfileComponent implements OnInit {
     //   });
     // }
     this.getGeoLocation();
-   }
+  }
 
   ngOnInit() {
     this.fetchMasterType();
     this.setBankAccount();
   }
 
-  getGeoLocation(){
+  getGeoLocation() {
     if (navigator.geolocation) {
-        var options = {
-          enableHighAccuracy: true
+      var options = {
+        enableHighAccuracy: true
+      };
+
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude;
+        this.longtitude = position.coords.longitude;
+        this.sellerForm.shop_latitude = position.coords.latitude;
+        this.sellerForm.shop_longitude = position.coords.longitude;
+        let geocoder = new google.maps.Geocoder();
+        let latlng = new google.maps.LatLng(this.latitude, this.longtitude);
+        let request = {
+          location: latlng
         };
 
-        navigator.geolocation.getCurrentPosition(position=> {
-          this.latitude = position.coords.latitude;
-          this.longtitude = position.coords.longitude;
-          this.sellerForm.shop_latitude = position.coords.latitude;
-          this.sellerForm.shop_longitude = position.coords.longitude;
-          let geocoder = new google.maps.Geocoder();
-          let latlng = new google.maps.LatLng(this.latitude, this.longtitude);
-          let request = {
-            location: latlng
-          };   
+        geocoder.geocode(request, (results, status) => {
 
-          geocoder.geocode(request,  (results, status) => {     
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[0] != null) {
+              let city = results[0].address_components[results[0].address_components.length - 4].short_name;
 
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[0] != null) {
-               let city = results[0].address_components[results[0].address_components.length-4].short_name;                      
-
-               this.sellerForm.shop_location = city;
+              this.sellerForm.shop_location = city;
 
 
-              } else {
-                alert("No address available");
-              }
+            } else {
+              alert("No address available");
             }
-});
+          }
+        });
 
-        }, error => {
-          console.log(error);
-        }, options);
+      }, error => {
+        console.log(error);
+      }, options);
     }
   }
 
@@ -140,7 +140,7 @@ export class CreateProfileComponent implements OnInit {
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
       // this.sellerService.getShopCategories().subscribe(
       //   Response => {
       //     this.isShow = !this.isShow;   
@@ -155,28 +155,28 @@ export class CreateProfileComponent implements OnInit {
     }
     else if (this.create_profile_id == 3) {
       this.isCreateBuyer = !this.isCreateBuyer;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
     else if (this.create_profile_id == 4) {
       this.isCreateDeliver = !this.isCreateDeliver;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
 
 
   }
 
-  fetchMasterType(){
+  fetchMasterType() {
     this.userService.getMasterData().subscribe(
       Response => {
-        console.log("[Response] ",Response)
+        console.log("[Response] ", Response)
         this.shopCatagory = Response.data.shop_type;
         this.validateCreateProfile();
 
 
       },
-      error => console.log("[Error] ",error)
+      error => console.log("[Error] ", error)
     )
   }
 
@@ -196,40 +196,59 @@ export class CreateProfileComponent implements OnInit {
 
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)
-    this.sellerForm.shop_type_id = parseInt(event);
+    // this.sellerForm.shop_type_id = parseInt(event);
   }
 
   createSeller() {
-    console.log("[This Seller] ",this.sellerForm)
-    this.sellerForm.user_id = localStorage.getItem("user_id")
-    this.userService.createSeller(this.sellerForm).subscribe(
+    console.log("[This Seller] ", this.sellerForm)
+    let temp = this.sellerForm;
+    temp.user_id = localStorage.getItem("user_id")
+    console.log("[Temp body] ",temp);
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    this.userService.createSeller(temp).subscribe(
       data => {
-        console.log("response from create seller",data)
+        console.log("response from create seller", data);
+        alert("Create seller success!!!");
+        this.router.navigateByUrl('/profile')
+
       },
-      error => console.log(error)
+      error => {
+        console.log(error)
+        alert(error.error.message);
+      }
     )
 
   }
 
   createDeliver() {
-    console.log("[This deliver] ",this.deliverForm)
+    console.log("[This deliver] ", this.deliverForm)
+    
     this.deliverForm.user_id = localStorage.getItem("user_id")
     this.userService.createDeliver(this.deliverForm).subscribe(
       data => {
-        console.log("response from create deliver",data)
+        console.log("response from create deliver", data)
+        alert("Create deliver success!!!");
+        this.router.navigateByUrl('/profile')
       },
       error => console.log(error)
     )
   }
 
   createBuyer() {
-    console.log("[This Buyer] ",this.buyerForm)
-    this.buyerForm.user_id = localStorage.getItem("user_id")
-    this.userService.createSeller(this.buyerForm).subscribe(
+    console.log("[This Buyer] ", this.buyerForm)
+    let temp = this.buyerForm;
+    temp.user_id = localStorage.getItem("user_id")
+    this.userService.createBuyer(this.buyerForm).subscribe(
       data => {
-        console.log("response from create buyer",data)
+        console.log("response from create buyer", data)
+        alert("Create buyer success!!!");
+        this.router.navigateByUrl('/profile')
       },
-      error => console.log(error)
+      error => {
+        console.log(error)
+        alert(error.error.message);
+      }
+
     )
 
   }

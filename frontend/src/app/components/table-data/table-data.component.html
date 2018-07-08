@@ -6,7 +6,7 @@
       <th>Product Name</th>
       <th>Product Description</th>
       <th>Product Price</th>
-      <th>Unit In Stock</th>
+      <!-- <th>Unit In Stock</th> -->
       <th>Product status</th>
       <th> </th>
     </tr>
@@ -18,7 +18,7 @@
       <td>{{ product.product_name }}</td>
       <td>{{ product.product_description }}</td>
       <td>{{ product.product_price }}</td>
-      <td>{{ product.unit_in_stock }}</td>
+      <!-- <td>{{ product.unit_in_stock }}</td> -->
       <td>{{ product.product_status.product_status_name }}</td>
       <td>
         <div class="btn-group">
@@ -55,8 +55,8 @@
             <strong>Product Price: </strong>{{ product_price }}</p>
           <p>
             <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
-          <p>
-            <strong>Product in stock: </strong>{{ unit_in_stock }}</p>
+          <!-- <p>
+            <strong>Product in stock: </strong>{{ unit_in_stock }}</p> -->
           <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
         </div>
         <div class="modal-footer">
@@ -96,12 +96,12 @@
                 <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
                   required>
               </div>
-
+<!-- 
             <div class="form-group">
               <label for="input-price">Product Amount Unit</label>
               <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
                 required>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <label for="selectCatagory">Product Catagory</label>

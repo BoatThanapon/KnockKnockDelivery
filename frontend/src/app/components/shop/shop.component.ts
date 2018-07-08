@@ -22,11 +22,9 @@ export class ShopComponent implements OnInit {
         product_image_1:null
     }
 
-    private shop = {
-        shop_name: null,
-        shop_type: null,
-        shop_location: null
-    }
+    private shop = [];
+
+
 
 
     constructor(
@@ -39,11 +37,13 @@ export class ShopComponent implements OnInit {
     ngOnInit() {
         this.setCartNum();
         this.setSellerID();
+        
     }
 
     setSellerID() {
       this.seller_id = localStorage.getItem('seller_id');
       this.getAllProduct();
+      this.getShopDetail(this.seller_id);
     }
 
     getAllProduct() {
@@ -58,6 +58,17 @@ export class ShopComponent implements OnInit {
         console.log("[Error] ",error);
 
       })
+    }
+
+    getShopDetail(id) {
+      this.SellerService.getShopByProfileId(id)
+      .subscribe(response => {
+        console.log("[Response] ",response);
+        this.shop = response.data
+      },
+      error => {
+        console.log("[Error] ",error);
+    })
     }
 
     

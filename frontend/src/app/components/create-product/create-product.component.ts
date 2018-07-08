@@ -11,7 +11,7 @@ import { SellerService } from '../../services/seller.service';
 export class CreateProductComponent implements OnInit {
 
   // @Input() name: String;
-  private isClick:boolean = false;
+  private isClick: boolean = false;
   private isLoad: boolean = false;
   private isCreate: boolean = false;
   private form = {
@@ -26,7 +26,7 @@ export class CreateProductComponent implements OnInit {
   }
   private dafault_catagory: Number;
   private catagory;
-  private seller;
+  private seller_id;
   private error = []
   private masterData;
   private bankAcc;
@@ -42,7 +42,8 @@ export class CreateProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.seller = JSON.parse(localStorage.getItem("seller"));
+    this.seller_id = localStorage.getItem("seller_id");
+    console.log("[Seller id] ", this.seller_id);
     this.masterData = JSON.parse(localStorage.getItem('masterData'))
     this.catagory = this.masterData.product_category;
     // this.sellerService.getShopCategories().subscribe(
@@ -88,7 +89,7 @@ export class CreateProductComponent implements OnInit {
   setBankAccount() {
     this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
   }
-  
+
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)
     this.form.selected_catagory = parseInt(event);
@@ -99,31 +100,37 @@ export class CreateProductComponent implements OnInit {
     console.log("form: ", this.form)
     this.isClick = !this.isClick;
 
-
-    var tempForm =
-    {
-      product_name: this.form.product_name,
-      product_description: this.form.product_description,
-      product_price: parseInt(this.form.product_price),
-      unit_in_stock: parseInt(this.form.unit_in_stock),
-      product_category_id: parseInt(this.form.selected_catagory)
+    if (this.form.product_price > 1000) {
+      this.isClick = !this.isClick;
+      this.error['product_price'] = 'product price not more than 1000'
     }
+    else {
 
-    console.log("tempForm: ", tempForm)
-
-
-    this.sellerService.createProduct(tempForm, this.seller).subscribe(
-      response =>   {
-        console.log("response onCreate: ", response)
-        this.isClick = !this.isClick;
-        this.isCreate = !this.isCreate;
-        this.onClear();
-      },
-      error => {
-        this.isClick = !this.isClick;
-        console.log("error: ", error)
+      let tempForm =
+      {
+        product_name: this.form.product_name,
+        product_description: this.form.product_description,
+        product_price: parseInt(this.form.product_price),
+        product_category_id: parseInt(this.form.selected_catagory)
       }
-    )
+
+      let seller_id = this.seller_id;
+      console.log("tempForm: ", tempForm)
+
+
+      this.sellerService.createProduct(tempForm, seller_id).subscribe(
+        response => {
+          console.log("response onCreate: ", response)
+          this.isClick = !this.isClick;
+          this.isCreate = !this.isCreate;
+          this.onClear();
+        },
+        error => {
+          this.isClick = !this.isClick;
+          console.log("error: ", error)
+        }
+      )
+    }
 
   }
 
@@ -137,6 +144,7 @@ export class CreateProductComponent implements OnInit {
     this.form.product_image = '';
     this.form.selected_catagory = '';
     this.form.unit_in_stock = '';
+    this.error = [];
 
   }
 

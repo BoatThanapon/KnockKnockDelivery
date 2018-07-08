@@ -23,8 +23,8 @@ export class SellerService {
 
   }
 
-  updateShop(form, seller) {
-    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id, form, this.httpOptions)
+  updateShop(form, seller_id) {
+    return this.http.post<shop>(`${this.baseUrl}seller/` + seller_id, form, this.httpOptions)
   }
 
   getAllProducts(seller_id) { 
@@ -38,6 +38,10 @@ export class SellerService {
     return this.http.get<shops>(`${this.baseUrl}sellers/`,this.httpOptions)
   }
 
+  getShopByProfileId(id) {
+    return this.http.get<shops>(`${this.baseUrl}seller/profile/`+id,this.httpOptions)
+  }
+
   getShopCategories() {
     return this.http.get<shopCategorie>(`${this.baseUrl}shoptypes`,this.httpOptions)
   }
@@ -46,8 +50,8 @@ export class SellerService {
     return this.http.get<productCategorie>(`${this.baseUrl}categories`,this.httpOptions)
   }
 
-  createProduct(product, seller) {
-    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id + `/product`, product,this.httpOptions)
+  createProduct(product, seller_id) {
+    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
 
   }
 
@@ -62,6 +66,11 @@ export class SellerService {
 
 }
 
+
+export interface shop {
+  message:null,
+  result:null
+}
 
 export interface Product {
   data: [{
