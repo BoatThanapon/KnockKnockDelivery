@@ -59,11 +59,11 @@
     <div class="form-group">
       <label for="input-price">Product Image</label>
       <br>
-      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" />
+      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" #fileInput/>
       <br>
       <br>
 
-      <!-- <canvas id="previewImg" #mycanvas></canvas> -->
+      <canvas id="previewImg" #mycanvas></canvas>
     </div>
 
     <div *ngIf="isClick">

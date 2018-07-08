@@ -20,8 +20,8 @@
 
 
                 <div class="form-group">
-                  <label for="input-localtion">Address</label>
-                  <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="sellerForm.shop_location"
+                  <label for="input-localtion">Shop location</label>
+                  <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Shop location" [(ngModel)]="sellerForm.shop_location"
                     required></textarea>
                   <span class="text-danger" [hidden]="!error.location">
                     {{error.location}}
