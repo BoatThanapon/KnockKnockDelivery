@@ -41,15 +41,6 @@ class ProfileController extends Controller
 
         $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
 
-        // if ($profiles->count() !== 0) {
-        //     if ($profiles[0]->role->role_id == 1) {
-        //         return response()->json([
-        //             'message' => 'Successfully',
-        //             'data' => $profiles[0],
-        //         ]);
-        //     }
-        // }
-
         $admin = null;
         $seller = null;
         $buyer = null;
@@ -57,32 +48,22 @@ class ProfileController extends Controller
         foreach ($profiles as $item) {
             if ($item->role->role_id == 1) {
                 $admin = $item;
-                if ($admin === null) {
-                    $admin = null;
-                }
             }
 
             if ($item->role->role_id == 2) {
-                $seller = $this->seller->where('profile_status_id', 2)->first();
-                if ($seller === null) {
-                    $seller = null;
-                } else {
+                $seller = $this->seller->where('profile_id', $item->profile_id)->first();
+                if ($seller !== null){
                     $seller->shop_logo_image = "/storage/seller/" . $seller->shop_logo_image;
                 }
             }
 
             if ($item->role->role_id == 3) {
-                $buyer = $this->buyer->where('profile_status_id', 2)->first();
-                if ($buyer === null) {
-                    $buyer = null;
-                }
+                $buyer = $this->buyer->where('profile_id', $item->profile_id)->first();
             }
 
             if ($item->role->role_id == 4) {
-                $shipper = $this->shipper->where('profile_status_id', 2)->first();
-                if ($shipper === null) {
-                    $shipper = null;
-                } else {
+                $shipper = $this->shipper->where('profile_id', $item->profile_id)->first();
+                if ($shipper !== null){
                     $shipper->shipper_transfer_slip = "/storage/shipper/" . $shipper->shipper_transfer_slip;
                 }
             }
