@@ -82,4 +82,6 @@ Route::group([
     Route::get('orders', 'OrderController@getListOrdersOfShipper');
     Route::put('order', 'OrderController@updateOrder');
     Route::post('order', 'OrderController@createOrder');
+    Route::post('order-detail', 'OrderDetailController@createOrderDeatail');
+    Route::get('order-detail/{order_id}', 'OrderDetailController@getOrderDetailsByOrderId');
 });
