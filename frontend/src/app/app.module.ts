@@ -31,6 +31,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { DeliverComponent } from './components/deliver/deliver.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'
+import { GoogleMapsAPIWrapper } from '@agm/core';
 
 
 
@@ -68,10 +70,12 @@ import { AgmCoreModule } from '@agm/core';
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8'
-    })
+    }),
+    AgmDirectionModule,
   ],
   providers: [
     AuthService,
+    GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent]
 })

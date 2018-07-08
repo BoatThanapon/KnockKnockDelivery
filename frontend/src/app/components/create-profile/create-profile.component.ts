@@ -1,15 +1,20 @@
+declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { SellerService } from '../../services/seller.service';
 
+
 import { Router } from '@angular/router';
-declare var google: any;
+
+
 
 @Component({
   selector: 'app-create-profile',
   templateUrl: './create-profile.component.html',
   styleUrls: ['./create-profile.component.css']
 })
+
+
 export class CreateProfileComponent implements OnInit {
 
   private create_profile_id;
@@ -18,9 +23,15 @@ export class CreateProfileComponent implements OnInit {
   private isCreateSeller: Boolean = false;
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
-  latitude: number = 18.847882;
-  longtitude: number = 99.006974;
-  accuracy?: number;
+  latitude: any;
+  longtitude: any;
+  dir = undefined;
+  options = {
+    suppressMarkers: true,
+  };
+
+  
+
   
 
 
@@ -34,21 +45,6 @@ export class CreateProfileComponent implements OnInit {
     shop_longitude:null
   }
 
-  buyerForm = {
-    buyer_location: null,
-    user_id: null,
-  }
-
-  deliverForm = {
-    bank_account_id: null,
-    bank_account_no: null,
-    shipper_transfer_slip: null,
-    user_id: null,
-
-  }
-
-  
-
   form = { 
     shop_name: '_',
     shop_location: 'Chiang Mai',
@@ -60,8 +56,18 @@ export class CreateProfileComponent implements OnInit {
   }
 
   private shopCatagory;
-  private bankAcc;
 
+  buyerForm = {
+    buyerName: null,
+    location: null,
+  }
+
+  deliverForm = {
+    name: null,
+    email: null,
+    password: null,
+    password_confirmation: null
+  }
 
 
   error = []
@@ -75,22 +81,64 @@ export class CreateProfileComponent implements OnInit {
     
 
   ) {
-    // if (navigator)
-    // {
-    // navigator.geolocation.getCurrentPosition( pos => {
-    //     this.longtitude = +pos.coords.longitude;
-    //     this.latitude = +pos.coords.latitude;
-    //     this.sellerForm.shop_latitude = +pos.coords.latitude;
-    //     this.sellerForm.shop_longitude = +pos.coords.longitude;
-    //   });
-    // }
     this.getGeoLocation();
+    // this.getDirection();
+    // this.initMap();
    }
 
   ngOnInit() {
     this.fetchMasterType();
-    this.setBankAccount();
   }
+
+  //  initMap() {
+  //   var uluru = {lat: -25.363, lng: 131.044};
+  //   var map = new google.maps.Map(document.getElementById('map'), {
+  //     zoom: 4,
+  //     center: uluru
+  //   });
+  
+  //   var contentString = '<div id="content">'+
+  //       '<div id="siteNotice">'+
+  //       '</div>'+
+  //       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+  //       '<div id="bodyContent">'+
+  //       '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+  //       'sandstone rock formation in the southern part of the '+
+  //       'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+  //       'south west of the nearest large town, Alice Springs; 450&#160;km '+
+  //       '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+  //       'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+  //       'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+  //       'Aboriginal people of the area. It has many springs, waterholes, '+
+  //       'rock caves and ancient paintings. Uluru is listed as a World '+
+  //       'Heritage Site.</p>'+
+  //       '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+  //       'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+  //       '(last visited June 22, 2009).</p>'+
+  //       '</div>'+
+  //       '</div>';
+  
+  //   var infowindow = new google.maps.InfoWindow({
+  //     content: contentString
+  //   });
+  
+  //   var marker = new google.maps.Marker({
+  //     position: uluru,
+  //     map: map,
+  //     title: 'Uluru (Ayers Rock)'
+  //   });
+  //   marker.addListener('click', function() {
+  //     infowindow.open(map, marker);
+  //   });
+  //   infowindow.open(map, marker);
+  // }
+  // public getDirection() {
+  //   this.dir = {
+  //     origin: { lat: 18.752179139651357, lng: 98.97422075271606 },
+  //     destination: { lat: 18.762179139651357, lng:  98.97522075271606 }
+  //   }
+  // }
+  
 
   getGeoLocation(){
     if (navigator.geolocation) {
@@ -103,30 +151,10 @@ export class CreateProfileComponent implements OnInit {
           this.longtitude = position.coords.longitude;
           this.sellerForm.shop_latitude = position.coords.latitude;
           this.sellerForm.shop_longitude = position.coords.longitude;
-          let geocoder = new google.maps.Geocoder();
-          let latlng = new google.maps.LatLng(this.latitude, this.longtitude);
-          let request = {
-            location: latlng
-          };   
-
-          geocoder.geocode(request,  (results, status) => {     
-
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[0] != null) {
-               let city = results[0].address_components[results[0].address_components.length-4].short_name;                      
-
-               this.sellerForm.shop_location = city;
-
-
-              } else {
-                alert("No address available");
-              }
-            }
-});
-
-        }, error => {
-          console.log(error);
-        }, options);
+          
+          }, error => {
+            console.log(error);
+          }, options);
     }
   }
 
@@ -184,15 +212,17 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  setBankAccount() {
-    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
-  }
-
-  onBankSelected(event) {
-    console.log("onBankSelected", event)
-    this.deliverForm.bank_account_id = parseInt(event);
-  }
-
+  // readImageUrl(event:any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
+  
+  //     reader.onload = (event:any) => {
+  //       this.sellerForm.shopImg = event.target.result;
+  //     }
+  
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   }
+  // }
 
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)
@@ -209,28 +239,6 @@ export class CreateProfileComponent implements OnInit {
       error => console.log(error)
     )
 
-  }
-
-  createDeliver() {
-    console.log("[This deliver] ",this.deliverForm)
-    this.deliverForm.user_id = localStorage.getItem("user_id")
-    this.userService.createDeliver(this.deliverForm).subscribe(
-      data => {
-        console.log("response from create deliver",data)
-      },
-      error => console.log(error)
-    )
-  }
-
-  createBuyer() {
-    console.log("[This Buyer] ",this.buyerForm)
-    this.buyerForm.user_id = localStorage.getItem("user_id")
-    this.userService.createSeller(this.buyerForm).subscribe(
-      data => {
-        console.log("response from create buyer",data)
-      },
-      error => console.log(error)
-    )
 
   }
 
