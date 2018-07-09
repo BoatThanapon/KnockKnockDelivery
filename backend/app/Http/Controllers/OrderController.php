@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ListOrdersOfShipperResource;
+use App\Http\Resources\ListOrdersBySellerIdResource;
 use App\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     private $order;
-    public function __construct(Order $order)
+    private $order_detail;
+    public function __construct(Order $order, OrderDetail $order_detail)
     {
         $this->order = $order;
+        $this->order_detail = $order_detail;
     }
 
     public function createOrder(Request $request)
@@ -104,19 +106,26 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getListOrdersOfShipper()
+    public function getListOrdersBySellerId($seller_id)
     {
-        $orders = $this->order->where('order_status_id', 1)->get();
-        return ListOrdersOfShipperResource::collection($orders);
+        $orders = $this->order
+                    ->where('order_status_id', 1)
+                    ->where('seller_id', $seller_id)
+                    ->get();
+
+        return ListOrdersBySellerIdResource::collection($orders);
     }
 
-    public function getShopHistoryBySellerId($seller_id)
+    public function getOrderByOrderId($order_id)
     {
-        $shop_history = $this->order->where('order_status_id', 8)->get();
-        return response()->json([
-            'message' => "Successfully",
-            'order' => $order,
-        ]);
-    }
+        $order = $this->order->where('order_id', $order_id)->first();
+        if($order === null)
+        {
+            return response()->json([
+                'message' => 'Order not found'
+            ], 400);
+        }
 
+        return ;
+    }
 }
