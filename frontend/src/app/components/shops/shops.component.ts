@@ -148,7 +148,7 @@ export class ShopsComponent implements OnInit {
     if(cart != null) {
           this.cart_num = cart.length;
     } 
-    else if(cart == {}) {
+    else if(cart == []) {
       this.cart_num = 0;
 
     }
@@ -161,11 +161,17 @@ export class ShopsComponent implements OnInit {
     console.log("Cart : ",cart)
 
     if(cart == null) {
-      localStorage.setItem("cart","");
+      localStorage.setItem("cart","[]");
     }
 
     this.router.navigateByUrl('/cart')
 
+
+  }
+
+  goToOrder() {
+    console.log("goToOrder")
+    this.router.navigateByUrl('/order')
 
   }
 

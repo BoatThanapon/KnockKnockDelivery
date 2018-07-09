@@ -51,7 +51,16 @@ export class SellerService {
   }
 
   createProduct(product, seller_id) {
-    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        'Content-Type': 'undefined',
+        'Authorization': 'Bearer '+ this.UAT,
+
+      })
+    }
+    console.log("[Header] ",header)
+
+    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,header)
 
   }
 

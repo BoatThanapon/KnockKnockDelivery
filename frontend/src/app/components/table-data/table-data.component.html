@@ -44,8 +44,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <img  class="card-img-top" [src]="product_image" alt="">
-          <p>
+          <div class="d-flex justify-content-center">
+            <img class="card-img-top" [src]="product_image" alt="">
+          </div>          <p>
             <strong>Product ID: </strong>{{ product_id }}</p>
           <p>
             <strong>Product Name: </strong>{{ product_name }}</p>
@@ -77,8 +78,9 @@
         </div>
         <div class="modal-body">
 
-          <img  class="card-img-top" [src]="product_image" alt="">
-
+          <div class="d-flex justify-content-center">
+            <img class="card-img-top" [src]="product_image" alt="">
+          </div>
           <form #editProductForm=ngForm>
             <div class="form-group">
               <label for="input-id">Product id</label>

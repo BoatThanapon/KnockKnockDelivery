@@ -29,7 +29,7 @@
         <i class="fa fa-shopping-cart" (click)="goToCart()">
           <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
         </i>
-        <i class="fa fa-history">
+        <i class="fa fa-history" (click)="goToOrder()">
             <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
         </i>
 
