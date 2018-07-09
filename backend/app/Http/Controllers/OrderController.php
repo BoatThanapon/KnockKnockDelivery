@@ -26,7 +26,6 @@ class OrderController extends Controller
             'receiver_longitude' => 'required',
             'order_total_price' => 'required',
             'service_charge' => 'required',
-            'total' => 'required',
             'payment_transfer_slip' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'seller_id' => 'required',
             'buyer_id' => 'required',
@@ -38,7 +37,7 @@ class OrderController extends Controller
         $order->receiver_location = $request->receiver_location;
         $order->receiver_latitude = $request->receiver_latitude;
         $order->receiver_longitude = $request->receiver_longitude;
-        $order->order_date = date('Y-m-d');
+        $order->service_charge = $request->service_charge;
         $order->order_total_price = $request->order_total_price;
         $order->seller_id = $request->seller_id;
         $order->buyer_id = $request->buyer_id;
