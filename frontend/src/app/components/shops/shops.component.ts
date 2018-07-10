@@ -156,7 +156,7 @@ export class ShopsComponent implements OnInit {
   }
 
   goToCart() {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+    let cart = localStorage.getItem("cart");
 
     console.log("Cart : ",cart)
 
