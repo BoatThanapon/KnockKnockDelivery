@@ -27,6 +27,10 @@
             </div>
           </div>
         </div>
+        <div>
+          <p><b>Totla price:</b> {{totalPrice}} &#3647;</p>
+        </div>
+        
       </div>
       <div class="card-footer d-flex justify-content-between">
         <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
@@ -35,25 +39,44 @@
     </div>
 
     <div class="w3-display-middle" [hidden]="isCheckOut">
-      <div class="card card-container" [hidden]="!isWarting">
-        <div class="card-header">Waiting shipper</div>
+      <div class="card card-container" [hidden]="!isNewOrder">
+        <div class="card-header">Create new order request</div>
+        <div class="card-body">
+            <form #createOrderForm=ngForm>
+
+              <!-- <label for="input-firstname">Receiver firstname</label> -->
+              <input type="text" name="receiver_firstname" class="form-control" id="input-receiver_firstname" placeholder="Receiver firstname" [(ngModel)]="orderForm.receiver_firstname"
+              required/>
+
+              <!-- <label for="input-receiver_lastname">Receiver lastname</label> -->
+              <input type="text" name="receiver_lastname" class="form-control" id="input-receiver_lastname" placeholder="Receiver lastname" [(ngModel)]="orderForm.receiver_lastname"
+              required/>
+
+              <!-- <label for="input-receiver_location">Receiver location</label> -->
+              <textarea type="text" name="receiver_location" class="form-control" id="input-receiver_location" placeholder="Receiver location" [(ngModel)]="orderForm.receiver_location"
+              required></textarea>
+            </form>
+           
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-danger" (click)="cancelOrderRequest()">Cancel</button>
+            <button class="btn btn-success" (click)="createNewOrderRequest()">Create</button>
+        </div>
+      </div>
+
+      <div class="card card-container" [hidden]="isNewOrder">
+        <div class="card-header">Waiting shipper accept</div>
         <div class="card-body">
           <h2>Waiting...</h2>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-        </div>
-      </div>
-
-      <div class="card card-container" [hidden]="isWarting">
-        <div class="card-header">Get shipper</div>
-        <div class="card-body">
-          <h2>Shipper detail</h2>
-        </div>
-        <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-success" >Ok</button>
+            <button class="btn btn-success" (click)="isCreatedOrder()">Ok</button>
         </div>
       </div>
     </div>
+
+
+
+
   </div>
 </div>

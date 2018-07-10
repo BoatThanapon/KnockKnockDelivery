@@ -1,5 +1,6 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
+import { OrderService } from '../../services/order.service';
 
 
 @Component({
@@ -22,17 +23,20 @@ export class DeliverComponent implements OnInit {
   }
   private dafault_bank;
   private error;
+  private orders = [];
   private bankAcc;
   @ViewChild("mycanvas") mycanvas;
 
   constructor(
     private deliverService: DeliverService,
+    private orderService: OrderService,
 
   ) { }
 
   ngOnInit() {
     this.getProfile();
     this.setBankAccount();
+    this.getAllOrder();
   }
 
   openOrderInfo() {
@@ -90,7 +94,6 @@ export class DeliverComponent implements OnInit {
         });
 
 
-        this.isShow = !this.isShow
       },
       error => {
         console.log("[response] ",error)
@@ -119,6 +122,18 @@ export class DeliverComponent implements OnInit {
     error => {
       console.log("[Error] ",error)
 
+    })
+  }
+
+  getAllOrder() {
+    this.orderService.getOrders()
+    .subscribe(response => {
+      console.log("[Response] ",response.data)
+      this.orders = response.data
+      this.isShow = !this.isShow
+
+    },error => {
+      console.log("[Error] ",error)
     })
   }
 

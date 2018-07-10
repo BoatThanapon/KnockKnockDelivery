@@ -17,6 +17,8 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DeliverComponent } from './components/deliver/deliver.component';
+import { OrderComponent } from './components/order/order.component';
+
 
 
 
@@ -61,6 +63,11 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
     canActivate: [IsLoggedInService]
   },
   {

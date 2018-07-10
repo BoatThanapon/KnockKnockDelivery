@@ -171,6 +171,8 @@ export class ProfileComponent implements OnInit {
   enterManageShop(sellerProfile) {
     console.log('enterManageShop')
     localStorage.setItem("seller",JSON.stringify(sellerProfile));
+    localStorage.setItem("seller_id",JSON.stringify(sellerProfile.seller_id));
+
     this.router.navigateByUrl('/manage-shop')
   }
 

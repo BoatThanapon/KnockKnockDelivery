@@ -55,6 +55,7 @@ import { OrderComponent } from './components/order/order.component';
     AdminComponent,
     CartComponent,
     DeliverComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

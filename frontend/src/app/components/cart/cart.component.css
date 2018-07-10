@@ -89,3 +89,10 @@
 }
 
 /* END Loading page CSS */
+
+
+#input-receiver_firstname,
+#input-receiver_lastname,
+#input-receiver_location {
+  margin-bottom: 10px;
+}
