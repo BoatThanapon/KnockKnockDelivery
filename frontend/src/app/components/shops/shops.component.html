@@ -20,18 +20,21 @@
             <button class="btn btn-warning" id="search-button">
               <i class="fa fa-search"></i>
             </button>
-          </div>          
+          </div>
         </div>
       </div>
       <div class="w3-col m3 w3-center" id="cart" (click)="goToCart()">
         <i class="fa fa-shopping-cart" >
             <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
         </i>
+        <i class="fa fa-history">
+            <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
+        </i>
       </div>
 
     </div>
 
-<!-- 
+<!--
     <div class="row" id="header-container">
       <div class="col-2" id="catagory_container">
         <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.product_category_name}}</p>
@@ -40,7 +43,7 @@
         </div>
     </div> -->
 
-<!-- 
+<!--
     <div class="w3-container" id="btn-container">
       <div class="w3-quarter w3-padding">
         <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
@@ -72,13 +75,13 @@
               <p class="card-text" id="description">{{product.product_description}}</p>
               <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
               <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
-              
+
             </div>
           </div>
         </div>
       </div>
-    </div> 
-    
+    </div>
+
     <div class="w3-padding-32 w3-light-grey">
       <button class="btn btn-outline-info btn-block">See More</button>
     </div> -->
@@ -98,7 +101,7 @@
                 <p class="card-text" id="description">{{shop.shop_location}}</p>
                 <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
                 <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoShopModal" (click)="openShopInfo(shop)">Detail</a>
-                
+
               </div>
             </div>
           </div>
