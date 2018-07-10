@@ -26,12 +26,11 @@ class OrderController extends Controller
             'receiver_longitude' => 'required',
             'order_total_price' => 'required',
             'service_charge' => 'required',
-            'payment_transfer_slip' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'seller_id' => 'required',
             'buyer_id' => 'required',
         ]);
 
-        $order = new Order();
+        $order = new Order;
         $order->receiver_firstname = $request->receiver_firstname;
         $order->receiver_lastname = $request->receiver_lastname;
         $order->receiver_location = $request->receiver_location;
@@ -105,7 +104,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getListOrdersBySellerId($seller_id)
+    public function getOrdersBySellerId($seller_id)
     {
         $orders = $this->order
                     ->where('order_status_id', 1)
@@ -113,18 +112,5 @@ class OrderController extends Controller
                     ->get();
 
         return ListOrdersBySellerIdResource::collection($orders);
-    }
-
-    public function getOrderByOrderId($order_id)
-    {
-        $order = $this->order->where('order_id', $order_id)->first();
-        if($order === null)
-        {
-            return response()->json([
-                'message' => 'Order not found'
-            ], 400);
-        }
-
-        return ;
     }
 }
