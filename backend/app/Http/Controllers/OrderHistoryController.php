@@ -25,7 +25,7 @@ class OrderHistoryController extends Controller
         return OrderUserProfileHistoryResource::collection($seller_orders_history);
     }
 
-    public function getOrderHistoryBuyerByRoleId($buyer_id)
+    public function getOrderHistoryBuyerByBuyerId($buyer_id)
     {
         $buyer_order_histories = $this->order
                         ->where('buyer_id', $buyer_id)
@@ -34,7 +34,7 @@ class OrderHistoryController extends Controller
         return OrderUserProfileHistoryResource::collection($buyer_orders_history);
     }
 
-    public function getOrderHistoryDeliverByDeliverId($shipper_id)
+    public function getOrderHistoryDeliverByShipperId($shipper_id)
     {
         $shipper_order_histories = $this->order
                         ->where('shipper_id', $shipper_id)

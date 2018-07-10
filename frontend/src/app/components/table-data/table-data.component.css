@@ -11,8 +11,6 @@
   animation: dots 1s steps(5, end) infinite;
 }
 
-
-
 @keyframes dots {
   0%,
   20% {
@@ -30,9 +28,4 @@
   100% {
     text-shadow: .25em 0 0 white, .5em 0 0 white;
   }
-}
-
-img {
-  max-width: 250px;
-  max-height: 200px;
 }

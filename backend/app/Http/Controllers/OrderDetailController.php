@@ -17,7 +17,7 @@ class OrderDetailController extends Controller
     public function createOrderDeatail(Request $request)
     {
         foreach ($request as $item) {
-            $order_detail = new OrderDetail();
+            $order_detail = new OrderDetail;
             $order_detail->product_id = $item->product_id;
             $order_detail->unit_of_product = $item->unit_of_product;
             $order_detail->order_id = $item->order_id;
