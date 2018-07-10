@@ -30,11 +30,6 @@ export class CreateProfileComponent implements OnInit {
     suppressMarkers: true,
   };
 
-  
-
-  
-
-
   sellerForm = {
     shop_name: null,
     shop_location: null,
@@ -45,14 +40,14 @@ export class CreateProfileComponent implements OnInit {
     shop_longitude:null
   }
 
-  form = { 
+  form = {
     shop_name: '_',
     shop_location: 'Chiang Mai',
     shop_latitude: '134.343',
     shop_longitude: '34.4234234',
     shop_type_id: '1',
     user_id: '3',
-    shop_logo_image: undefined 
+    shop_logo_image: undefined
   }
 
   private shopCatagory;
@@ -60,13 +55,16 @@ export class CreateProfileComponent implements OnInit {
   buyerForm = {
     buyerName: null,
     location: null,
+    user_id:null
   }
 
   deliverForm = {
     name: null,
     email: null,
     password: null,
-    password_confirmation: null
+    password_confirmation: null,
+    user_id:null,
+    bank_account_id:null
   }
 
 
@@ -74,12 +72,10 @@ export class CreateProfileComponent implements OnInit {
 
 
 
-  constructor(    
+  constructor(
     private userService: UserService,
     private sellerService: SellerService,
-    
-    
-
+    private router: Router,
   ) {
     this.getGeoLocation();
     // this.getDirection();
@@ -96,7 +92,7 @@ export class CreateProfileComponent implements OnInit {
   //     zoom: 4,
   //     center: uluru
   //   });
-  
+
   //   var contentString = '<div id="content">'+
   //       '<div id="siteNotice">'+
   //       '</div>'+
@@ -117,11 +113,11 @@ export class CreateProfileComponent implements OnInit {
   //       '(last visited June 22, 2009).</p>'+
   //       '</div>'+
   //       '</div>';
-  
+
   //   var infowindow = new google.maps.InfoWindow({
   //     content: contentString
   //   });
-  
+
   //   var marker = new google.maps.Marker({
   //     position: uluru,
   //     map: map,
@@ -138,7 +134,7 @@ export class CreateProfileComponent implements OnInit {
   //     destination: { lat: 18.762179139651357, lng:  98.97522075271606 }
   //   }
   // }
-  
+
 
   getGeoLocation(){
     if (navigator.geolocation) {
@@ -151,7 +147,7 @@ export class CreateProfileComponent implements OnInit {
           this.longtitude = position.coords.longitude;
           this.sellerForm.shop_latitude = position.coords.latitude;
           this.sellerForm.shop_longitude = position.coords.longitude;
-          
+
           }, error => {
             console.log(error);
           }, options);
@@ -168,10 +164,10 @@ export class CreateProfileComponent implements OnInit {
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
       // this.sellerService.getShopCategories().subscribe(
       //   Response => {
-      //     this.isShow = !this.isShow;   
+      //     this.isShow = !this.isShow;
       //     console.log("Response from get catagory: ",Response.data);
       //     this.shopCatagory = Response.data;
       //   },
@@ -183,12 +179,12 @@ export class CreateProfileComponent implements OnInit {
     }
     else if (this.create_profile_id == 3) {
       this.isCreateBuyer = !this.isCreateBuyer;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
     else if (this.create_profile_id == 4) {
       this.isCreateDeliver = !this.isCreateDeliver;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
 
@@ -215,11 +211,11 @@ export class CreateProfileComponent implements OnInit {
   // readImageUrl(event:any) {
   //   if (event.target.files && event.target.files[0]) {
   //     var reader = new FileReader();
-  
+
   //     reader.onload = (event:any) => {
   //       this.sellerForm.shopImg = event.target.result;
   //     }
-  
+
   //     reader.readAsDataURL(event.target.files[0]);
   //   }
   // }
@@ -230,16 +226,83 @@ export class CreateProfileComponent implements OnInit {
   }
 
   createSeller() {
-    console.log("[This Seller] ",this.sellerForm)
-    this.sellerForm.user_id = localStorage.getItem("user_id")
-    this.userService.createSeller(this.sellerForm).subscribe(
+    console.log("[This Seller] ", this.sellerForm)
+    let temp = this.sellerForm;
+    this.isShow = !this.isShow
+    temp.user_id = localStorage.getItem("user_id")
+    console.log("[Temp body] ",temp);
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    this.userService.createSeller(temp).subscribe(
       data => {
-        console.log("response from create seller",data)
+        console.log("response from create seller", data);
+        alert("Create seller success!!!");
+        this.isShow = !this.isShow
+        this.router.navigateByUrl('/profile')
+
       },
-      error => console.log(error)
+      error => {
+        console.log(error)
+        this.isShow = !this.isShow
+        alert(error.error.message);
+      }
     )
 
+  }
 
+  onBankSelected(event) {
+    console.log("onBankSelected", event)
+    this.deliverForm.bank_account_id = parseInt(event);
+  }
+  createDeliver() {
+    console.log("[This deliver] ", this.deliverForm)
+    this.isShow = !this.isShow
+
+    this.deliverForm.user_id = localStorage.getItem("user_id")
+    this.userService.createDeliver(this.deliverForm).subscribe(
+      data => {
+        console.log("response from create deliver", data)
+        this.isShow = !this.isShow
+        alert("Create deliver success!!!");
+        this.router.navigateByUrl('/profile')
+
+    // console.log("[This Seller] ",this.sellerForm)
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    // this.userService.createSeller(this.sellerForm).subscribe(
+    //   data => {
+    //     console.log("response from create seller",data)
+    //   },
+    //   error => {
+    //     console.log(error)
+    //     this.isShow = !this.isShow
+    //     alert(error.error.message);
+    //   }
+    // )
+  },
+    error => {
+      console.log(error)
+      this.isShow = !this.isShow
+      alert(error.error.message);
+    })
+  }
+
+  createBuyer() {
+    console.log("[This Buyer] ", this.buyerForm)
+    let temp = this.buyerForm;
+    this.isShow = !this.isShow
+
+    temp.user_id = localStorage.getItem("user_id")
+    this.userService.createBuyer(temp).subscribe(
+      data => {
+        console.log("response from create buyer", data)
+        alert("Create buyer success!!!");
+        this.isShow = !this.isShow
+        this.router.navigateByUrl('/profile')
+      },
+      error => {
+        console.log(error)
+        this.isShow = !this.isShow
+        alert(error.error.message);
+      })
   }
 
 }
