@@ -81,8 +81,8 @@ Route::group([
 ], function ($router) {
     Route::get('order/sellers', 'OrderController@getListSellersHaveOrders');
     Route::get('order/seller/{seller_id}/order-list', 'OrderController@getListOrdersBySellerId');
-    Route::post('order', 'OrderController@updateOrder');
-    Route::post('order/{order_id}', 'OrderController@createOrder');
+    Route::post('order/{order_id}', 'OrderController@updateOrder');
+    Route::post('order', 'OrderController@createOrder');
     Route::post('order-detail', 'OrderDetailController@createOrderDeatail');
     Route::get('order-detail/{order_id}', 'OrderDetailController@getOrderDetailsByOrderId');
 });
