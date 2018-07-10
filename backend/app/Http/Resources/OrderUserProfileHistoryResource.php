@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ListOrdersOfShipperResource extends JsonResource
+class OrderUserProfileHistoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,14 +25,10 @@ class ListOrdersOfShipperResource extends JsonResource
             'order_total_price' => $this->telephone_number,
             'service_charge' => $this->telephone_number,
             'total' => $this->telephone_number,
-            'seller' => [
-                'seller_id' => $this->seller->seller_id,
-                'shop_name' => $this->seller->shop_name,
-                'shop_location' => $this->seller->shop_location
-            ],
-            'buyer' => [
-                'buyer_id' => $this->buyer->buyer_id,
-            ]
+            'seller' => $this->seller,
+            'buyer' => $this->buyer,
+            'shipper' => $this->shipper,
+            'order_details' => OrderDetail::getOrderDetailsByOrderId($this->order_id)
         ];
     }
 }
