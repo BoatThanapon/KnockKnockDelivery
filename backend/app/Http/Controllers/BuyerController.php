@@ -57,13 +57,13 @@ class BuyerController extends Controller
             ], 400);
         }
 
-        $profile = new Profile();
+        $profile = new Profile;
         $profile->user_id = $request->user_id;
         $profile->role_id = 3;
 
         $profile->save();
 
-        $buyer = new Buyer();
+        $buyer = new Buyer;
         $buyer->buyer_address = $request->buyer_address;
         $buyer->profile_status_id = 1;
         $buyer->profile_id = $profile->profile_id;

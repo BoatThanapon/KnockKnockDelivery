@@ -29,6 +29,7 @@ export class CreateProductComponent implements OnInit {
   private error = []
   private masterData;
   private bankAcc;
+  private image = new FormData();
 
   fileToUpload: File = null;
 
@@ -59,14 +60,11 @@ export class CreateProductComponent implements OnInit {
 
   preview(e: any): void {
     console.log("[Event] ",e.target.files[0]);
-    // let selectedFile: File;
-    // selectedFile = e.target.files[0]
-    // this.form.product_image_1 = selectedFile
-    const image = new FormData();
-    image.append('product_image_1', e.target.files[0], e.target.files[0].name)
-    this.form.product_image_1 = image;
-    // console.log("[this.image] ", image.get("myFile"));
-    // console.log("[this.form.product_image_1] ",this.form.product_image_1);
+
+    // this.form.product_image_1 = e.target.files[0]
+    this.image.append('myFile', e.target.files[0])
+    this.form.product_image_1 = this.image;
+    console.log("[this.form.product_image_1] ",this.form.product_image_1);
 
     // let canvas = this.mycanvas.nativeElement;
     // let context = canvas.getContext('2d');
@@ -108,7 +106,7 @@ export class CreateProductComponent implements OnInit {
   onCreate() {
     console.log("onCreate")
     console.log("form: ", this.form)
-    console.log("Image: ", this.form.product_image_1)
+    console.log("Image: ", this.image)
 
     this.isClick = !this.isClick;
 
@@ -124,13 +122,13 @@ export class CreateProductComponent implements OnInit {
         product_description: this.form.product_description,
         product_price: parseInt(this.form.product_price),
         product_category_id: parseInt(this.form.selected_catagory),
-        product_image_1:<File>this.form.product_image_1
+        product_image_1:this.image
+
+        // product_image_1:this.image
       }
 
       let seller_id = this.seller_id;
       console.log("tempForm: ", tempForm)
-      console.log("product_image_1: ", tempForm.product_image_1)
-
 
 
       this.sellerService.createProduct(tempForm, seller_id).subscribe(

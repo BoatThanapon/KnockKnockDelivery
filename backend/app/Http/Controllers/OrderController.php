@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ListOrdersOfShipperResource;
+use App\Http\Resources\ListOrdersBySellerIdResource;
 use App\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     private $order;
-    public function __construct(Order $order)
+    private $order_detail;
+    public function __construct(Order $order, OrderDetail $order_detail)
     {
         $this->order = $order;
+        $this->order_detail = $order_detail;
     }
 
     public function createOrder(Request $request)
@@ -24,19 +26,17 @@ class OrderController extends Controller
             'receiver_longitude' => 'required',
             'order_total_price' => 'required',
             'service_charge' => 'required',
-            'total' => 'required',
-            'payment_transfer_slip' => 'image|nullable|mimes:jpeg,jpg,png|max:10000',
             'seller_id' => 'required',
             'buyer_id' => 'required',
         ]);
 
-        $order = new Order();
+        $order = new Order;
         $order->receiver_firstname = $request->receiver_firstname;
         $order->receiver_lastname = $request->receiver_lastname;
         $order->receiver_location = $request->receiver_location;
         $order->receiver_latitude = $request->receiver_latitude;
         $order->receiver_longitude = $request->receiver_longitude;
-        $order->order_date = date('Y-m-d');
+        $order->service_charge = $request->service_charge;
         $order->order_total_price = $request->order_total_price;
         $order->seller_id = $request->seller_id;
         $order->buyer_id = $request->buyer_id;
@@ -104,19 +104,13 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getListOrdersOfShipper()
+    public function getOrdersBySellerId($seller_id)
     {
-        $orders = $this->order->where('order_status_id', 1)->get();
-        return ListOrdersOfShipperResource::collection($orders);
-    }
+        $orders = $this->order
+                    ->where('order_status_id', 1)
+                    ->where('seller_id', $seller_id)
+                    ->get();
 
-    public function getShopHistoryBySellerId($seller_id)
-    {
-        $shop_history = $this->order->where('order_status_id', 8)->get();
-        return response()->json([
-            'message' => "Successfully",
-            'order' => $order,
-        ]);
+        return ListOrdersBySellerIdResource::collection($orders);
     }
-
 }
