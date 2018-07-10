@@ -18,7 +18,13 @@ class OrderDetail extends Model
 
     public static function getOrderDetailsByOrderId($order_id)
     {
-        $order_details = OrderDetail::where('order_id', $order_id)->get();
+        $order_details = OrderDetail::with('product')->where('order_id', $order_id)->get();
+
         return $order_details;
     }
+    public function product()
+    {
+        return $this->belongsTo('App\product', 'product_id', 'product_id');
+    }
+
 }

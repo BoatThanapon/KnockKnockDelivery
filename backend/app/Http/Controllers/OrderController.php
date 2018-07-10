@@ -6,6 +6,7 @@ use App\Http\Resources\ListOrdersBySellerIdResource;
 use App\Order;
 use App\Seller;
 use App\Buyer;
+use App\OrderDetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -135,4 +136,75 @@ class OrderController extends Controller
 
         return ListOrdersBySellerIdResource::collection($orders);
     }
+
+    public function getOrderByOrderId($order_id)
+    {
+        $order = $this->order->where('order_id', $order_id)->first();
+        if($order === null)
+            return response()->json(['message' => 'Order not found']);
+
+        if($order->shipper !== null){
+            return response()->json([
+                'data' => [
+                    'order_id' => $order->order_id,
+                    'receiver_firstname' => $order->receiver_firstname,
+                    'receiver_lastname' => $order->receiver_lastname,
+                    'receiver_location' => $order->receiver_location,
+                    'receiver_latitude' => $order->receiver_latitude,
+                    'receiver_longitude' => $order->receiver_longitude,
+                    'service_charge' => $order->service_charge,
+                    'order_total_price' => $order->order_total_price,
+                    'created_at' => $order->created_at->format('Y-m-d'),
+                    'updated_at' => $order->updated_at->format('Y-m-d'),
+                    'seller' => [
+                        'seller_id' => $order->seller->seller_id,
+                        'shop_name' => $order->seller->shop_name,
+                        'shop_location' => $order->seller->shop_location,
+                        'shop_latitude' => $order->seller->shop_latitude,
+                        'shop_longitude' => $order->seller->shop_longitude
+                    ],
+                    'buyer' => [
+                        'buyer_id' => $order->buyer->buyer_id,
+                    ],
+                    'shipper' => [
+                        'shipper_id' => $order->shipper->shipper||null,
+                        'bank_account' => [
+                            'bank_account_id' => $order->shipper->bank_account->bank_account_id||null,
+                            'bank_account_name' => $order->shipper->bank_account->bank_account_name||null
+                        ] || null,
+                        'bank_account_no' => $order->shipper->bank_account_no || null,
+                    ],
+                    'order_details' => OrderDetail::getOrderDetailsByOrderId($order->order_id)
+                ]
+            ]);
+        }else{
+            return response()->json([
+                'data' => [
+                    'order_id' => $order->order_id,
+                    'receiver_firstname' => $order->receiver_firstname,
+                    'receiver_lastname' => $order->receiver_lastname,
+                    'receiver_location' => $order->receiver_location,
+                    'receiver_latitude' => $order->receiver_latitude,
+                    'receiver_longitude' => $order->receiver_longitude,
+                    'service_charge' => $order->service_charge,
+                    'order_total_price' => $order->order_total_price,
+                    'created_at' => $order->created_at->format('Y-m-d'),
+                    'updated_at' => $order->updated_at->format('Y-m-d'),
+                    'seller' => [
+                        'seller_id' => $order->seller->seller_id,
+                        'shop_name' => $order->seller->shop_name,
+                        'shop_location' => $order->seller->shop_location,
+                        'shop_latitude' => $order->seller->shop_latitude,
+                        'shop_longitude' => $order->seller->shop_longitude
+                    ],
+                    'buyer' => [
+                        'buyer_id' => $order->buyer->buyer_id,
+                    ],
+                    'shipper' => null,
+                    'order_details' => OrderDetail::getOrderDetailsByOrderId($order->order_id)
+                ]
+            ]);
+        }
+    }
+
 }

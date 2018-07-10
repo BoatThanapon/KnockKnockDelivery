@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\OrderDetail;
 
 class ListOrdersBySellerIdResource extends JsonResource
 {
@@ -33,7 +34,8 @@ class ListOrdersBySellerIdResource extends JsonResource
             ],
             'buyer' => [
                 'buyer_id' => $this->buyer->buyer_id,
-            ]
+            ],
+            'order_details' => OrderDetail::getOrderDetailsByOrderId($this->order_id)
         ];
     }
 }
