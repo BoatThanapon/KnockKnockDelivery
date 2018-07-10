@@ -31,11 +31,6 @@ export class CreateProfileComponent implements OnInit {
     suppressMarkers: true,
   };
 
-  
-
-  
-
-
   sellerForm = {
     shop_name: null,
     shop_location: null,
@@ -46,14 +41,14 @@ export class CreateProfileComponent implements OnInit {
     shop_longitude:null
   }
 
-  form = { 
+  form = {
     shop_name: '_',
     shop_location: 'Chiang Mai',
     shop_latitude: '134.343',
     shop_longitude: '34.4234234',
     shop_type_id: '1',
     user_id: '3',
-    shop_logo_image: undefined 
+    shop_logo_image: undefined
   }
 
   private shopCatagory;
@@ -78,14 +73,10 @@ export class CreateProfileComponent implements OnInit {
 
 
 
-  constructor(    
+  constructor(
     private userService: UserService,
     private sellerService: SellerService,
     private router: Router,
-
-    
-    
-
   ) {
     this.getGeoLocation();
     // this.getDirection();
@@ -102,7 +93,7 @@ export class CreateProfileComponent implements OnInit {
   //     zoom: 4,
   //     center: uluru
   //   });
-  
+
   //   var contentString = '<div id="content">'+
   //       '<div id="siteNotice">'+
   //       '</div>'+
@@ -123,11 +114,11 @@ export class CreateProfileComponent implements OnInit {
   //       '(last visited June 22, 2009).</p>'+
   //       '</div>'+
   //       '</div>';
-  
+
   //   var infowindow = new google.maps.InfoWindow({
   //     content: contentString
   //   });
-  
+
   //   var marker = new google.maps.Marker({
   //     position: uluru,
   //     map: map,
@@ -144,7 +135,7 @@ export class CreateProfileComponent implements OnInit {
   //     destination: { lat: 18.762179139651357, lng:  98.97522075271606 }
   //   }
   // }
-  
+
 
   getGeoLocation(){
     if (navigator.geolocation) {
@@ -157,7 +148,7 @@ export class CreateProfileComponent implements OnInit {
           this.longtitude = position.coords.longitude;
           this.sellerForm.shop_latitude = position.coords.latitude;
           this.sellerForm.shop_longitude = position.coords.longitude;
-          
+
           }, error => {
             console.log(error);
           }, options);
@@ -174,10 +165,10 @@ export class CreateProfileComponent implements OnInit {
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
       // this.sellerService.getShopCategories().subscribe(
       //   Response => {
-      //     this.isShow = !this.isShow;   
+      //     this.isShow = !this.isShow;
       //     console.log("Response from get catagory: ",Response.data);
       //     this.shopCatagory = Response.data;
       //   },
@@ -189,12 +180,12 @@ export class CreateProfileComponent implements OnInit {
     }
     else if (this.create_profile_id == 3) {
       this.isCreateBuyer = !this.isCreateBuyer;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
     else if (this.create_profile_id == 4) {
       this.isCreateDeliver = !this.isCreateDeliver;
-      this.isShow = !this.isShow;   
+      this.isShow = !this.isShow;
 
     }
 
@@ -222,11 +213,11 @@ export class CreateProfileComponent implements OnInit {
   // readImageUrl(event:any) {
   //   if (event.target.files && event.target.files[0]) {
   //     var reader = new FileReader();
-  
+
   //     reader.onload = (event:any) => {
   //       this.sellerForm.shopImg = event.target.result;
   //     }
-  
+
   //     reader.readAsDataURL(event.target.files[0]);
   //   }
   // }
@@ -314,7 +305,6 @@ export class CreateProfileComponent implements OnInit {
         this.isShow = !this.isShow
         alert(error.error.message);
       })
-
 
   }
 

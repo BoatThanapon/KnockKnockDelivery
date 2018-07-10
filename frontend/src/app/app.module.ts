@@ -36,9 +36,6 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 import { OrderComponent } from './components/order/order.component';
 
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
