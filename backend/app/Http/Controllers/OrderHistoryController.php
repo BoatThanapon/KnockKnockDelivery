@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
-use App\Http\Resources\OrderUserProfileHistoryResource as OrderUserProfileHistoryResource;
+use App\Http\Resources\ListOrderHistoryResource as ListOrderHistoryResource;
 
 
 class OrderHistoryController extends Controller
@@ -16,30 +16,36 @@ class OrderHistoryController extends Controller
         $this->order = $order;
     }
 
-    public function getOrderHistorySellerBySellerId($seller_id)
+    public function getListOrdersHistory()
     {
-        $seller_order_histories = $this->order
+        $orders = $this->order->with('order_status')->where('order_status_id', 8)->get();
+        return ListOrderHistoryResource::collection($seller_orders_history);
+    }
+
+    public function getListOrderHistorySellerBySellerId($seller_id)
+    {
+        $seller_order_histories = $this->order->with('order_status')
                         ->where('seller_id', $seller_id)
                         ->where('order_status_id', 8)
                         ->get();
-        return OrderUserProfileHistoryResource::collection($seller_orders_history);
+        return ListOrderHistoryResource::collection($seller_orders_history);
     }
 
-    public function getOrderHistoryBuyerByBuyerId($buyer_id)
+    public function getListOrderHistoryBuyerByBuyerId($buyer_id)
     {
-        $buyer_order_histories = $this->order
+        $buyer_order_histories = $this->order->with('order_status')
                         ->where('buyer_id', $buyer_id)
                         ->where('order_status_id', 8)
                         ->get();
-        return OrderUserProfileHistoryResource::collection($buyer_orders_history);
+        return ListOrderHistoryResource::collection($buyer_orders_history);
     }
 
-    public function getOrderHistoryDeliverByShipperId($shipper_id)
+    public function getListOrderHistoryDeliverByShipperId($shipper_id)
     {
-        $shipper_order_histories = $this->order
+        $shipper_order_histories = $this->order->with('order_status')
                         ->where('shipper_id', $shipper_id)
                         ->where('order_status_id', 8)
                         ->get();
-        return OrderUserProfileHistoryResource::collection($shipper_order_histories);
+        return ListOrderistoryResource::collection($shipper_order_histories);
     }
 }

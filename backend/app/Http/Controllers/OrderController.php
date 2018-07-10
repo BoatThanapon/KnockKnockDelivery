@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ListOrdersBySellerIdResource;
 use App\Order;
+use App\Seller;
+use App\Buyer;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     private $order;
-    private $order_detail;
-    public function __construct(Order $order, OrderDetail $order_detail)
+    private $seller;
+    private $buyer;
+    public function __construct(Order $order, Seller $seller,Buyer $buyer)
     {
         $this->order = $order;
-        $this->order_detail = $order_detail;
+        $this->seller = $seller;
+        $this->buyer = $buyer;
     }
 
     public function createOrder(Request $request)
@@ -38,16 +42,23 @@ class OrderController extends Controller
         $order->receiver_longitude = $request->receiver_longitude;
         $order->service_charge = $request->service_charge;
         $order->order_total_price = $request->order_total_price;
+
+        $seller = $this->seller->where('seller_id', $request->seller_id)->first();
+        if($seller === null)
+            return response()->json(['message' => 'Seller not found']);
+
         $order->seller_id = $request->seller_id;
+
+        $buyer = $this->buyer->where('buyer_id', $request->buyer_id)->first();
+        if($buyer === null)
+            return response()->json(['message' => 'Buyer not found']);
+
         $order->buyer_id = $request->buyer_id;
         $order->order_status_id = 1;
 
         $order->save();
 
-        return response()->json([
-            'message' => 'Successfully',
-            'result' => $order,
-        ]);
+        return response()->json(['result' => $order]);
     }
 
     public function updateOrder(Request $request, $order_id)
@@ -98,13 +109,24 @@ class OrderController extends Controller
             $order->payment_transfer_slip = "storage/payment_transfer_slip/" . $request->payment_transfer_slip;
         }
 
-        return response()->json([
-            'message' => "Successfully",
-            'order' => $order,
-        ]);
+        return response()->json(['result' => $order]);
     }
 
-    public function getOrdersBySellerId($seller_id)
+    public function getListSellersHaveOrders()
+    {
+        $orders = $this->order->where('order_status_id', 1)->get();
+        $order_sellers = array();
+        foreach($orders as $index => $item){
+            $seller_id = $item->seller_id;
+            $order_sellers[$index] = $seller_id;
+        }
+
+        $sellers = $this->seller->whereIn('seller_id', $order_sellers)->get();
+
+        return response()->json(['data' => $sellers]);
+    }
+
+    public function getListOrdersBySellerId($seller_id)
     {
         $orders = $this->order
                     ->where('order_status_id', 1)

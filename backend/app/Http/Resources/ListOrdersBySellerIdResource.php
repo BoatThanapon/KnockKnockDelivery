@@ -21,14 +21,15 @@ class ListOrdersBySellerIdResource extends JsonResource
             'receiver_location' => $this->receiver_location,
             'receiver_latitude' => $this->receiver_latitude,
             'receiver_longitude' => $this->receiver_longitude,
-            'order_date' => $this->order_date,
-            'order_total_price' => $this->telephone_number,
-            'service_charge' => $this->telephone_number,
-            'total' => $this->telephone_number,
+            'service_charge' => $this->service_charge,
+            'order_total_price' => $this->order_total_price,
+            'created_at' => $this->created_at->format('Y-m-d'),
             'seller' => [
                 'seller_id' => $this->seller->seller_id,
                 'shop_name' => $this->seller->shop_name,
-                'shop_location' => $this->seller->shop_location
+                'shop_location' => $this->seller->shop_location,
+                'shop_latitude' => $this->seller->shop_latitude,
+                'shop_longitude' => $this->seller->shop_longitude
             ],
             'buyer' => [
                 'buyer_id' => $this->buyer->buyer_id,
