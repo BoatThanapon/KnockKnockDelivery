@@ -23,13 +23,16 @@
           </div>
         </div>
       </div>
-      <div class="w3-col m3 w3-center" id="cart" (click)="goToCart()">
-        <i class="fa fa-shopping-cart" >
-            <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
-        </i>
-        <i class="fa fa-history">
-            <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
-        </i>
+      <div class="w3-col m3 w3-center" id="cart" >
+        <div class="d-flex justify-content-around">
+          <i class="fa fa-shopping-cart w3-padding" (click)="goToCart()">
+              <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
+          </i>
+          <i class="fa fa-history w3-padding" (click)="goToOrder()">
+              <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
+          </i>
+        </div>
+        
       </div>
 
     </div>
@@ -100,16 +103,16 @@
                 <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
                 <p class="card-text" id="description">{{shop.shop_location}}</p>
                 <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
-                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoShopModal" (click)="openShopInfo(shop)">Detail</a>
+                <a class="btn btn-primary btn-block" (click)="goToShop(shop)">Go to shop</a>
 
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="w3-padding-32" [hidden]="shops.length < 12">
+      <!-- <div class="w3-padding-32" [hidden]="shops.length < 12">
         <button class="btn btn-outline-info btn-block">See More</button>
-      </div>
+      </div> -->
     </div>
 
     <!-- Contact Section -->

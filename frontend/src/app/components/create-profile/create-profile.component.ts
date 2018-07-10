@@ -23,6 +23,7 @@ export class CreateProfileComponent implements OnInit {
   private isCreateSeller: Boolean = false;
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
+  private bankAcc;
   latitude: any;
   longtitude: any;
   dir = undefined;
@@ -78,6 +79,7 @@ export class CreateProfileComponent implements OnInit {
     private router: Router,
   ) {
     this.getGeoLocation();
+    this.setBankAccount();
     // this.getDirection();
     // this.initMap();
    }
@@ -304,5 +306,11 @@ export class CreateProfileComponent implements OnInit {
         alert(error.error.message);
       })
   }
+
+  setBankAccount () {
+    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account
+  }
+
+
 
 }

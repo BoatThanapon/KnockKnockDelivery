@@ -106,7 +106,9 @@ export interface Profile {
 export interface user {
     data: {
         seller:null,
-        buyer:null,
+        buyer:{
+            buyer_id:null
+        },
         shipper:null,
         admin:null
     },
