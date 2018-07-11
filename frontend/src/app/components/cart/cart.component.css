@@ -78,6 +78,9 @@
   height: 240px;
   animation: spin 2s linear infinite;
 }
+agm-map {
+  height: 250px;
+}
 
 @keyframes spin {
   0% {
