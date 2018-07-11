@@ -132,6 +132,7 @@ class OrderController extends Controller
         $orders = $this->order
                     ->where('order_status_id', 1)
                     ->where('seller_id', $seller_id)
+                    ->orderBy('created_at', 'DESC')
                     ->get();
 
         return ListOrdersBySellerIdResource::collection($orders);

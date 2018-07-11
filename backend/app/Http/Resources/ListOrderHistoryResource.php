@@ -16,8 +16,8 @@ class ListOrderHistoryResource extends JsonResource
     {
         return [
             'order_id' => $this->order_id,
-            'update_at' => $this->update_at,
             'order_status' => $this->order_status,
+            'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
     }
 }

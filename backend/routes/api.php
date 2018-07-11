@@ -75,7 +75,6 @@ Route::group([
     Route::get('product/{product_id}', 'ProductController@getProductByProductId');
 });
 
-// order
 Route::group([
     'middleware' => ['auth:api','CORS'],
 ], function ($router) {
@@ -86,4 +85,10 @@ Route::group([
     Route::post('order', 'OrderController@createOrder');
     Route::post('order-detail', 'OrderDetailController@createOrderDeatail');
     Route::get('order-detail/{order_id}', 'OrderDetailController@getOrderDetailsByOrderId');
+
+
+    Route::get('order/seller/{seller_id}/histories', 'OrderHistoryController@getListOrderHistorySellerBySellerId');
+    Route::get('order/buyer/{buyer_id}/histories', 'OrderHistoryController@getListOrderHistoryBuyerByBuyerId');
+    Route::get('order/shipper/{shipper_id}/histories', 'OrderHistoryController@getListOrderHistoryDeliverByShipperId');
+    Route::get('admin/order/histories', 'OrderHistoryController@getListOrdersHistory');
 });
