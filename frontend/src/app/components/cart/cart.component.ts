@@ -1,3 +1,4 @@
+declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
@@ -27,14 +28,20 @@ export class CartComponent implements OnInit {
     receiver_firstname: null,
     receiver_lastname:  null,
     receiver_location:  null,
+    receiver_latitude: null,
+    receiver_longitude: null,
   }
+  latitude: any;
+  longtitude: any;
 
   constructor(
     private router: Router,
     private orderService: OrderService,
     private userService: UserService,
 
-  ) { }
+  ) {
+    this.getGeoLocation();
+   }
 
   ngOnInit() {
     this.getCart();
@@ -68,6 +75,30 @@ export class CartComponent implements OnInit {
     console.log("Cart : ", this.cart)
     this.calculateTotalPrice();
 
+  }
+
+  getGeoLocation(){
+    if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
+
+        navigator.geolocation.getCurrentPosition(position=> {
+          this.latitude = position.coords.latitude;
+          this.longtitude = position.coords.longitude;
+          this.orderForm.receiver_latitude = position.coords.latitude;
+          this.orderForm.receiver_longitude = position.coords.longitude;
+
+          }, error => {
+            console.log(error);
+          }, options);
+    }
+  }
+  onChooseLocation(event) {
+    this.latitude = event.coords.lat;
+    this.longtitude = event.coords.lng;
+    this.orderForm.receiver_latitude = event.coords.lat;
+    this.orderForm.receiver_longitude = event.coords.lng;
   }
 
   deleteProduct(product) {
@@ -145,8 +176,8 @@ export class CartComponent implements OnInit {
       receiver_firstname: this.orderForm.receiver_firstname,
       receiver_lastname: this.orderForm.receiver_lastname,
       receiver_location: this.orderForm.receiver_location,
-      receiver_latitude: "67.232",  
-      receiver_longitude: "34.1231231",
+      receiver_latitude: this.orderForm.receiver_latitude,  
+      receiver_longitude: this.orderForm.receiver_longitude,
       order_total_price: this.totalPrice,
       service_charge: "40",
       seller_id: this.seller_id,
