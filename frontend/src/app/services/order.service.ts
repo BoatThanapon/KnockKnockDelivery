@@ -25,6 +25,19 @@ export class OrderService {
   getOrders() {
     return this.http.get<orders>(`${this.baseUrl}order/sellers`, this.httpOptions)
   }
+
+  getOrderBySellerId(sid) {
+    return this.http.get<orders>(`${this.baseUrl}order/seller/`+sid+`/order-list`, this.httpOptions)
+  }
+
+  getOrderDetail(oid) {
+    return this.http.get<orders>(`${this.baseUrl}order/`+oid, this.httpOptions)
+  }
+
+  updateOrder(oid,body) {
+    return this.http.post(`${this.baseUrl}order/`+oid,body ,this.httpOptions)
+
+  }
 }
 
 export interface order {

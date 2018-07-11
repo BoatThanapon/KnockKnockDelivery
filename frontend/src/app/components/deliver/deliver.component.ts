@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class DeliverComponent implements OnInit {
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
+    private router: Router
 
   ) { }
 
@@ -135,6 +137,13 @@ export class DeliverComponent implements OnInit {
     },error => {
       console.log("[Error] ",error)
     })
+  }
+
+  gotoShop(seller) {
+    console.log("[Go to shop] ",seller)
+    localStorage.setItem('seller_order_id',seller.seller_id)
+    this.router.navigateByUrl('/deliver-order')
+
   }
 
 }

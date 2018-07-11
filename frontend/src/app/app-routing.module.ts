@@ -18,6 +18,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DeliverComponent } from './components/deliver/deliver.component';
 import { OrderComponent } from './components/order/order.component';
+import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orders.component';
+
 
 
 
@@ -73,6 +75,11 @@ const routes: Routes = [
   {
     path: 'deliver',
     component: DeliverComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'deliver-order',
+    component: DeliverOrdersComponent,
     canActivate: [IsLoggedInService]
   },
   {
