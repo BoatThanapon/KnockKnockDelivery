@@ -101,6 +101,7 @@ export class ShopComponent implements OnInit {
     let cart = JSON.parse(localStorage.getItem("cart"));
     if(cart == null){
       let obj = [];
+      obj['seller_id'] = this.seller_id
       obj.push(product);
       // console.log("product: ",product);
       localStorage.setItem("cart",JSON.stringify(obj));

@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { SellerService } from '../../services/seller.service';
 import { UserService } from '../../services/user.service';
-
-
-
 import { Router } from '@angular/router';
-
-
 
 
 @Component({
@@ -22,6 +17,7 @@ export class ShopsComponent implements OnInit {
   private shops;
   private isShow: boolean = true;
   private cart_num = 0;
+  private orders_num = 0;
   private baseUrl = 'http://localhost:8000';
 
 
@@ -92,6 +88,10 @@ export class ShopsComponent implements OnInit {
     )
   }
 
+  getOrder() {
+
+  }
+
   openInfo(product){
     console.log("onClick product: ",product)
     this.form.product_name= product.product_name,
@@ -153,6 +153,19 @@ export class ShopsComponent implements OnInit {
     }
 
   }
+
+  setOrderNum(){
+    let orders = JSON.parse(localStorage.getItem("orders"));
+    console.log("orders: ",orders);
+    if(orders != null) {
+          this.orders_num = orders.length;
+    } 
+    else if(orders == {}) {
+      this.orders_num = 0;
+    }
+  }
+
+
 
   goToCart() {
     let cart = localStorage.getItem("cart");
