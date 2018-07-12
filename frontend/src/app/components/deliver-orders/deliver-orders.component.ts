@@ -76,7 +76,7 @@ export class DeliverOrdersComponent implements OnInit {
       console.log("[response] ",response)
       this.isShow = !this.isShow
       alert('Sucess accept this order')
-      localStorage.setItem('order',order)
+      localStorage.setItem('order',JSON.stringify(order))
 
     }
     ,error => {

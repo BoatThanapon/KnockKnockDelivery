@@ -48,6 +48,7 @@ export class ShopsComponent implements OnInit {
   ngOnInit() {
     this.setCartNum();
     this.getAllProducts();
+    this.setOrderNum();
   }
 
   getAllProducts() {
