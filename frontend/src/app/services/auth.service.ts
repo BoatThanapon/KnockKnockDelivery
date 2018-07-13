@@ -29,6 +29,32 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  // middleware(url, data, headers, method) {
+  //   const _this = this;
+  //   return {
+  //     subscribe: (cbSuccess, cbError) => {
+  //       _this.http.post(`${this.baseUrl}/${url}`, data, headers)
+  //         .subscribe(cbSuccess, error => {
+
+  //           _this.refresh()
+  //             .subscribe(
+  //               token => {
+  //                 //SET TOKEN
+  //                 _this.http.post(`${this.baseUrl}/${url}`, data, headers).subscribe(cbSuccess, cbError);
+  //               }, 
+  //               cbError
+  //             );
+
+  //           cbError(error);
+  //         }
+  //       );
+  //     }
+  //   }
+  // }
+
+  // xservice(data) {
+  //   return this.middleware('/fetchxxx', { foo:'bar'}, {}, 'POST');   
+  // }
 
   signup(data) {
     return this.http.post(`${this.baseUrl}/signup`, data)

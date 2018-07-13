@@ -32,8 +32,8 @@
             </p>
           </div>
           <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <div>
+            <div class="row">
+              <div class="col-5">
                 <p><b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p>
                 <p><b>Reciever location:</b> {{order.receiver_location}}</p>
                 <p><b>Shop name:</b> {{order.seller.shop_name}}</p>
@@ -42,7 +42,7 @@
                 <p><b>Total price:</b> {{order.order_total_price}}</p>
               </div>
 
-              <div>
+              <div class="col-5">
               <agm-map [zoom]="18" >
                 <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
                 <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
@@ -58,7 +58,7 @@
               </agm-map>
               </div>
               
-              <div class="d-flex align-items-center btn-group">
+              <div class="col-2 d-flex align-items-center btn-group">
                 <button class="btn btn-success" (click)="acceptOrder(order)">Accept order</button>
               </div>
             </div>
