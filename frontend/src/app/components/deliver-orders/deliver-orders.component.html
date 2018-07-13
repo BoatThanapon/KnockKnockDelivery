@@ -42,6 +42,7 @@
                 <p><b>Total price:</b> {{order.order_total_price}}</p>
               </div>
 
+              <div>
               <agm-map [zoom]="18" >
                 <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
                 <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
