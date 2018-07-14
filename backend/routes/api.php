@@ -67,6 +67,7 @@ Route::group([
     Route::post('search/users', 'AdminController@searchUsers');
     // Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
     Route::post('admin/updatestatus', 'AdminController@adminUpdateStatusUser');
+    Route::put('admin/cancel-order/{order_id}', 'AdminController@cancelOrder');
 });
 
 
