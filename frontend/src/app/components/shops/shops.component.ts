@@ -99,7 +99,7 @@ export class ShopsComponent implements OnInit {
   }
 
   getBuyerProfile() {
-    let id = localStorage.getItem('user_id')
+    let id = JSON.parse(localStorage.getItem('buyer')).profile_id
     this.BuyerService.getBuyerByProfileId(id).subscribe(
       Response=> {
         console.log("[Response] getBuyerProfile: ",Response.data)
@@ -143,6 +143,8 @@ export class ShopsComponent implements OnInit {
   goToShop(shop) {
     console.log("onClick goToShop: ",shop)
     localStorage.setItem("seller_id",shop.seller_id)
+    localStorage.setItem("shop",JSON.stringify(shop))
+
     this.router.navigateByUrl('/shop')
 
   }
@@ -228,7 +230,6 @@ export class ShopsComponent implements OnInit {
     this.BuyerService.updateBuyer(temp,id)
     .subscribe(response => {
       console.log("[response] onEditBuyer: ",response)
-      this.ngOnInit();
     }
     ,error => {console.log("[error] onEditBuyer: ",error)})
   }

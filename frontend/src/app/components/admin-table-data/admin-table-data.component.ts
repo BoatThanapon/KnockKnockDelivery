@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,  EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerService } from '../../services/seller.service';
 import { AdminService } from '../../services/admin.service';
@@ -10,12 +10,16 @@ import { AdminService } from '../../services/admin.service';
 })
 export class AdminTableDataComponent implements OnInit {
 
-  @Input() products: Object;
+  @Input() _headers: Object;
+  @Input() data_history: Object;
+  @Input() _type: String;
+
   @Output() reloadPage = new EventEmitter();
 
   private baseUrl = 'http://localhost:8000';
+
   private headers;
-  private datas;
+  private data;
 
   constructor(
     private modalService: NgbModal,
@@ -25,6 +29,12 @@ export class AdminTableDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setPage();
+  }
+
+  setPage() {
+    this.headers = this._headers;
+    this.data = this.data_history;
   }
 
 }

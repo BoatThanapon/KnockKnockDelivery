@@ -1,33 +1,75 @@
-<table datatable [dtOptions]="dtOptions" class="row-border hover">
+<table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
     <thead>
       <tr *ngFor="let header of headers">
         <th>No.</th>
-        <th>ID</th>
-        <th>Product Name</th>
-        <th>Product Description</th>
-        <th>Product Price</th>
-        <th>Product status</th>
+        <th>{{header.order_id}}</th>
+        <th>{{header.order_status.order_status_name}}</th>
+        <th>{{header.updated_at}}</th>
+        
         <th> </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of datas;let  i = index">
-        <td>{{ i+1 }}</td>
-        <td>{{ product.product_id }}</td>
-        <td>{{ product.product_name }}</td>
-        <td>{{ product.product_description }}</td>
-        <td>{{ product.product_price }}</td>
-        <td>{{ product.product_status.product_status_name }}</td>
+      <tr *ngFor="let order of data;let  i = index">
+        <td>{{i+1}}</td>
+        <td>{{order.order_id}} </td>
+        <td>{{order.order_status.order_status_name}} </td>
+        <td>{{order.updated_at}} </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
+            <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="openEdit(product)">Edit</button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button> -->
           </div>
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <!-- Modal -->
   
