@@ -151,4 +151,12 @@ export class ShopComponent implements OnInit {
     }
   }
 
+  openEditBuyer() {
+    
+  }
+
+  onEditBuyer() {
+
+  }
+
 }
