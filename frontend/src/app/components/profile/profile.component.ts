@@ -189,7 +189,9 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl('/manage-shop')
   }
 
-  enterShops() {
+  enterShops(buyerProfile) {
+    localStorage.setItem("buyer",JSON.stringify(buyerProfile));
+    localStorage.setItem("buyer_id",JSON.stringify(buyerProfile.buyer_id));
     this.router.navigateByUrl('/shops')
 
   }

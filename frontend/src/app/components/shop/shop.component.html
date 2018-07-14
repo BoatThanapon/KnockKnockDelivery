@@ -34,10 +34,9 @@
         <i class="fa fa-history w3-padding" (click)="goToOrder()">
           <span *ngIf="orders_num!=0" class="history-num" id="topActionHistoryNumber">{{orders_num}}</span>
         </i>
+        <i class="fa fa-cog w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()"></i>
       </div>
-
     </div>
-
   </div>
 
 
@@ -100,3 +99,26 @@
       </div>
     </div>
   </div>
+
+<!-- //////////////////////////////////// Edit buyer Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="editBuyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit buyer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ganger" data-dismiss="modal" (click)="onEditBuyer()">Cancel</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -19,6 +19,15 @@ export class ShopsComponent implements OnInit {
   private cart_num = 0;
   private orders_num = 0;
   private baseUrl = 'http://localhost:8000';
+  private buyer_profile ={
+    buyer_address:'',
+    buyer_id:'',
+    profile_id:'',
+    profile_status:{
+      profile_status_id:'',
+      profile_status_name:''
+    }
+  }
 
 
 
@@ -80,14 +89,31 @@ export class ShopsComponent implements OnInit {
   getAllShops() {
     this.SellerService.getAllShops().subscribe(
       response => {
-        console.log("getAllShops: ", response.data);
+        console.log("[Response] getAllShops: ", response.data);
         this.shops = response.data;
-        this.isShow = !this.isShow;    
+        this.getBuyerProfile();
 
       },
       error => console.log(error)
     )
   }
+
+  getBuyerProfile() {
+    let id = localStorage.getItem('user_id')
+    this.BuyerService.getBuyerByProfileId(id).subscribe(
+      Response=> {
+        console.log("[Response] getBuyerProfile: ",Response.data)
+        this.buyer_profile = Response.data[0]
+        this.isShow = !this.isShow;    
+
+      }
+      ,error => {
+        console.log("[Error] getBuyerProfile: ",error)
+        this.isShow = !this.isShow;    
+      });
+
+  }
+
 
   getOrder() {
 
@@ -185,6 +211,26 @@ export class ShopsComponent implements OnInit {
   goToOrder() {
     this.router.navigateByUrl('/order')
 
+  }
+
+  openEditBuyer() {
+    
+  }
+
+  onEditBuyer() {
+    let id = localStorage.getItem('buyer_id')
+    console.log("[buyer] ",this.buyer_profile)
+    let temp = {
+      buyer_location: this.buyer_profile.buyer_address,
+      profile_status_id: 1
+    }
+
+    this.BuyerService.updateBuyer(temp,id)
+    .subscribe(response => {
+      console.log("[response] onEditBuyer: ",response)
+      this.getBuyerProfile();
+    }
+    ,error => {console.log("[error] onEditBuyer: ",error)})
   }
 
 }
