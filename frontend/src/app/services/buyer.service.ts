@@ -37,6 +37,11 @@ export class BuyerService {
     return this.http.put(`${this.baseUrl}buyer/${uid}`,form,this.httpOptions)
 
   }
+
+  getOrderByBuyerId(id) {
+    return this.http.get<Product>(`${this.baseUrl}order/buyer/${id}/histories`,this.httpOptions)
+
+  }
 }
 
 export interface Product {

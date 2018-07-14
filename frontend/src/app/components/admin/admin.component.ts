@@ -13,7 +13,9 @@ export class AdminComponent implements OnInit {
 
   private isLoad: boolean = true;
   private isMenu: boolean = false;
-  private isHolding: boolean = true;
+  private isHolding: boolean = false;
+  private isUserIn: boolean = false;
+  private isHistory:boolean = false;
 
   private isBuyer: boolean = true;
   private isSeller: boolean = true;
@@ -102,6 +104,7 @@ export class AdminComponent implements OnInit {
   userInSystem() {
     this.isMenu = !this.isMenu;
     this.isLoad = !this.isLoad;
+    this.isUserIn = !this.isUserIn;
     console.log("userInSystem");
     localStorage.setItem('adminSelect',"userInSystem")
 
@@ -397,6 +400,24 @@ export class AdminComponent implements OnInit {
 
   reject() {
 
+  }
+
+
+  OrderHistory() {
+    this.isLoad = !this.isLoad;
+    this.isMenu = !this.isMenu;
+    this.isHistory = !this.isHistory    
+    this.adminService.getAllOrderHistory()
+    .subscribe(response => {
+        console.log("[response] ",response);
+        this.isLoad = !this.isLoad;    
+        this.isHistory = !this.isHistory;
+
+
+    },error => { 
+      console.log("[error] ",error);
+
+    })
   }
 
 

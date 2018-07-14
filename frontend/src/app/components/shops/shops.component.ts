@@ -221,14 +221,14 @@ export class ShopsComponent implements OnInit {
     let id = localStorage.getItem('buyer_id')
     console.log("[buyer] ",this.buyer_profile)
     let temp = {
-      buyer_location: this.buyer_profile.buyer_address,
+      buyer_address: this.buyer_profile.buyer_address,
       profile_status_id: 1
     }
 
     this.BuyerService.updateBuyer(temp,id)
     .subscribe(response => {
       console.log("[response] onEditBuyer: ",response)
-      this.getBuyerProfile();
+      this.ngOnInit();
     }
     ,error => {console.log("[error] onEditBuyer: ",error)})
   }

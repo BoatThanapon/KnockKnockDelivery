@@ -25,7 +25,7 @@
             </div>
             <div class="col-12" id="menu-button">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
-                <div>
+                <div (click)="OrderHistory()">
                   <p class="w3-display-middle">Order history</p>
                 </div>
               </div>
@@ -36,9 +36,9 @@
   </div>
 
 
-  <!-- User in system -->
   <div [hidden]="!isMenu">
-    <div [hidden]="!isHolding">
+    <!-- User In system -->
+    <div [hidden]="!isUserIn">
       <div class="w3-container" id="holding-container">
         <h1>
           <b>User in system</b>
@@ -56,7 +56,8 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+
+            <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -85,7 +86,9 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <!-- <app-admin-table-data [headers]=""></app-admin-table-data> -->
+
           </div>
           <div [hidden]="isSeller">
             <table datatable class="row-border hover">
@@ -154,13 +157,8 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <!-- Holding User -->
-    <div [hidden]="isHolding">
+    <div [hidden]="!isHolding">
       <div class="w3-container" id="system-container">
         <h1>
           <b>Holding user</b>
@@ -281,7 +279,17 @@
         </div>
       </div>
     </div>
+    <!-- Order history< -->
+    <div [hidden]="!isHistory">
+      <h1>Order history</h1>
+    </div>
+
   </div>
+
+  
+
+
+
 </div>
 
 

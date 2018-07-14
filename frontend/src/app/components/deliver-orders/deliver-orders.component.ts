@@ -1,5 +1,5 @@
 declare var google: any;
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
 import { ElementSchemaRegistry } from '@angular/compiler';
@@ -11,6 +11,8 @@ import { ElementSchemaRegistry } from '@angular/compiler';
 })
 export class DeliverOrdersComponent implements OnInit {
 
+  private haveOrder: boolean = false;
+  private orders_num = 0;
   private orders = [];
   private orderDetail = [];
   private isShow:boolean = true;
@@ -22,6 +24,21 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  
+  private deliver_profile;
+  private isUpdate:boolean = false;
+  private form = {
+    bank_account_id:null,
+    bank_account_no:null,
+    profile_status_id:null,
+    shipper_transfer_slip:null,
+    selected_bank:null
+
+  }
+  private dafault_bank;
+  private error;
+  private bankAcc;
+  @ViewChild("mycanvas") mycanvas;
 
   constructor(
     private deliverService: DeliverService,
@@ -30,7 +47,61 @@ export class DeliverOrdersComponent implements OnInit {
 
   ngOnInit() {
     this.getShopOrders()
-    
+    this.getProfile();
+    this.setBankAccount();
+    this.getAcceptOrder();
+  }
+
+  getAcceptOrder() {
+    let accept_order = localStorage.getItem('accept_order');
+    console.log("[Accept order] ",accept_order);
+    if(accept_order != null) {
+    this.orders_num = 1;
+    this.haveOrder = !this.haveOrder
+
+    }
+  }
+  
+  setBankAccount() {
+    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
+  }
+
+  setOrderNum(){
+    let orders = JSON.parse(localStorage.getItem("orders"));
+    console.log("orders: ",orders);
+    if(orders != null) {
+          this.orders_num = orders.length;
+    } 
+    else if(orders == {}) {
+      this.orders_num = 0;
+    }
+  }
+
+  getProfile() {
+    let id = localStorage.getItem('seller_id');
+    this.deliverService.getDeliverByProfileId(id)
+    .subscribe(
+      response => {
+        console.log("[response] ",response)
+        this.deliver_profile = response.data[0]
+        this.form.bank_account_id = response.data[0].bank_account.bank_account_id;
+        this.form.bank_account_no = response.data[0].bank_account_no;
+        this.form.profile_status_id = response.data[0].profile_status.profile_status_id;
+
+        this.bankAcc.forEach((element, idx) => {
+          if (element.bank_account_id == this.form.bank_account_id) {
+            this.dafault_bank = idx + 1;
+            this.form.selected_bank = idx + 1;
+          }    
+        });
+
+
+      },
+      error => {
+        console.log("[response] ",error)
+
+      }
+    )
   }
 
   getShopOrders() {
@@ -98,7 +169,7 @@ export class DeliverOrdersComponent implements OnInit {
       this.isShow = !this.isShow
       alert('Sucess accept this order')
       localStorage.setItem('accept_order',JSON.stringify(order))
-      this.getShopOrders();
+      this.ngOnInit();
     }
     ,error => {
       console.log("[error] ",error)

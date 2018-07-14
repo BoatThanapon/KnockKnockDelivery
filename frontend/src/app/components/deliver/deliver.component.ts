@@ -146,4 +146,8 @@ export class DeliverComponent implements OnInit {
 
   }
 
+  openAcceptOrder() {
+
+  }
+
 }
