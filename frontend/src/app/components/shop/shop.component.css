@@ -152,6 +152,10 @@
     cursor: pointer;
   
   }
+
+  #noProduct{
+    height: 50vh;
+  }
   
   
   .history-num{

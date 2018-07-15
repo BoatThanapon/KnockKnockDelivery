@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit {
     private products;
     private isShow: boolean = true;
     private cart_num = 0;
+    private seller = [];
     private seller_id;
     private form = {
         product_name: null,
@@ -23,6 +24,15 @@ export class ShopComponent implements OnInit {
     }
     private orders_num = 0;
     private shop = [];
+    private buyer_profile ={
+      buyer_address:'',
+      buyer_id:'',
+      profile_id:'',
+      profile_status:{
+        profile_status_id:'',
+        profile_status_name:''
+      }
+    }
 
 
 
@@ -44,7 +54,7 @@ export class ShopComponent implements OnInit {
     setSellerID() {
       this.seller_id = localStorage.getItem('seller_id');
       this.getAllProduct();
-      this.getShopDetail(this.seller_id);
+      this.getShopDetail();
     }
 
     getAllProduct() {
@@ -53,7 +63,9 @@ export class ShopComponent implements OnInit {
       .subscribe(response => {
         console.log("[Response] ",response.data);
         this.products = response.data;
-        this.isShow = !this.seller_id
+        this.getBuyerProfile();
+
+        // this.isShow = !this.seller_id
       },
       error => {
         console.log("[Error] ",error);
@@ -61,15 +73,26 @@ export class ShopComponent implements OnInit {
       })
     }
 
-    getShopDetail(id) {
-      this.SellerService.getShopByProfileId(id)
-      .subscribe(response => {
-        console.log("[Response] ",response);
-        this.shop = response.data
-      },
-      error => {
-        console.log("[Error] ",error);
-    })
+    getShopDetail() {
+      this.seller = JSON.parse(localStorage.getItem('shop'))
+
+
+    }
+
+    getBuyerProfile() {
+      let id = JSON.parse(localStorage.getItem('buyer')).profile_id
+      this.BuyerService.getBuyerByProfileId(id).subscribe(
+        Response=> {
+          console.log("[Response] getBuyerProfile: ",Response.data)
+          this.buyer_profile = Response.data[0]
+          this.isShow = !this.isShow;    
+  
+        }
+        ,error => {
+          console.log("[Error] getBuyerProfile: ",error)
+          this.isShow = !this.isShow;    
+        });
+  
     }
 
     
@@ -151,12 +174,20 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  openEditBuyer() {
-    
-  }
 
   onEditBuyer() {
+    let id = localStorage.getItem('buyer_id')
+    console.log("[buyer] ",this.buyer_profile)
+    let temp = {
+      buyer_address: this.buyer_profile.buyer_address,
+      profile_status_id: 1
+    }
 
+    this.BuyerService.updateBuyer(temp,id)
+    .subscribe(response => {
+      console.log("[response] onEditBuyer: ",response)
+    }
+    ,error => {console.log("[error] onEditBuyer: ",error)})
   }
 
 }

@@ -56,7 +56,7 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-
+            
             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
@@ -87,7 +87,6 @@
                 </tr>
               </tbody>
             </table> -->
-            <!-- <app-admin-table-data [headers]=""></app-admin-table-data> -->
 
           </div>
           <div [hidden]="isSeller">
@@ -175,10 +174,8 @@
           </div>
         </div>
         <div id="dataTable">
-
-
           <div [hidden]="isBuyer">
-            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                     <th>No.</th>
@@ -206,12 +203,13 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> 
+            
+            <!-- <app-admin-table-data *ngIf="!isBuyer" [_headers]="headers_buyer"></app-admin-table-data> -->
+
           </div>
-
-
           <div [hidden]="isSeller">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+               <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -240,10 +238,12 @@
                     </tr>
                   </tbody>
                 </table>
+                
+            <!-- <app-admin-table-data *ngIf="!isSeller" [_headers]="headers_seller"></app-admin-table-data> -->
 
           </div>
           <div [hidden]="isDeliver">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -274,14 +274,22 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> -->
+
+            <app-admin-table-data *ngIf="!isDeliver" [_headers]="headers_deliver"></app-admin-table-data>
+          
           </div>
         </div>
       </div>
     </div>
-    <!-- Order history< -->
+    <!-- Order history -->
     <div [hidden]="!isHistory">
-      <h1>Order history</h1>
+        <div class="w3-container" id="order-history">
+            <h1>
+              <b>Order history</b>
+            </h1>      
+            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [data_history]="data_history"></app-admin-table-data>
+        </div>
     </div>
 
   </div>

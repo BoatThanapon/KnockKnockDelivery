@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit {
   private isBuyer: boolean = true;
   private isSeller: boolean = true;
   private isDeliver: boolean = true;
+  private ready: boolean = false;
 
   private roles: string[];
   private selectedRole: string;
@@ -33,6 +34,46 @@ export class AdminComponent implements OnInit {
 
   private selected_user;
   private masterData;
+  private type;
+
+  private headers_history = [{
+    order_id:'Order id',
+    order_status: {
+      order_status_id:'Order status id',
+      order_status_name:'Order status'
+    },
+    updated_at: 'Updated at'
+  }]
+
+  private headers_seller = [{
+    ID:'ID',
+    Shop_Name: 'Shop Name',
+    Location:'Location',
+    Email:'Email',
+    Status:'Status',
+  }]
+
+  private headers_buyer = [{
+    ID:'ID',
+    Name: 'Name',
+    Address:'Address',
+    Email:'Email',
+    Status:'Status',
+  }]
+
+  private headers_deliver = [{
+    ID:'ID',
+    Name: 'Name',
+    Bank_Account_No:'Bank Account No',
+    Bank_Account_Name:'Bank Account Name',
+    Email:'Email',
+    Status:'Status',
+  }]
+
+  private data_history = [];
+  private data_holding = [];
+  private data_inSystem = [];
+
 
   dtOptions: DataTables.Settings = {};
 
@@ -48,7 +89,7 @@ export class AdminComponent implements OnInit {
       pagingType: 'full_numbers'
   };
   this.setMasterData()
-
+  this.setOrderHistory();
   }
 
 
@@ -60,7 +101,7 @@ export class AdminComponent implements OnInit {
 
   holdingUser() {
     this.isMenu = !this.isMenu;
-    this.isLoad = !this.isLoad;
+    // this.isLoad = !this.isLoad;
     this.isHolding  = !this.isHolding;
     localStorage.setItem('adminSelect',"holdingUser")
     console.log("holdingUser");
@@ -404,20 +445,70 @@ export class AdminComponent implements OnInit {
 
 
   OrderHistory() {
-    this.isLoad = !this.isLoad;
     this.isMenu = !this.isMenu;
-    this.isHistory = !this.isHistory    
+    this.isHistory = !this.isHistory;
+  }
+
+  setOrderHistory() {
+    this.isLoad = !this.isLoad;
     this.adminService.getAllOrderHistory()
     .subscribe(response => {
-        console.log("[response] ",response);
-        this.isLoad = !this.isLoad;    
-        this.isHistory = !this.isHistory;
+        console.log("[response] ",response.data);
+        this.data_history = response.data
+        this.type = 'history'
+        this.ready = !this.ready
+        this.isLoad = !this.isLoad;
 
+        // this.setHoldingUSer();
 
     },error => { 
       console.log("[error] ",error);
 
     })
+  }
+
+  setUserInsystem() {
+    this.isLoad = !this.isLoad;
+    this.adminService.getAllOrderHistory()
+    .subscribe(response => {
+        console.log("[response] ",response.data);
+        this.data_history = response.data
+        this.ready = !this.ready
+        this.isLoad = !this.isLoad;
+    },error => { 
+      console.log("[error] ",error);
+
+    })
+  }
+
+  setHoldingUSer() {
+    this.adminService.getAllHoldingUser(2).subscribe(
+      response => {
+        this.holdingUsers['seller'] = response.data;
+        this.adminService.getAllHoldingUser(3).subscribe(
+          response => {
+            this.holdingUsers['buyer'] = response.data;
+            this.adminService.getAllHoldingUser(4).subscribe(
+              response => {
+                this.holdingUsers['deliver'] = response.data;
+                console.log("[this.holdingUsers] ", this.holdingUsers)
+                this.isLoad = !this.isLoad;
+
+              },
+              error => {
+                console.log("[Error]", error)
+              }
+            )
+          },
+          error => {
+            console.log("[Error]", error)
+          }
+        )
+      },
+      error => {
+        console.log("[Error]", error)
+      }
+    )
   }
 
 
