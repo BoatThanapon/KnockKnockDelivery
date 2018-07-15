@@ -93,18 +93,20 @@ export class AuthService {
   }
 
   removeToken() {
-    localStorage.removeItem('UAT');
-    localStorage.removeItem('product_catagory');
-    localStorage.removeItem('seller');
-    localStorage.removeItem('shop_catagory');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('cart');
-    localStorage.removeItem('masterData');
-    localStorage.removeItem('accept_order');
-    localStorage.removeItem('adminSelect');
-    localStorage.removeItem('orders');
-    localStorage.removeItem('seller_id');
-    localStorage.removeItem('seller_order_id');
+    // localStorage.removeItem('UAT');
+    // localStorage.removeItem('product_catagory');
+    // localStorage.removeItem('seller');
+    // localStorage.removeItem('shop_catagory');
+    // localStorage.removeItem('user_id');
+    // localStorage.removeItem('cart');
+    // localStorage.removeItem('masterData');
+    // localStorage.removeItem('accept_order');
+    // localStorage.removeItem('adminSelect');
+    // localStorage.removeItem('orders');
+    // localStorage.removeItem('seller_id');
+    // localStorage.removeItem('seller_order_id');
+    localStorage.clear();
+
 
 
   }

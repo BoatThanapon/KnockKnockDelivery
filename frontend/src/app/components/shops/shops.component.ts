@@ -184,15 +184,26 @@ export class ShopsComponent implements OnInit {
   }
 
   setOrderNum(){
-    let orders = JSON.parse(localStorage.getItem("orders"));
-    console.log("orders: ",orders);
-    if(orders != null) {
-          this.orders_num = orders.length;
-    } 
-    else if(orders == {}) {
-      this.orders_num = 0;
-    }
+    // let orders = JSON.parse(localStorage.getItem("orders"));
+    // console.log("orders: ",orders);
+    // if(orders != null) {
+    //       this.orders_num = orders.length;
+    // } 
+    // else if(orders == {}) {
+    //   this.orders_num = 0;
+    // }
+    let id = localStorage.getItem('buyer_id')
+    this.BuyerService.getOrderByBuyerId(id)
+    .subscribe(response => {
+      console.log("[response] ", response)
+      this.orders_num = response.data.length
+      , error => {
+        console.log('error',error);
+      }
+    })
   }
+
+  
 
 
 

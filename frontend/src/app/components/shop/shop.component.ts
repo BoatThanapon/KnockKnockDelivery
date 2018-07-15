@@ -13,6 +13,7 @@ export class ShopComponent implements OnInit {
     private baseUrl = 'http://localhost:8000';
     private products;
     private isShow: boolean = true;
+    private isEmpty: boolean = true;
     private cart_num = 0;
     private seller = [];
     private seller_id;
@@ -63,6 +64,9 @@ export class ShopComponent implements OnInit {
       .subscribe(response => {
         console.log("[Response] ",response.data);
         this.products = response.data;
+        if(this.products.lenght > 0){
+          this.isEmpty = !this.isEmpty
+        }
         this.getBuyerProfile();
 
         // this.isShow = !this.seller_id
@@ -164,14 +168,26 @@ export class ShopComponent implements OnInit {
   }
 
   setOrderNum(){
-    let orders = JSON.parse(localStorage.getItem("orders"));
-    console.log("orders: ",orders);
-    if(orders != null) {
-          this.orders_num = orders.length;
-    } 
-    else if(orders == {}) {
-      this.orders_num = 0;
-    }
+    // let orders = JSON.parse(localStorage.getItem("orders"));
+    // console.log("orders: ",orders);
+    // if(orders != null) {
+    //       this.orders_num = orders.length;
+    // } 
+    // else if(orders == {}) {
+    //   this.orders_num = 0;
+    // }
+
+    let id = localStorage.getItem('buyer_id')
+    this.BuyerService.getOrderByBuyerId(id)
+    .subscribe(response => {
+      console.log("[response] ", response)
+      this.orders_num = response.data.length
+      , error => {
+        console.log('error',error);
+      }
+    })
+
+
   }
 
 

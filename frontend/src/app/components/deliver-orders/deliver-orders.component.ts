@@ -3,6 +3,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
 import { ElementSchemaRegistry } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deliver-orders',
@@ -43,6 +44,8 @@ export class DeliverOrdersComponent implements OnInit {
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
+    private router: Router
+
   ) { }
 
   ngOnInit() {
@@ -176,6 +179,11 @@ export class DeliverOrdersComponent implements OnInit {
       alert('Fail to accept this order')
 
     });
+  }
+
+  openAcceptOrder() {
+    this.router.navigateByUrl('/order')
+
   }
 
 

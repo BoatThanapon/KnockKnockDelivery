@@ -35,7 +35,7 @@
         <i class="fa fa-history w3-padding" (click)="goToOrder()">
           <span *ngIf="orders_num!=0" class="history-num" id="topActionHistoryNumber">{{orders_num}}</span>
         </i>
-        <i class="fa fa-cog w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()"></i>
+        <i class="fa fa-user w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()"></i>
       </div>
     </div>
   </div>
@@ -53,6 +53,10 @@
       <div class="col-3">
           <p><b>Shop name: </b>{{seller.shop_name}}</p>
           <p><b>Shop address: </b>{{seller.shop_location}}</p>
+          <p><b>Seller name: </b>{{seller.user.firstname}} {{seller.user.lastname}}</p>
+          <p><b>Seller email: </b>{{seller.user.email}}</p>
+          <p><b>Seller phone number: </b>{{seller.user.telephone_number}}</p>
+
 
       </div>
       <div class="col-4">
@@ -64,7 +68,7 @@
 
   </div>
 
-  <div class="w3-container w3-padding w3-light-grey">
+  <div class="w3-container w3-padding w3-light-grey"  [hidden]="!isEmpty">
     <div *ngFor="let product of products;let i = index">
       <div class="w3-container w3-quarter">
         <div class="card">
@@ -84,7 +88,7 @@
   <!-- <div class="w3-padding-32 w3-light-grey">
     <button class="btn btn-outline-info btn-block">See More</button>
   </div> -->
-  <div class="w3-container w3-padding w3-light-grey" id="noProduct" [hidden]="products.lenght>0">
+  <div class="w3-container w3-padding w3-light-grey" id="noProduct" [hidden]="isEmpty">
     <div class="d-flex justify-content-center align-items-center">
         <h2>No product in this shop</h2>
     </div>
