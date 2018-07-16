@@ -121,16 +121,20 @@ export class DeliverOrdersComponent implements OnInit {
       this.isShow = !this.isShow
 
       this.orders.forEach(element => {
-        this.shop_latitude= element.shop_latitude;
-        this.shop_longtitude=element.shop_longitude;
-        this.receiver_latitude=element.receiver_latitude;
-        this.receiver_longitude=element.receiver_longitude;
+        element["shop_latitude"] = +element.seller.shop_latitude;
+        element["shop_longtitude"] = +element.seller.shop_longitude;
+        element["direction"] = {
+          origin: {
+            lat: +element.seller.shop_latitude,
+            lng: +element.seller.shop_longitude
+          },
+          destination: {
+            lat: +element.receiver_latitude,
+            lng: +element.receiver_longitude
+          }
+        };
         })
 
-      this.dir = {
-            origin: { lat: +this.shop_latitude, lng: +this.shop_longtitude },
-            destination: { lat: +this.receiver_latitude, lng:  +this.receiver_longitude }
-          }
 
     },error => {
       console.log("[error] ",error)
