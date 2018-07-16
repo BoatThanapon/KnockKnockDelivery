@@ -2,7 +2,6 @@ declare var google: any;
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
-import { ElementSchemaRegistry } from '@angular/compiler';
 import { Router } from '@angular/router';
 
 @Component({
@@ -52,36 +51,43 @@ export class DeliverOrdersComponent implements OnInit {
     this.getShopOrders()
     this.getProfile();
     this.setBankAccount();
-    this.getAcceptOrder();
+    this.setOrderNum();
   }
 
   getAcceptOrder() {
     let accept_order = localStorage.getItem('accept_order');
     console.log("[Accept order] ",accept_order);
     if(accept_order != null) {
-    this.orders_num = 1;
-    this.haveOrder = !this.haveOrder
 
-    }
   }
+}
   
   setBankAccount() {
     this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
   }
 
   setOrderNum(){
-    let orders = JSON.parse(localStorage.getItem("orders"));
-    console.log("orders: ",orders);
-    if(orders != null) {
-          this.orders_num = orders.length;
-    } 
-    else if(orders == {}) {
-      this.orders_num = 0;
-    }
+    
+    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+    this.deliverService.getOrderByDeliverId(id)
+    .subscribe(
+      response => {
+        console.log("[response] ",response.data)
+        this.orders_num = response.data.length
+        this.haveOrder = !this.haveOrder
+
+        this.isShow = !this.isShow
+
+      },
+      error => {
+        console.log("[response] ",error)
+
+      }
+    )
   }
 
   getProfile() {
-    let id = localStorage.getItem('seller_id');
+    let id = JSON.parse(localStorage.getItem('deliver')).profile_id
     this.deliverService.getDeliverByProfileId(id)
     .subscribe(
       response => {
@@ -118,7 +124,6 @@ export class DeliverOrdersComponent implements OnInit {
       console.log("[response] ",response)
       this.orders = response.data;
       // this.getOrderDetail(this.orders)
-      this.isShow = !this.isShow
 
       this.orders.forEach(element => {
         this.shop_latitude= element.shop_latitude;
@@ -161,10 +166,13 @@ export class DeliverOrdersComponent implements OnInit {
   }
 
   acceptOrder(order) {
+    let shipper_id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+
     console.log("[Accept Order] ",order)
     this.isShow = !this.isShow
     let body = {
-      order_status_id: 2
+      order_status_id: 2,
+      shipper_id:shipper_id
     }
     this.orderService.updateOrder(order.order_id,body)
     .subscribe(response => {
@@ -172,7 +180,7 @@ export class DeliverOrdersComponent implements OnInit {
       this.isShow = !this.isShow
       alert('Sucess accept this order')
       localStorage.setItem('accept_order',JSON.stringify(order))
-      this.ngOnInit();
+      this.router.navigateByUrl('/deliver')
     }
     ,error => {
       console.log("[error] ",error)

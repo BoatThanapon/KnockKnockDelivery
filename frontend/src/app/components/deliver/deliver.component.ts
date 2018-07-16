@@ -81,7 +81,7 @@ export class DeliverComponent implements OnInit {
   }
 
   getProfile() {
-    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+    let id = JSON.parse(localStorage.getItem('deliver')).profile_id
     this.deliverService.getDeliverByProfileId(id)
     .subscribe(
       response => {
@@ -135,7 +135,6 @@ export class DeliverComponent implements OnInit {
     .subscribe(response => {
       console.log("[Response] ",response.data)
       this.orders = response.data
-      this.isShow = !this.isShow
 
     },error => {
       console.log("[Error] ",error)
@@ -165,11 +164,13 @@ export class DeliverComponent implements OnInit {
 
   setOrderNum(){
 
-    let id = localStorage.getItem('buyer_id')
+    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
     this.deliverService.getOrderByDeliverId(id)
     .subscribe(response => {
       console.log("[response] ", response)
       this.orders_num = response.data.length
+      this.isShow = !this.isShow
+
       , error => {
         console.log('error',error);
       }
