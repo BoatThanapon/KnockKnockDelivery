@@ -55,22 +55,21 @@
             </div>
 
             <div class="col-5">
-              <agm-map [zoom]="18">
-                <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
-                <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
+              <agm-map [zoom] = "15"  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+                <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" [renderOptions]="options"></agm-direction>
+                <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng">
                   <agm-info-window #infoWindow>
-                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong>
-                    <br>
+                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
                   </agm-info-window>
                 </agm-marker>
-                <agm-marker *ngIf="dir" [latitude]="dir.destination.lat" [longitude]="dir.destination.lng">
+                <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude">
                   <agm-info-window #infoWindow>
-                    <strong>{{order.shop_name}}</strong>
-                    <br>
+                    <strong>{{order.shop_name}}</strong><br>
+                    <strong>{{order.seller.shop_name}}</strong><br>
                   </agm-info-window>
                 </agm-marker>
               </agm-map>
-            </div>
+              </div>
 
             <div class="col-2 d-flex align-items-center btn-group">
               <button class="btn btn-success" (click)="acceptOrder(order)" [disabled]="haveOrder">Accept order</button>
