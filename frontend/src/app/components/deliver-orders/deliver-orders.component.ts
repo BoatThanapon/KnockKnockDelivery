@@ -72,9 +72,11 @@ export class DeliverOrdersComponent implements OnInit {
     this.deliverService.getOrderByDeliverId(id)
     .subscribe(
       response => {
-        console.log("[response] ",response.data)
+        console.log("[response] setOrderNum",response.data.length)
         this.orders_num = response.data.length
-        this.haveOrder = !this.haveOrder
+        if(this.orders_num != 0) {
+          this.haveOrder = !this.haveOrder
+        }
 
         this.isShow = !this.isShow
 
