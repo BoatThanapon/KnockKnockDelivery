@@ -60,8 +60,9 @@
 
       </div>
       <div class="col-4">
-          <h2>Google map here!!!</h2>
-
+          <agm-map [zoom]="14" [latitude]="shop_latitude" [longitude]="shop_longtitude" (mapClick)="onChooseLocation($event)" >
+            <agm-marker [latitude]="shop_latitude" [longitude]="shop_longtitude" [label]="labelOptionShop"></agm-marker>
+          </agm-map>
       </div>
       <div class="col-2">
         </div>

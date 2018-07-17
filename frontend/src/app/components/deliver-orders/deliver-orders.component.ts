@@ -24,6 +24,22 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+
+  labelOptionShop = {
+    color: '#fff',
+    fontFamily: '',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    text: 'S',
+    }
+
+    labelOptionReceiver = {
+      color: '#fff',
+      fontFamily: '',
+      fontSize: '15px',
+      fontWeight: 'bold',
+      text: 'R',
+      }
   
   private deliver_profile;
   private isUpdate:boolean = false;

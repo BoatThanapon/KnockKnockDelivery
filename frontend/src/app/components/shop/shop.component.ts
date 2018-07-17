@@ -34,6 +34,15 @@ export class ShopComponent implements OnInit {
         profile_status_name:''
       }
     }
+    shop_latitude: any;
+    shop_longtitude: any;
+    labelOptionShop = {
+      color: '#fff',
+      fontFamily: '',
+      fontSize: '15px',
+      fontWeight: 'bold',
+      text: 'S',
+      }
 
 
 
@@ -79,6 +88,14 @@ export class ShopComponent implements OnInit {
 
     getShopDetail() {
       this.seller = JSON.parse(localStorage.getItem('shop'))
+      this.shop_latitude = +this.seller["shop_latitude"];
+      this.shop_longtitude = +this.seller["shop_longitude"];
+
+
+      // this.seller.forEach(element => {
+      //   element["shop_latitude"] = +element.shop_latitude;
+      //   element["shop_longtitude"] = +element.shop_longitude;
+      //   })
 
 
     }
