@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
-import { SellerService } from '../../services/seller.service';
+import { SellerService, address } from '../../services/seller.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -43,6 +43,10 @@ export class ShopComponent implements OnInit {
       fontWeight: 'bold',
       text: 'S',
       }
+      address = {
+        address_components: null,
+        formatted_address: null
+      };
 
 
 
@@ -77,6 +81,7 @@ export class ShopComponent implements OnInit {
           this.isEmpty = !this.isEmpty
         }
         this.getBuyerProfile();
+        this.showgetGoogleMapAddress(this.shop_latitude, this.shop_longtitude);
 
         // this.isShow = !this.seller_id
       },
@@ -88,8 +93,9 @@ export class ShopComponent implements OnInit {
 
     getShopDetail() {
       this.seller = JSON.parse(localStorage.getItem('shop'))
-      this.shop_latitude = +this.seller["shop_latitude"];
-      this.shop_longtitude = +this.seller["shop_longitude"];
+      this.shop_latitude = +this.seller["shop_latitude"]
+      this.shop_longtitude = +this.seller["shop_longitude"]
+
 
 
       // this.seller.forEach(element => {
@@ -98,6 +104,13 @@ export class ShopComponent implements OnInit {
       //   })
 
 
+    }
+
+    showgetGoogleMapAddress(lat,lng) {
+      this.SellerService.getGoogleMapAddress(lat,lng)
+        .subscribe((data: address) => {
+          console.log("[Response Address] ",data.results[0]);
+          this.address = data.results[0]});
     }
 
     getBuyerProfile() {
