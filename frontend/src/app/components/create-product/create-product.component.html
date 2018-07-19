@@ -59,10 +59,10 @@
     <div class="form-group">
       <label for="input-price">Product Image</label>
       <br>
-      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" #fileInput/>
+      <input [disabled]="isClick"type='file' id="img" (change)="preview($event.target.files)" accept="image/*" #fileInput/>
       <br>
       <br>
-
+      <img [hidden]="imageUrl==null" [src]="imageUrl" style="width:50%;height: 50%;">
       <!-- <canvas id="previewImg" #mycanvas></canvas> -->
     </div>
 
