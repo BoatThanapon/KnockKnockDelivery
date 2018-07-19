@@ -92,6 +92,10 @@ class OrderController extends Controller
 
     public function uploadPaymentTransferSlip(Request $request, $order_id)
     {
+        $this->validate($request,[
+            'payment_transfer_slip' => 'required|image|mimes:jpeg,jpg,png|max:10000',
+        ]);
+
         $order = $this->order->where('order_id', $order_id)->first();
         if ($order === null) {
             return response()->json([
@@ -99,7 +103,7 @@ class OrderController extends Controller
             ], 400);
         }
 
-        $order->order_status_id = 4;
+        $order->order_status_id = 5;
 
         if($order->payment_transfer_slip !== null){
             Storage::delete('public/payment_transfer_slip/'.$order->payment_transfer_slip);
