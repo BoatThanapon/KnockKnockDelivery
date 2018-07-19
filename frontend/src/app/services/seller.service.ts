@@ -51,12 +51,18 @@ export class SellerService {
   }
 
   createProduct(product, seller_id) {
-    // let header = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'multipart/form-data',
-    //     'Authorization': 'Bearer '+ this.UAT
-    //   })
-    // };
+    let header = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+        'Authorization': 'Bearer '+ this.UAT,
+        'Accept':"application/json, text/plain, */*",
+
+      })
+    };
+    // Display the key/value pairs
+    for (var pair of product.entries()) {
+      console.log('[product] '+ pair[0]+ ', ' + pair[1]); 
+    } 
     return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
 
   }

@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './/app-routing.module';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -36,6 +40,7 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 import { OrderComponent } from './components/order/order.component';
 import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orders.component';
 import { AdminTableDataComponent } from './components/admin-table-data/admin-table-data.component';
+import { ScannerComponent } from './components/scanner/scanner.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +64,8 @@ import { AdminTableDataComponent } from './components/admin-table-data/admin-tab
     DeliverComponent,
     OrderComponent,
     DeliverOrdersComponent,
-    AdminTableDataComponent
+    AdminTableDataComponent,
+    ScannerComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +80,10 @@ import { AdminTableDataComponent } from './components/admin-table-data/admin-tab
       apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8'
     }),
     AgmDirectionModule,
+    QRCodeModule,
+    NgQRCodeReaderModule,
+    NgQrScannerModule
+
   ],
   providers: [
     AuthService,

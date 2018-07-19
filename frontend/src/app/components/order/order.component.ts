@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { DeliverService } from './../../services/deliver.service';
 import { OrderService } from './../../services/order.service';
-import { resolve } from 'url';
+import { Router } from '@angular/router';
+
 
 
 
@@ -16,11 +17,14 @@ export class OrderComponent implements OnInit {
   private orders = [];
   private isEmpty:boolean = true;
   private isShow:boolean = true;
+  private isBuyer:boolean = true;
+  private isShipper:boolean = true;
   private seeMore_form = {}
   constructor(
     private BuyerService: BuyerService,
     private DeliverService: DeliverService,
     private OrderService: OrderService,
+    private router: Router
 
   ) { }
 
@@ -36,9 +40,11 @@ export class OrderComponent implements OnInit {
 
     if(buyer != null){
       this.getBuyerOrder(buyer);
+      this.isBuyer = !this.isBuyer;
     }
     else if(deliver != null) {
       this.getDeliverOrder(deliver);
+      this.isShipper = !this.isShipper
     }
   }
 
@@ -103,6 +109,12 @@ export class OrderComponent implements OnInit {
       console.log("[error] seeMore: ",error);
 
     })
+
+  }
+
+  scanQRCode() {
+    console.log('Scan QR Code');
+    this.router.navigateByUrl('/scanner')
 
   }
 
