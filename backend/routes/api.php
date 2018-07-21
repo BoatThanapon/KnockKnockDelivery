@@ -72,14 +72,14 @@ Route::group([
 
 
 Route::group([
-//    'middleware' => ['auth:api','CORS'],
+   'middleware' => ['auth:api','CORS'],
 ], function ($router) {
     Route::get('products', 'ProductController@getProducts');
     Route::get('product/{product_id}', 'ProductController@getProductByProductId');
 });
 
 Route::group([
-//    'middleware' => ['auth:api','CORS'],
+   'middleware' => ['auth:api','CORS'],
 ], function ($router) {
     Route::get('order/sellers', 'OrderController@getListSellersHaveOrders');
     Route::get('order/seller/{seller_id}/order-list', 'OrderController@getListOrdersBySellerId');
@@ -96,9 +96,10 @@ Route::group([
 });
 
 Route::group([
-//    'middleware' => ['auth:api','CORS'],
+   'middleware' => ['auth:api','CORS'],
 ],function ($router){
-    // Route::get('orderQRcode', 'OrderQRcodeController@testQRcode');
+    Route::get('qrcode/seller/order/{order_id}', 'OrderQRcodeController@getDataQRCodeByOrderId');
+    Route::get('qrcode/buyer/order/{order_id}', 'OrderQRcodeController@getDataQRCodeByOrderId');
     Route::put('orderQRcode/order/{order_id}/shipper-accept', 'OrderQRcodeController@shipperAcceptOrder');
     Route::get('orderQRcode/seller/order/{order_id}', 'OrderQRcodeController@getQRcodeSellerByOrderId');
     Route::get('orderQRcode/buyer/order/{order_id}', 'OrderQRcodeController@getQRcodeBuyerByOrderId');
