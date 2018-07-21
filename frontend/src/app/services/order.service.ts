@@ -52,27 +52,5 @@ export interface order {
 }
 
 export interface orders {
-  data:{
-    buyer: {
-      user: {
-        firstname:'',
-        lastname:'',
-        telephone_number:'',
-      }
-    },
-    order_id:'',
-    order_total_price:'',
-    receiver_firstname:'',
-    receiver_lastname:'',
-    service_charge:'',
-    shipper: {
-      user:{
-        firstname:'',
-        lastname:'',
-        telephone_number:''
-      }
-    },
-    updated_at:'',
-
-  }
+  data:[{}]
 }

@@ -9,7 +9,7 @@
         <th>{{header.order_id}}</th>
         <th>{{header.order_status.order_status_name}}</th>
         <th>{{header.updated_at}}</th>
-        
+
         <th> </th>
       </tr>
     </thead>
@@ -42,7 +42,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let user  of data;let  i = index">
+        <td>{{ i+1 }}</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -70,7 +72,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let user  of data;let  i = index">
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -85,8 +89,8 @@
     </tbody>
   </table>
 
-  
-  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='shipper'">
+
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='deliver'">
     <thead>
       <tr>
           <th>No.</th>
@@ -100,8 +104,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let deliver of data;let  i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{ deliver.shipper_id }}</td>
         <td></td>
+        <td>{{ deliver.bank_account_no }}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -121,9 +128,6 @@
 
 
 
-  
-  
-  
 
 
 
@@ -163,9 +167,12 @@
 
 
 
-  
+
+
+
+
   <!-- ////////////////////////////////// infoModal ///////////////////////////////////////-->
-  
+
   <div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -211,33 +218,33 @@
             </button>
           </div>
           <div class="modal-body">
-  
+
             <img  class="card-img-top" [src]="product_image" alt="">
-  
+
             <form #editProductForm=ngForm>
               <div class="form-group">
                 <label for="input-id">Product id</label>
                 <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
               </div>
-  
+
               <div class="form-group">
                 <label for="input-name">Product name</label>
                 <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
                   required/>
               </div>
-  
+
               <div class="form-group">
                   <label for="input-price">Product Price</label>
                   <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
                     required>
                 </div>
-  <!-- 
+  <!--
               <div class="form-group">
                 <label for="input-price">Product Amount Unit</label>
                 <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
                   required>
               </div> -->
-  
+
               <div class="form-group">
                 <label for="selectCatagory">Product Catagory</label>
                 <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
@@ -245,7 +252,7 @@
                   <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
                 </select>
               </div>
-  
+
               <div class="form-group">
                 <label for="input-description">Product Description</label>
                 <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
@@ -272,7 +279,7 @@
     </div>
 
   <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
-  
+
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -297,10 +304,10 @@
       </div>
     </div>
   </div>
-  
+
 
     <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
-  
+
     <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

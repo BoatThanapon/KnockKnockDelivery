@@ -45,7 +45,7 @@
           <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
         <a href="javascript:void(0);" class="icon" (click)="toogle()">
           <i class="fa fa-angle-down"></i>
-         
+
         </a>
       </div>
       <hr>
@@ -80,7 +80,7 @@
 
   <div *ngIf="isShopHistory">
       <div class="w3-row-padding w3-container">
-        <app-admin-table-data [_headers]="headers_history" [_type]="type" [data_history]="history"></app-admin-table-data>
+        <app-admin-table-data [_headers]="headers_history" [_type]="type" [_data]="history"></app-admin-table-data>
       </div>
   </div>
 

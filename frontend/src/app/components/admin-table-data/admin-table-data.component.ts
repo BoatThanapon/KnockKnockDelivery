@@ -3,6 +3,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerService } from '../../services/seller.service';
 import { AdminService } from '../../services/admin.service';
 import { OrderService } from '../../services/order.service';
+import { ClassGetter } from '../../../../node_modules/@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { OrderService } from '../../services/order.service';
 export class AdminTableDataComponent implements OnInit {
 
   @Input() _headers: Object;
-  @Input() data_history: Object;
+  @Input() _data: Object;
   @Input() _type: String;
 
   @Output() reloadPage = new EventEmitter();
@@ -62,12 +63,21 @@ export class AdminTableDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('[ngOnInit] ' );
+    console.log('[_headers] ',this._headers);
+    console.log('[_data] ',this._data);
+    console.log('[_type] ',this._type );
+    if(this._type === 'deliver')
+    console.log('profile_status.profile_status_name ',this._data[0].profile_status.profile_status_name );
+
+
     this.setPage();
   }
 
   setPage() {
     this.headers = this._headers;
-    this.data = this.data_history;
+    this.data = this._data;
+
   }
 
   openOrderInfo(order) {
@@ -75,7 +85,7 @@ export class AdminTableDataComponent implements OnInit {
     this.getOrderDetail(order.order_id)
     .then(result => {
       console.log("[detail] seeMore: ",result);
-      this.order = result
+      // this.order = result
       this.isShow = !this.isShow
 
     }).catch(error => {
@@ -95,7 +105,7 @@ export class AdminTableDataComponent implements OnInit {
         reject(error)
       })
     });
-    
+
 
 
   }

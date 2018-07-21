@@ -72,14 +72,14 @@ Route::group([
 
 
 Route::group([
-   'middleware' => ['auth:api','CORS'],
+//    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
     Route::get('products', 'ProductController@getProducts');
     Route::get('product/{product_id}', 'ProductController@getProductByProductId');
 });
 
 Route::group([
-   'middleware' => ['auth:api','CORS'],
+//    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
     Route::get('order/sellers', 'OrderController@getListSellersHaveOrders');
     Route::get('order/seller/{seller_id}/order-list', 'OrderController@getListOrdersBySellerId');

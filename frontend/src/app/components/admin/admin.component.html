@@ -56,7 +56,7 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-            
+
             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
@@ -156,7 +156,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Holding User -->
     <div [hidden]="!isHolding">
       <div class="w3-container" id="system-container">
@@ -176,7 +176,7 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-             <table datatable [dtOptions]="dtOptions" class="row-border hover">
+             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                     <th>No.</th>
@@ -204,13 +204,13 @@
                   </td>
                 </tr>
               </tbody>
-            </table> 
-            
-            <!-- <app-admin-table-data *ngIf="!isBuyer" [_headers]="headers_buyer"></app-admin-table-data> -->
+            </table> -->
+
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="holdingUsers['buyer']"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
-               <table datatable [dtOptions]="dtOptions" class="row-border hover">
+               <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -238,9 +238,9 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
-                
-            <!-- <app-admin-table-data *ngIf="!isSeller" [_headers]="headers_seller"></app-admin-table-data> -->
+                </table> -->
+
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']"></app-admin-table-data>
 
           </div>
           <div [hidden]="isDeliver">
@@ -277,8 +277,8 @@
                   </tbody>
                 </table> -->
 
-            <app-admin-table-data *ngIf="!isDeliver" [_headers]="headers_deliver"></app-admin-table-data>
-          
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']"></app-admin-table-data>
+
           </div>
         </div>
       </div>
@@ -288,14 +288,14 @@
         <div class="w3-container" id="order-history">
             <h1>
               <b>Order history</b>
-            </h1>      
-            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [data_history]="data_history"></app-admin-table-data>
+            </h1>
+            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [_data]="_data"></app-admin-table-data>
         </div>
     </div>
 
   </div>
 
-  
+
 
 
 

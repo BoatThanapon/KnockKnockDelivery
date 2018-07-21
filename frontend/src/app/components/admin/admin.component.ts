@@ -70,7 +70,7 @@ export class AdminComponent implements OnInit {
     Status:'Status',
   }]
 
-  private data_history = [];
+  private _data = [];
   private data_holding = [];
   private data_inSystem = [];
 
@@ -118,7 +118,8 @@ export class AdminComponent implements OnInit {
                 // console.log("[Response 4]: ", response.data);
                 this.holdingUsers['deliver'] = response.data;
                 console.log("[this.holdingUsers] ", this.holdingUsers)
-                this.isLoad = !this.isLoad;
+
+                // this.isLoad = !this.isLoad;
 
               },
               error => {
@@ -187,7 +188,7 @@ export class AdminComponent implements OnInit {
       this.roles.forEach((element,index) => {
         if(this.roles.length <= index) {
           this.selectedRole = element;
-          this.searchByRole()
+          // this.searchByRole()
         }
         else {
           resolve
@@ -195,7 +196,7 @@ export class AdminComponent implements OnInit {
 
     });
     });
-    
+
   }
 
 
@@ -213,68 +214,75 @@ export class AdminComponent implements OnInit {
       console.log("[this.isHolding true]", this.isHolding)
 
       if (this.selectedRole == 'Seller') {
-        this.userInsystem['seller'].forEach((element, index) => {
-          console.log("element ",element)
+        // this.userInsystem['seller'].forEach((element, index) => {
+        //   console.log("element ",element)
 
-          let temp = {
-            profile_id: element.profile_id,
-            id: element.seller_id,
-            name: element.shop_name,
-            location: element.shop_location,
-            email: element.user.email,
-            status: element.profile_status.profile_status_name,
-          }
+        //   let temp = {
+        //     profile_id: element.profile_id,
+        //     id: element.seller_id,
+        //     name: element.shop_name,
+        //     location: element.shop_location,
+        //     email: element.user.email,
+        //     status: element.profile_status.profile_status_name,
+        //   }
 
-          this.display_seller[index] = temp;
+        //   this.display_seller[index] = temp;
 
-        });
+        // });
         this.isDeliver = true;
         this.isBuyer = true;
         this.isSeller = false;
+        this.type = 'seller'
+
         console.log("[this.display_seller]", this.display_seller)
 
       }
       else if (this.selectedRole == 'Buyer') {
-        this.userInsystem['buyer'].forEach((element, index) => {
-          console.log("element buyer",element)
+        // this.userInsystem['buyer'].forEach((element, index) => {
+        //   console.log("element buyer",element)
 
-          let temp = {
-            profile_id: element.profile_id,
-            id: element.buyer_id,
-            name: element.user.firstname,
-            location: element.buyer_address,
-            status: element.profile_status.profile_status_name,
-            email: element.user.email,
+        //   let temp = {
+        //     profile_id: element.profile_id,
+        //     id: element.buyer_id,
+        //     name: element.user.firstname,
+        //     location: element.buyer_address,
+        //     status: element.profile_status.profile_status_name,
+        //     email: element.user.email,
 
-          }
+        //   }
 
-          this.display_buyer[index] = temp;
+        //   this.display_buyer[index] = temp;
 
-        });
+        // });
         this.isDeliver = true;
         this.isBuyer = false;
         this.isSeller = true;
+        this.type = 'buyer'
+
         console.log("[this.display_buyer]", this.display_buyer)
 
       }
       else if (this.selectedRole == 'Deliver') {
-        this.userInsystem['deliver'].forEach((element, index) => {
-          let temp = {
-            id: element.shipper_id,
-            profile_id: element.profile_id,
-            name:element.user.firstname + '' +element.user.lastname,
-            bank_account_no: element.bank_account_no,
-            bank_account_name: element.bank_account.bank_account_name,
-            email: element.user.email,
-            status: element.profile_status.profile_status_name,
-          }
+        // this.userInsystem['deliver'].forEach((element, index) => {
+        //   let temp = {
+        //     id: element.shipper_id,
+        //     profile_id: element.profile_id,
+        //     name:element.user.firstname + '' +element.user.lastname,
+        //     bank_account_no: element.bank_account_no,
+        //     bank_account_name: element.bank_account.bank_account_name,
+        //     email: element.user.email,
+        //     status: element.profile_status.profile_status_name,
+        //   }
 
-          this.display_shipper[index] = temp;
+        //   this.display_shipper[index] = temp;
 
-        });
-        this.isDeliver = false;
+        // });
         this.isBuyer = true;
         this.isSeller = true;
+        this.type = 'deliver'
+        this.isDeliver = false;
+
+
         console.log("[this.display_shipper]", this.display_shipper)
 
 
@@ -454,14 +462,14 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllOrderHistory()
     .subscribe(response => {
         console.log("[response] ",response.data);
-        this.data_history = response.data
+        this._data = response.data
         this.type = 'history'
         this.ready = !this.ready
         this.isLoad = !this.isLoad;
 
         // this.setHoldingUSer();
 
-    },error => { 
+    },error => {
       console.log("[error] ",error);
 
     })
@@ -472,10 +480,10 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllOrderHistory()
     .subscribe(response => {
         console.log("[response] ",response.data);
-        this.data_history = response.data
+        this._data = response.data
         this.ready = !this.ready
         this.isLoad = !this.isLoad;
-    },error => { 
+    },error => {
       console.log("[error] ",error);
 
     })
@@ -488,10 +496,13 @@ export class AdminComponent implements OnInit {
         this.adminService.getAllHoldingUser(3).subscribe(
           response => {
             this.holdingUsers['buyer'] = response.data;
+            this.display_buyer = response.data
             this.adminService.getAllHoldingUser(4).subscribe(
               response => {
                 this.holdingUsers['deliver'] = response.data;
                 console.log("[this.holdingUsers] ", this.holdingUsers)
+                this._data = response.data
+
                 this.isLoad = !this.isLoad;
 
               },
