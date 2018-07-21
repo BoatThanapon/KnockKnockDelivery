@@ -87,10 +87,11 @@
                 </tr>
               </tbody>
             </table> -->
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="userInsystem['buyer']"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
-            <table datatable class="row-border hover">
+            <!-- <table datatable class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -119,10 +120,12 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']"></app-admin-table-data>
+
           </div>
           <div [hidden]="isDeliver">
-            <table datatable class="row-border hover">
+            <!-- <table datatable class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -151,7 +154,9 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']"></app-admin-table-data>
+
           </div>
         </div>
       </div>
@@ -277,7 +282,7 @@
                   </tbody>
                 </table> -->
 
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
         </div>

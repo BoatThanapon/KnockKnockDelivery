@@ -17,11 +17,12 @@ export class AdminTableDataComponent implements OnInit {
   @Input() _data: Object;
   @Input() _type: String;
 
-  @Output() reloadPage = new EventEmitter();
+  @Output() updateUser = new EventEmitter();
 
   private baseUrl = 'http://localhost:8000';
   private isShow:boolean = true;
 
+  private emit_data;
   private headers;
   private data;
 
@@ -67,8 +68,6 @@ export class AdminTableDataComponent implements OnInit {
     console.log('[_headers] ',this._headers);
     console.log('[_data] ',this._data);
     console.log('[_type] ',this._type );
-    if(this._type === 'deliver')
-    console.log('profile_status.profile_status_name ',this._data[0].profile_status.profile_status_name );
 
 
     this.setPage();
@@ -107,6 +106,13 @@ export class AdminTableDataComponent implements OnInit {
     });
 
 
+
+  }
+
+  onClickUpdate(id,status) {
+    console.log('[onClickUpdate] admin-data-table',id,status);
+    this.emit_data = {id,status}
+    this.updateUser.emit(this.emit_data)
 
   }
 

@@ -22,6 +22,7 @@ import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orde
 import { ScannerComponent } from './components/scanner/scanner.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { QRcodeComponent } from './components/qrcode/qrcode.component';
+import { QrcodeResultComponent } from './components/qrcode-result/qrcode-result.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,11 @@ const routes: Routes = [
     path: 'qr-code',
     component: QRcodeComponent,
     canActivate: [IsLoggedInService]
+  },
+  {
+  path: 'qr-code-result',
+  component: QrcodeResultComponent,
+  canActivate: [IsLoggedInService]
   },
   {
     path: 'order-detail',

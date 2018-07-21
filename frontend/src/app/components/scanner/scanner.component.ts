@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit, ElementRef, Renderer2,ViewEncapsulation } from '@angular/core';
 import {QrScannerComponent} from 'angular2-qrscanner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scanner',
@@ -22,7 +23,10 @@ export class ScannerComponent implements OnInit {
   @ViewChild('result') resultElement: ElementRef;
   
   showQRCode: boolean = true;
-  constructor(private renderer: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private router: Router
+  ) {
 
   }
   ngOnInit() {
@@ -60,7 +64,8 @@ export class ScannerComponent implements OnInit {
 
   reader(result) {
     console.log('[reader]',result);
-    
+    this.router.navigateByUrl('/qr-code-result')
+
   }
 
   render(e) {

@@ -44,15 +44,15 @@
     <tbody>
       <tr *ngFor="let user  of data;let  i = index">
         <td>{{ i+1 }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{user.buyer_id}}</td>
+        <td>{{user.user.firstname}} {{user.user.lastname}}</td>
+        <td>{{user.buyer_address}}</td>
+        <td>{{user.user.email}}</td>
+        <td>{{user.profile_status.profile_status_name}}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
+            <button type="button" class="btn btn-success" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -73,16 +73,16 @@
     </thead>
     <tbody>
       <tr *ngFor="let user  of data;let  i = index">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ i+1 }}</td>
+        <td>{{ user.seller_id }}</td>
+        <td>{{ user.shop_name }}</td>
+        <td>{{ user.shop_location }}</td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.profile_status.profile_status_name }}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
+            <button type="button" class="btn btn-success" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.seller_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -104,18 +104,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let deliver of data;let  i = index">
+      <tr *ngFor="let user of data;let  i = index">
         <td>{{ i+1 }}</td>
-        <td>{{ deliver.shipper_id }}</td>
-        <td></td>
-        <td>{{ deliver.bank_account_no }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ user.shipper_id }}</td>
+        <td>{{ user.user.firstname}} {{ user.user.lastname}}</td>
+        <td>{{ user.bank_account_no }}</td>
+        <td>{{ user.bank_account.bank_account_name }}</td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.profile_status.profile_status_name }}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
+            <button type="button" class="btn btn-success" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.shipper_id,3)">Reject</button>
           </div>
         </td>
       </tr>

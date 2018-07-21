@@ -43,6 +43,7 @@ import { AdminTableDataComponent } from './components/admin-table-data/admin-tab
 import { ScannerComponent } from './components/scanner/scanner.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { QRcodeComponent } from './components/qrcode/qrcode.component';
+import { QrcodeResultComponent } from './components/qrcode-result/qrcode-result.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { QRcodeComponent } from './components/qrcode/qrcode.component';
     AdminTableDataComponent,
     ScannerComponent,
     OrderDetailComponent,
-    QRcodeComponent
+    QRcodeComponent,
+    QrcodeResultComponent
   ],
   imports: [
     BrowserModule,
