@@ -53,17 +53,30 @@ export class SellerService {
   createProduct(product, seller_id) {
     let header = {
       headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
         'Authorization': 'Bearer '+ this.UAT,
         'Accept':"application/json, text/plain, */*",
 
       })
     };
+    
     // Display the key/value pairs
-    for (var pair of product.entries()) {
-      console.log('[product] '+ pair[0]+ ', ' + pair[1]); 
-    } 
-    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
+    // for (var pair of product.entries()) {
+    //   console.log('[product] '+ pair[0]+ ', ' + pair[1]); 
+    // } 
+
+    let formData = new FormData();
+    formData.append('product_name',product.product_name);
+    formData.append('product_price',product.product_price)
+    formData.append('product_category_id',product.product_category_id)
+    formData.append('product_description',product.product_description)
+    formData.append('product_image_1',product.product_image_1)
+    var options = { content: formData };
+
+    console.log("tempForm: ", formData.getAll('product_category_id'))
+    
+    
+
+    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, formData,header)
 
   }
 

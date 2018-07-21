@@ -6,7 +6,7 @@ import { SellerService } from '../../services/seller.service';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.css'],
 })
 export class CreateProductComponent implements OnInit {
 
@@ -121,24 +121,24 @@ export class CreateProductComponent implements OnInit {
     }
     else {
       
-      let tempForm = new FormData();
-      tempForm.append('product_name',this.form.product_name)
-      tempForm.append('product_description',this.form.product_description)
-      tempForm.append('product_price',this.form.product_price)
-      tempForm.append('product_category_id',this.form.selected_catagory)
-      tempForm.append('product_image_1',this.form.product_image_1,this.form.product_image_1.name)
+      // let tempForm = new FormData();
+      // tempForm.append('product_name',this.form.product_name)
+      // tempForm.append('product_description',this.form.product_description)
+      // tempForm.append('product_price',this.form.product_price)
+      // tempForm.append('product_category_id',this.form.selected_catagory)
+      // tempForm.append('product_image_1',this.form.product_image_1)
 
-      // let tempForm =
-      // {
-      //   product_name: this.form.product_name,
-      //   product_description: this.form.product_description,
-      //   product_price: parseInt(this.form.product_price),
-      //   product_category_id: parseInt(this.form.selected_catagory),
-      //   // product_image_1:this.image
-      // }
+      let tempForm =
+      {
+        product_name: this.form.product_name,
+        product_description: this.form.product_description,
+        product_price: parseInt(this.form.product_price),
+        product_category_id: parseInt(this.form.selected_catagory),
+        product_image_1: this.form.product_image_1
+      }
 
       let seller_id = this.seller_id;
-      console.log("tempForm: ", tempForm)
+      // console.log("tempForm: ", tempForm)
 
 
       this.sellerService.createProduct(tempForm, seller_id).subscribe(
