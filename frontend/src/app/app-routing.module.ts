@@ -20,6 +20,8 @@ import { DeliverComponent } from './components/deliver/deliver.component';
 import { OrderComponent } from './components/order/order.component';
 import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orders.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { QRcodeComponent } from './components/qrcode/qrcode.component';
 
 const routes: Routes = [
   {
@@ -60,6 +62,16 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'qr-code',
+    component: QRcodeComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'order-detail',
+    component: OrderDetailComponent,
     canActivate: [IsLoggedInService]
   },
   {

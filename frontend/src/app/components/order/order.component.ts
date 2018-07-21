@@ -118,4 +118,17 @@ export class OrderComponent implements OnInit {
 
   }
 
+  openQrCode(order) {
+    // this.isShow = !this.isShow
+    // console.log('Open QR Code',order);
+    // this.OrderService.getDataQRcodeBuyerByOrderId(order.order_id)
+    // .subscribe(response => {
+    //   console.log('[response] openQrCode: ',response);
+    //   this.isShow = !this.isShow
+    // },error => {
+    //   console.log('[error] openQrCode: ',error);
+
+    // })
+  }
+
 }

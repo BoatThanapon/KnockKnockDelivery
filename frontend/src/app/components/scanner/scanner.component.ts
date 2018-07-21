@@ -26,7 +26,8 @@ export class ScannerComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.qrScannerComponent.getMediaDevices().then(devices => {
+    this.qrScannerComponent.getMediaDevices()
+    .then(devices => {
         console.log(devices);
         const videoDevices: MediaDeviceInfo[] = [];
         for (const device of devices) {
@@ -52,8 +53,14 @@ export class ScannerComponent implements OnInit {
 
     this.qrScannerComponent.capturedQr.subscribe(result => {
       console.log(result);
+      this.reader(result)
     });
 
+  }
+
+  reader(result) {
+    console.log('[reader]',result);
+    
   }
 
   render(e) {
