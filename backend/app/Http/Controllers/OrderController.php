@@ -100,13 +100,7 @@ class OrderController extends Controller
         if ($order === null) {
             return response()->json([
                 'message' => 'order not found',
-            ], 400);
-        }
-
-        $order->order_status_id = 5;
-
-        if($order->payment_transfer_slip !== null){
-            Storage::delete('public/payment_transfer_slip/'.$order->payment_transfer_slip);
+            ], 404);
         }
 
         if ($request->hasFile('payment_transfer_slip')) {
@@ -119,7 +113,7 @@ class OrderController extends Controller
             // Filename to store
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
-            $path = $request->file('payment_transfer_slip')->storeAs('public/payment_transfer_slip', $fileNameToStore);
+            $path = $request->file('payment_transfer_slip')->storeAs('public/payment_transfer_slip/', $fileNameToStore);
         } else {
             $fileNameToStore = 'noimage.jpg';
         }
@@ -128,6 +122,7 @@ class OrderController extends Controller
             $order->payment_transfer_slip = $fileNameToStore;
         }
 
+        $order->order_status_id = 5;
         $order->save();
 
         if ($request->hasFile('payment_transfer_slip')) {
