@@ -54,7 +54,7 @@ class OrderQRcodeController extends Controller
         }
 
         return response()->json([ 'data' => [
-            'qrcode_seller' => $order->qrcode_seller
+            'qrcode_seller' => '/storage/qrcodes/seller/'.$order->qrcode_seller
         ]]);
     }
 
@@ -65,8 +65,9 @@ class OrderQRcodeController extends Controller
             return response()->json(['message'=> 'Order not found'], 400);
         }
 
+
         return response()->json([ 'data' => [
-            'qrcode_buyer' => $order->qrcode_buyer
+            'qrcode_buyer' => '/storage/qrcodes/buyer/'.$order->qrcode_buyer
         ]]);
     }
 
