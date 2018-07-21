@@ -396,13 +396,32 @@ export class AdminComponent implements OnInit {
       .subscribe(response => {
         console.log("[Response] ", response);
           this.isLoad = !this.isLoad;
-          alert("This profile has been approve")
-          location.reload();
+          let status = this.checkUpdateResult(response)
+          .then(result => {
+            console.log("[status name] : ",result);
+            alert("This profile has been "+result)
+            location.reload();
+          }).catch(error => {
+            console.log('[error] ',error);
+          })
+
         
       },
         error => {
           console.log("[Error] ", error);
         })
+
+  }
+
+  checkUpdateResult(response) {
+    let status = response.result.profile_status_id
+    return new Promise((resolve,reject) => {
+      this.masterData.profile_status.forEach(element => {
+          if(element.profile_status_id === status) {
+            return resolve(element.profile_status_name);
+          }
+      });
+    });
 
   }
 

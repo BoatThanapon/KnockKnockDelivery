@@ -87,7 +87,7 @@
                 </tr>
               </tbody>
             </table> -->
-            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="userInsystem['buyer']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="userInsystem['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
@@ -121,7 +121,7 @@
                 </tr>
               </tbody>
             </table> -->
-            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isDeliver">
@@ -155,7 +155,7 @@
                 </tr>
               </tbody>
             </table> -->
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
         </div>
@@ -211,7 +211,7 @@
               </tbody>
             </table> -->
 
-            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="holdingUsers['buyer']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="holdingUsers['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
@@ -245,7 +245,7 @@
                   </tbody>
                 </table> -->
 
-            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isDeliver">
@@ -294,7 +294,7 @@
             <h1>
               <b>Order history</b>
             </h1>
-            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [_data]="_data"></app-admin-table-data>
+            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [_data]="_data" ></app-admin-table-data>
         </div>
     </div>
 

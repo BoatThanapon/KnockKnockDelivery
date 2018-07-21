@@ -26,12 +26,13 @@
                 <b>Update at:</b> {{order.updated_at}}</p>
               <p class="card-text">
                 <b>Status:</b> {{order.order_status.order_status_name}}</p>
+              <p class="card-text" style="color:red;" [hidden]="isShipper">Waiting buyer send transfer slip</p>
             </div>
             <div class="card-footer">
               <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#seeMoreModal" (click)="seeMore(order)">See More</button>
-              <button class="btn btn-outline-success btn-block" data-toggle="modal" data-target="#UploadModal">Upload transfer</button>
-              <button class="btn btn-outline-warning btn-block" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" (click)="openQrCode(order)" >Open QR Code</button>
-              <button class="btn btn-outline-warning btn-block" [hidden]="isShipper" (click)="scanQRCode()" >Scan QR Code</button>
+              <button class="btn btn-outline-success btn-block" *ngIf="order.order_status.order_status_id===2&&!isBuyer"  data-toggle="modal" data-target="#UploadModal" (click)="uploadTransfer(order)">Upload transfer</button>
+              <button class="btn btn-outline-warning btn-block" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" (click)="openQrCode(order)">Open QR Code</button>
+              <button class="btn btn-outline-warning btn-block" [hidden]="isShipper" (click)="scanQRCode()">Scan QR Code</button>
             </div>
           </div>
         </div>
@@ -43,10 +44,10 @@
   </div>
 
 
-  
-<!-- //////////////////////////////////// See more Modal /////////////////////////////////////////// -->
 
-<div class="modal fade" id="seeMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- //////////////////////////////////// See more Modal /////////////////////////////////////////// -->
+
+  <div class="modal fade" id="seeMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -56,12 +57,18 @@
           </button>
         </div>
         <div class="modal-body">
-          <p><b>Order id:</b> {{seeMore_form.order_id}}</p>
-          <p><b>Receiver name:</b> {{seeMore_form.receiver_firstname}} {{seeMore_form.receiver_lastname}}</p>
-          <p><b>Retriever address:</b> {{seeMore_form.receiver_location}}</p>
-          <p><b>Service charge:</b> {{seeMore_form.service_charge}}</p>
-          <p><b>Total price:</b> {{seeMore_form.order_total_price}}</p>
-          <p><b>Updated at:</b> {{seeMore_form.updated_at}}</p>
+          <p>
+            <b>Order id:</b> {{seeMore_form.order_id}}</p>
+          <p>
+            <b>Receiver name:</b> {{seeMore_form.receiver_firstname}} {{seeMore_form.receiver_lastname}}</p>
+          <p>
+            <b>Retriever address:</b> {{seeMore_form.receiver_location}}</p>
+          <p>
+            <b>Service charge:</b> {{seeMore_form.service_charge}}</p>
+          <p>
+            <b>Total price:</b> {{seeMore_form.order_total_price}}</p>
+          <p>
+            <b>Updated at:</b> {{seeMore_form.updated_at}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>
@@ -69,11 +76,11 @@
       </div>
     </div>
   </div>
-  
- 
-<!-- //////////////////////////////////// Upload transFer Modal /////////////////////////////////////////// -->
 
-<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <!-- //////////////////////////////////// Upload transFer Modal /////////////////////////////////////////// -->
+
+  <div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -83,22 +90,29 @@
           </button>
         </div>
         <div class="modal-body">
-         
+
+          <div class="form-group">
+            <input type='file' id="img" (change)="preview($event.target.files)" accept="image/*" #fileInput/>
+            <br>
+            <br>
+            <img [hidden]="imageUrl==null" [src]="imageUrl" style="width:50%;height: 50%;">
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" data-dismisss="modal">Upload</button>
+          <button type="button" class="btn btn-success" data-dismisss="modal" (click)="updateOrder()">Upload</button>
 
         </div>
       </div>
     </div>
   </div>
-  
 
-   
-<!-- //////////////////////////////////// Open QR code Modal /////////////////////////////////////////// -->
 
-<div class="modal fade" id="OpenQRCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <!-- //////////////////////////////////// Open QR code Modal /////////////////////////////////////////// -->
+
+  <div class="modal fade" id="OpenQRCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -108,7 +122,7 @@
           </button>
         </div>
         <div class="modal-body">
-         <app-qrcode></app-qrcode>
+          <app-qrcode></app-qrcode>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>
@@ -116,4 +130,3 @@
       </div>
     </div>
   </div>
-  

@@ -36,12 +36,24 @@ export class OrderService {
   }
 
   updateOrder(oid,body) {
-    return this.http.post(`${this.baseUrl}order/`+oid,body ,this.httpOptions)
+    return this.http.put(`${this.baseUrl}order/`+oid,body ,this.httpOptions)
 
   }
 
   getDataQRcodeBuyerByOrderId(id) {
     return this.http.get<orders>(`${this.baseUrl}orderQRcode/buyer/order/`+id, this.httpOptions)
+
+  }
+
+  UploadTransferSlipByOrderId(order_id,body) {
+    let header = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ this.UAT,
+        'Accept':"application/json, text/plain, */*",
+
+      })
+    };
+    return this.http.post(`${this.baseUrl}order/${order_id}/uploadPaymentTransferSlip`,body,header)
 
   }
 

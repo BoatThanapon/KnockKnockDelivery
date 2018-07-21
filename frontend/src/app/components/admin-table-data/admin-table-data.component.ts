@@ -28,26 +28,26 @@ export class AdminTableDataComponent implements OnInit {
 
   private order = {
 
-    order_id:'',
-    order_total_price:'',
-    receiver_firstname:'',
-    receiver_lastname:'',
-    service_charge:'',
-    shipper: {
-      user:{
-        firstname:'',
-        lastname:'',
-        telephone_number:''
-      }
-    },
-    updated_at:'',
-    buyer: {
-      user: {
-        firstname:'',
-        lastname:'',
-        telephone_number:'',
-      }
-    },
+    // order_id:'',
+    // order_total_price:'',
+    // receiver_firstname:'',
+    // receiver_lastname:'',
+    // service_charge:'',
+    // shipper: {
+    //   user:{
+    //     firstname:'',
+    //     lastname:'',
+    //     telephone_number:''
+    //   }
+    // },
+    // updated_at:'',
+    // buyer: {
+    //   user: {
+    //     firstname:'',
+    //     lastname:'',
+    //     telephone_number:'',
+    //   }
+    // },
 
   }
 
@@ -84,7 +84,7 @@ export class AdminTableDataComponent implements OnInit {
     this.getOrderDetail(order.order_id)
     .then(result => {
       console.log("[detail] seeMore: ",result);
-      // this.order = result
+      this.order = result
       this.isShow = !this.isShow
 
     }).catch(error => {
