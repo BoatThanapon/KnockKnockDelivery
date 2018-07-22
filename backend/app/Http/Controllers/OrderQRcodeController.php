@@ -35,7 +35,7 @@ class OrderQRcodeController extends Controller
             ], 404);
         }
 
-        $order->order_status_id = 5;
+        $order->order_status_id = 4;
 
         $qr_id = (string)$order->order_id;
         $seller_link = 'http://localhost:4200/qrcode/seller/order/'.$qr_id;
