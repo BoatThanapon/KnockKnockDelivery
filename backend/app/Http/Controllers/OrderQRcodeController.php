@@ -38,11 +38,13 @@ class OrderQRcodeController extends Controller
         $order->order_status_id = 5;
 
         $qr_id = (string)$order->order_id;
-        QrCode::size(350)->generate('http://localhost:4200/qrcode/seller/order/'.$qr_id, '../storage/app/public/qrcodes/seller/Seller_QRcode_'.$qr_id.'.svg');
-        $order->qrcode_seller = 'Seller_QRcode_'.$qr_id.'.svg';
+        $seller_link = 'http://localhost:4200/qrcode/seller/order/'.$qr_id;
+        QrCode::size(350)->generate($seller_link , '../storage/app/public/qrcodes/seller/Seller_QRcode_Order_'.$qr_id.'.svg');
+        $order->qrcode_seller = 'Seller_QRcode_Order_'.$qr_id.'.svg';
 
-        QrCode::size(350)->generate('http://localhost:4200/qrcode/buyer/order/'.$qr_id,'../storage/app/public/qrcodes/buyer/Buyer_QRcode_'.$qr_id.'.svg');
-        $order->qrcode_buyer = 'Buyer_QRcode_'.$qr_id.'.svg';
+        $buyer_link = 'http://localhost:4200/qrcode/buyer/order/'.$qr_id;
+        QrCode::size(350)->generate($buyer_link, '../storage/app/public/qrcodes/buyer/Buyer_QRcode_Order_'.$qr_id.'.svg');
+        $order->qrcode_buyer = 'Buyer_QRcode_Order_'.$qr_id.'.svg';
 
         $order->save();
         return response()->json(['result' => $order]);
