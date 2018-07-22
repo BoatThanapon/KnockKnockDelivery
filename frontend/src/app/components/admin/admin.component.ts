@@ -234,8 +234,6 @@ export class AdminComponent implements OnInit {
         this.isSeller = false;
         this.type = 'seller'
 
-        console.log("[this.display_seller]", this.display_seller)
-
       }
       else if (this.selectedRole == 'Buyer') {
         // this.userInsystem['buyer'].forEach((element, index) => {

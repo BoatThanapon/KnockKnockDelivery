@@ -132,6 +132,11 @@ export class ManageShopComponent implements OnInit {
         }
     }
 
+    loading() {
+        console.log("[loading]");
+        this.isLoad = !this.isLoad;
+    }
+
 
     onSelectAllProducts() {
         this.isAllProducts = true;

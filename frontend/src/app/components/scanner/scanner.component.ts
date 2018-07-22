@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit, ElementRef, Renderer2,ViewEncapsulation } from '@angular/core';
 import {QrScannerComponent} from 'angular2-qrscanner';
 import { Router } from '@angular/router';
+import { OrderService } from './../../services/order.service';
 
 @Component({
   selector: 'app-scanner',
@@ -11,11 +12,7 @@ import { Router } from '@angular/router';
 
 })
 export class ScannerComponent implements OnInit {
-  // public angularxQrCode: string = null;
-  // constructor () {
-  //     // assign a value
-  //     this.myAngularxQrCode = 'Your QR code data string';
-  // }
+
   elementType = 'url';
   value = 'https://assets.econsultancy.com/images/resized/0002/4236/qr_code-blog-third.png';
 
@@ -25,7 +22,9 @@ export class ScannerComponent implements OnInit {
   showQRCode: boolean = true;
   constructor(
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private OrderService: OrderService,
+
   ) {
 
   }
@@ -80,5 +79,38 @@ export class ScannerComponent implements OnInit {
       this.renderer.removeChild(this.resultElement.nativeElement, node);
     }
     this.renderer.appendChild(this.resultElement.nativeElement, element);
+  }
+
+  scan_seller() {
+    let order = JSON.parse(localStorage.getItem('order'))
+    let body = {
+      order_status_id:5
+    }
+    this.OrderService.QRcodeUpdateStatusOrderByOrderId(order.order_id,body)
+    .subscribe(response => {
+      console.log('[reeponse] scan_seller',response);
+      alert('Success scan@seller')
+    },error => {
+      console.log('[error] scan_seller',error);
+      alert('Fail scan@seller')
+
+    })
+  }
+
+  scan_buyer() {
+    let order = JSON.parse(localStorage.getItem('order'))
+    let body = {
+      order_status_id:6
+    }
+    this.OrderService.QRcodeUpdateStatusOrderByOrderId(order.order_id,body)
+    .subscribe(response => {
+      console.log('[reeponse] scan_buyer',response);
+      alert('Success scan@buyer')
+
+    },error => {
+      console.log('[error] scan_buyer',error);
+      alert('Fail scan@buyer')
+
+    })
   }
 }

@@ -12,27 +12,21 @@
                 <b>Order</b>
               </p>
             </div>
-            <!-- <div class="d-flex justify-content-center">
-              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
-            </div> -->
             <div class="card-body">
-              <!-- <p class="card-text"><b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p> -->
+              <img id="paymentTransferSlip"*ngIf="order.order_status.order_status_id===3" [src]="baseUrl+order.payment_transfer_slip" >
               <p class="card-text">
                 <b>Order id:</b> {{order.order_id}}</p>
-              <!-- <p class="card-text"><b>Recieveer address:</b> {{order.receiver_location}}</p> -->
-              <!-- <p class="card-text"><b>Service charge:</b> {{order.service_charge}}</p> -->
-              <!-- <p class="card-text"><b>Total price:</b> {{order.order_total_price}}</p> -->
               <p class="card-text">
                 <b>Update at:</b> {{order.updated_at}}</p>
               <p class="card-text">
                 <b>Status:</b> {{order.order_status.order_status_name}}</p>
-              <!-- <p class="card-text" style="color:red;" [hidden]="isShipper">Waiting buyer send transfer slip</p> -->
             </div>
             <div class="card-footer">
               <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#seeMoreModal" (click)="seeMore(order)">See More</button>
               <button class="btn btn-outline-success btn-block" *ngIf="order.order_status.order_status_id===2&&!isBuyer"  data-toggle="modal" data-target="#UploadModal" (click)="uploadTransfer(order)">Upload transfer</button>
               <button class="btn btn-outline-warning btn-block" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" *ngIf="order.order_status.order_status_id!==1&&order.order_status.order_status_id!==2" (click)="openQrCode(order)">Open QR Code</button>
-              <button class="btn btn-outline-warning btn-block" [hidden]="isShipper" (click)="scanQRCode()">Scan QR Code</button>
+              <button class="btn btn-outline-success btn-block" *ngIf="order.order_status.order_status_id===3&&!isShipper"  (click)="acceptTransfer(order)">Accept transfer</button>
+              <button class="btn btn-outline-warning btn-block" [hidden]="isShipper" *ngIf="order.order_status.order_status_id===4||order.order_status.order_status_id===5" (click)="scanQRCode(order)">Scan QR Code</button>
             </div>
           </div>
         </div>
@@ -47,7 +41,7 @@
 
   <!-- //////////////////////////////////// See more Modal /////////////////////////////////////////// -->
 
-  <div class="modal fade" id="seeMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="isSeeMore" class="modal fade" id="seeMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,7 +80,7 @@
 
   <!-- //////////////////////////////////// Upload transFer Modal /////////////////////////////////////////// -->
 
-  <div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="isUploadTransfer" class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -107,7 +101,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" data-dismisss="modal" (click)="updateOrder()">Upload</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateOrder()">Upload</button>
 
         </div>
       </div>
@@ -118,7 +112,7 @@
 
   <!-- //////////////////////////////////// Open QR code Modal /////////////////////////////////////////// -->
 
-  <div class="modal fade" id="OpenQRCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="isOpenQRCode" class="modal fade" id="OpenQRCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

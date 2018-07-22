@@ -59,8 +59,14 @@ export class OrderService {
 
   getQRcodeSellerByOrderId(id) {
     return this.http.get<image>(`${this.baseUrl}orderQRcode/seller/order/${id}`, this.httpOptions)
+  }
+
+  QRcodeUpdateStatusOrderByOrderId(id,body) {
+    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}`,body, this.httpOptions)
 
   }
+
+
 
 }
 

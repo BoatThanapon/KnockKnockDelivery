@@ -51,7 +51,7 @@
 
   <div *ngIf="isAllProducts">
     <div class="table-container">
-      <app-table-data [products]="products" (reloadPage)="ngOnInit($event)"></app-table-data>
+      <app-table-data [products]="products" (reloadPage)="ngOnInit($event)" (isLoad)="loading($event)"></app-table-data>
     </div>
 
   </div>

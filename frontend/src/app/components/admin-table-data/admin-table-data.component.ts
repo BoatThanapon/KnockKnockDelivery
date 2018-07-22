@@ -15,45 +15,21 @@ export class AdminTableDataComponent implements OnInit {
 
   @Input() _headers: Object;
   @Input() _data: Object;
-  @Input() _type: String;
+  @Input() _type: String = null;
 
   @Output() updateUser = new EventEmitter();
 
   private baseUrl = 'http://localhost:8000';
   private isShow:boolean = true;
+  private isOrderInfo:boolean = false;
+  private isOpenQRCode:boolean = false;
 
   private emit_data;
   private headers;
   private data;
   private imageUrl;
-  private order = {
-
-    // order_id:'',
-    // order_total_price:'',
-    // receiver_firstname:'',
-    // receiver_lastname:'',
-    // service_charge:'',
-    // shipper: {
-    //   user:{
-    //     firstname:'',
-    //     lastname:'',
-    //     telephone_number:''
-    //   }
-    // },
-    // updated_at:'',
-    // buyer: {
-    //   user: {
-    //     firstname:'',
-    //     lastname:'',
-    //     telephone_number:'',
-    //   }
-    // },
-
-  }
-
-  private product = {
-
-  }
+  private order = {}
+  private product = {}
 
   constructor(
     private modalService: NgbModal,
@@ -117,11 +93,14 @@ export class AdminTableDataComponent implements OnInit {
   }
 
   openQRCode(order) {
+    this.isShow = !this.isShow
     console.log('[open qr code] ',order);
     this.orderService.getQRcodeSellerByOrderId(order.order_id)
     .subscribe(response => {
       console.log("[response] ",response);
       this.imageUrl = response
+      this.isShow = !this.isShow
+
     },error => {
       console.log("[error] ",error);
 

@@ -21,6 +21,10 @@ export class OrderComponent implements OnInit {
     updated_at: ''
   };
   private upload_img;
+  private isSeeMore:boolean = false;
+  private isUploadTransfer:boolean = false;
+  private isOpenQRCode:boolean = false;
+
   private isEmpty:boolean = true;
   private isShow:boolean = true;
   private isBuyer:boolean = true;
@@ -114,6 +118,8 @@ export class OrderComponent implements OnInit {
       console.log("[detail] seeMore: ",result);
       this.seeMore_form = result
       this.isShow = !this.isShow
+      this.isSeeMore = !this.isSeeMore
+
 
     }).catch(error => {
       console.log("[error] seeMore: ",error);
@@ -122,10 +128,10 @@ export class OrderComponent implements OnInit {
 
   }
 
-  scanQRCode() {
+  scanQRCode(order) {
     console.log('Scan QR Code');
+    localStorage.setItem('order',JSON.stringify(order))
     this.router.navigateByUrl('/scanner')
-
   }
 
   openQrCode(order) {
@@ -134,6 +140,7 @@ export class OrderComponent implements OnInit {
     .subscribe(response => {
       console.log("[response] ",response);
       this.qrCodeImageUrl = response
+      this.isOpenQRCode = !this.isOpenQRCode
       console.log('[qrCodeImageUrl] ',this.qrCodeImageUrl);
     },error => {
       console.log("[error] ",error);
@@ -143,6 +150,7 @@ export class OrderComponent implements OnInit {
 
   uploadTransfer(order) {
     this.upload_order = order;
+    this.isUploadTransfer = !this.isUploadTransfer
     console.log("[upload transfer] ",order);
   }
 
@@ -175,6 +183,25 @@ export class OrderComponent implements OnInit {
     }
     reader.readAsDataURL(this.upload_img)
 
+  }
+
+  acceptTransfer(order) {
+    this.isShow = !this.isShow
+    let shipper = JSON.parse(localStorage.getItem('deliver'))
+    let body = {
+      order_status_id:4,
+      shipper_id:shipper.shipper_id
+    }
+    this.OrderService.updateOrder(order.order_id,body)
+    .subscribe(response => {
+      console.log("[response] acceptTransfer ",response);
+      alert('Transfer slip has been approve')
+      this.isShow = !this.isShow
+      this.ngOnInit();
+    },error => {
+      console.log("[error] acceptTransfer ",error);
+
+    })
   }
 
 }
