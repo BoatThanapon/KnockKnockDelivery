@@ -119,12 +119,12 @@
           <div class="form-group">
             <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
             <br>
-            <input [disabled]="isUpdate" type='file' id="img" (change)="preview($event)" accept="image/*" />
-            <br>
-            <br>
-  
-            <!-- <canvas id="previewImg" #mycanvas></canvas> -->
-          </div>
+            <input  name="shipper-transfer-slip-image"  type='file' id="img" (change)="previewShipperTransferImage($event.target.files)" accept="image/*">
+                    <br>
+                    <br>
+
+                    <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
+                  </div>
   
         </div>
         <div class="modal-footer">
