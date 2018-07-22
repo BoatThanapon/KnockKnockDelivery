@@ -70,7 +70,7 @@ export class SellerService {
     formData.append('product_category_id',product.product_category_id)
     formData.append('product_description',product.product_description)
     formData.append('product_image_1',product.product_image_1)
-    var options = { content: formData };
+
 
     console.log("tempForm: ", formData.getAll('product_category_id'))
     
