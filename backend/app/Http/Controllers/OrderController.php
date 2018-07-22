@@ -123,7 +123,7 @@ class OrderController extends Controller
             $order->payment_transfer_slip = $fileNameToStore;
         }
 
-        $order->order_status_id = 5;
+        $order->order_status_id = 3;
         $order->save();
 
         if ($request->hasFile('payment_transfer_slip')) {
