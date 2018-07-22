@@ -22,7 +22,7 @@
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#orderInfo" (click)="openOrderInfo(order)">Info</button>
-            <button type="button" class="btn btn-warning" (click)="openQRCode(order)">Open QR Code</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#qrcodeModel" (click)="openQRCode(order)">Open QR Code</button>
           </div>
         </td>
       </tr>
@@ -308,7 +308,7 @@
 
     <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
 
-    <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div *ngIf="!isShow" class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -344,6 +344,28 @@
       </div>
     </div>
 
+
+
+    <!-- ////////////////////////////////// qr code ///////////////////////////////////////-->
+
+    <div class="modal fade" id="qrcodeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img [hidden]="imageUrl==null" [src]="baseUrl+imageUrl.data.qrcode_seller" style="width:50%;height: 50%;">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

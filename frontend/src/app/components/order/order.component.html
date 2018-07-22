@@ -26,12 +26,12 @@
                 <b>Update at:</b> {{order.updated_at}}</p>
               <p class="card-text">
                 <b>Status:</b> {{order.order_status.order_status_name}}</p>
-              <p class="card-text" style="color:red;" [hidden]="isShipper">Waiting buyer send transfer slip</p>
+              <!-- <p class="card-text" style="color:red;" [hidden]="isShipper">Waiting buyer send transfer slip</p> -->
             </div>
             <div class="card-footer">
               <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#seeMoreModal" (click)="seeMore(order)">See More</button>
               <button class="btn btn-outline-success btn-block" *ngIf="order.order_status.order_status_id===2&&!isBuyer"  data-toggle="modal" data-target="#UploadModal" (click)="uploadTransfer(order)">Upload transfer</button>
-              <button class="btn btn-outline-warning btn-block" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" (click)="openQrCode(order)">Open QR Code</button>
+              <button class="btn btn-outline-warning btn-block" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" *ngIf="order.order_status.order_status_id!==1&&order.order_status.order_status_id!==2" (click)="openQrCode(order)">Open QR Code</button>
               <button class="btn btn-outline-warning btn-block" [hidden]="isShipper" (click)="scanQRCode()">Scan QR Code</button>
             </div>
           </div>
@@ -69,6 +69,12 @@
             <b>Total price:</b> {{seeMore_form.order_total_price}}</p>
           <p>
             <b>Updated at:</b> {{seeMore_form.updated_at}}</p>
+          <p>
+            <b>Shipper name:</b>{{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
+          <p>
+            <b>Shipper account no:</b>{{seeMore_form.shipper.bank_account_no}} {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
+          <p>
+            <b>Shipper telephone no:</b>{{seeMore_form.shipper.user.telephone_number}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>
@@ -122,7 +128,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <app-qrcode></app-qrcode>
+          <!-- <app-qrcode></app-qrcode> -->
+          <img [src]="baseUrl+qrCodeImageUrl.data.qrcode_buyer" >
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn" data-dismiss="modal">Close</button>

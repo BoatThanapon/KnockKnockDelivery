@@ -25,7 +25,7 @@ export class AdminTableDataComponent implements OnInit {
   private emit_data;
   private headers;
   private data;
-
+  private imageUrl;
   private order = {
 
     // order_id:'',
@@ -117,7 +117,15 @@ export class AdminTableDataComponent implements OnInit {
   }
 
   openQRCode(order) {
+    console.log('[open qr code] ',order);
+    this.orderService.getQRcodeSellerByOrderId(order.order_id)
+    .subscribe(response => {
+      console.log("[response] ",response);
+      this.imageUrl = response
+    },error => {
+      console.log("[error] ",error);
 
+    })
   }
 
 }

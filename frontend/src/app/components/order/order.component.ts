@@ -25,7 +25,9 @@ export class OrderComponent implements OnInit {
   private isShow:boolean = true;
   private isBuyer:boolean = true;
   private isShipper:boolean = true;
-  private imageUrl;
+  private imageUrl =null;
+  private qrCodeImageUrl;
+  private baseUrl = 'http://localhost:8000';
   private seeMore_form = {}
   constructor(
     private BuyerService: BuyerService,
@@ -106,6 +108,7 @@ export class OrderComponent implements OnInit {
 
   seeMore(order) {
     this.isShow = !this.isShow
+    this.seeMore_form = {}
     this.getOrderDetail(order.order_id)
     .then(result => {
       console.log("[detail] seeMore: ",result);
@@ -126,16 +129,16 @@ export class OrderComponent implements OnInit {
   }
 
   openQrCode(order) {
-    // this.isShow = !this.isShow
-    // console.log('Open QR Code',order);
-    // this.OrderService.getDataQRcodeBuyerByOrderId(order.order_id)
-    // .subscribe(response => {
-    //   console.log('[response] openQrCode: ',response);
-    //   this.isShow = !this.isShow
-    // },error => {
-    //   console.log('[error] openQrCode: ',error);
+    console.log('[open qr code] ',order);
+    this.OrderService.getDataQRcodeBuyerByOrderId(order.order_id)
+    .subscribe(response => {
+      console.log("[response] ",response);
+      this.qrCodeImageUrl = response
+      console.log('[qrCodeImageUrl] ',this.qrCodeImageUrl);
+    },error => {
+      console.log("[error] ",error);
 
-    // })
+    })
   }
 
   uploadTransfer(order) {

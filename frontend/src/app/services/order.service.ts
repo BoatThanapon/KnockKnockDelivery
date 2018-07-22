@@ -12,7 +12,7 @@ export class OrderService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+ this.UAT
+      'Authorization': 'Bearer ' + this.UAT
     })
   };
 
@@ -27,42 +27,55 @@ export class OrderService {
   }
 
   getOrderBySellerId(sid) {
-    return this.http.get<orders>(`${this.baseUrl}order/seller/`+sid+`/order-list`, this.httpOptions)
+    return this.http.get<orders>(`${this.baseUrl}order/seller/` + sid + `/order-list`, this.httpOptions)
   }
 
 
   getOrderDetail(oid) {
-    return this.http.get<orders>(`${this.baseUrl}order/`+oid, this.httpOptions)
+    return this.http.get<orders>(`${this.baseUrl}order/` + oid, this.httpOptions)
   }
 
-  updateOrder(oid,body) {
-    return this.http.put(`${this.baseUrl}order/`+oid,body ,this.httpOptions)
+  updateOrder(oid, body) {
+    return this.http.put(`${this.baseUrl}order/` + oid, body, this.httpOptions)
 
   }
 
   getDataQRcodeBuyerByOrderId(id) {
-    return this.http.get<orders>(`${this.baseUrl}orderQRcode/buyer/order/`+id, this.httpOptions)
+    return this.http.get<orders>(`${this.baseUrl}orderQRcode/buyer/order/` + id, this.httpOptions)
 
   }
 
-  UploadTransferSlipByOrderId(order_id,body) {
+  UploadTransferSlipByOrderId(order_id, body) {
     let header = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer '+ this.UAT,
-        'Accept':"application/json, text/plain, */*",
+        'Authorization': 'Bearer ' + this.UAT,
+        'Accept': "application/json, text/plain, */*",
 
       })
     };
-    return this.http.post(`${this.baseUrl}order/${order_id}/uploadPaymentTransferSlip`,body,header)
+    return this.http.post(`${this.baseUrl}order/${order_id}/uploadPaymentTransferSlip`, body, header)
+
+  }
+
+  getQRcodeSellerByOrderId(id) {
+    return this.http.get<image>(`${this.baseUrl}orderQRcode/seller/order/${id}`, this.httpOptions)
 
   }
 
 }
 
+export interface image {
+  response: {
+    data: {
+      qrcode_buyer: ''
+    }
+  }
+}
+
 export interface order {
-  result:null
+  result: null
 }
 
 export interface orders {
-  data:[{}]
+  data: [{}]
 }
