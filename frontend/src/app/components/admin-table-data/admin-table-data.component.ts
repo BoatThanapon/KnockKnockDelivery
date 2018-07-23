@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerService } from '../../services/seller.service';
 import { AdminService } from '../../services/admin.service';
 import { OrderService } from '../../services/order.service';
-import { ClassGetter } from '../../../../node_modules/@angular/compiler/src/output/output_ast';
 
 
 @Component({

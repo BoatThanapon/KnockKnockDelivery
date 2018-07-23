@@ -66,6 +66,11 @@ export class OrderService {
 
   }
 
+  ShipperAcceptOrder(id) {
+    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`, this.httpOptions)
+
+  }
+
 
 
 }

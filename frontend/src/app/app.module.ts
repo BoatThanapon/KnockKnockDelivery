@@ -44,6 +44,7 @@ import { ScannerComponent } from './components/scanner/scanner.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { QRcodeComponent } from './components/qrcode/qrcode.component';
 import { QrcodeResultComponent } from './components/qrcode-result/qrcode-result.component';
+import { TableHistoryComponent } from './components/table-history/table-history.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { QrcodeResultComponent } from './components/qrcode-result/qrcode-result.
     ScannerComponent,
     OrderDetailComponent,
     QRcodeComponent,
-    QrcodeResultComponent
+    QrcodeResultComponent,
+    TableHistoryComponent
   ],
   imports: [
     BrowserModule,

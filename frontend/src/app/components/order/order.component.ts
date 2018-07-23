@@ -113,16 +113,18 @@ export class OrderComponent implements OnInit {
   seeMore(order) {
     this.isShow = !this.isShow
     this.seeMore_form = {}
+    this.isSeeMore = !this.isSeeMore
+
     this.getOrderDetail(order.order_id)
     .then(result => {
       console.log("[detail] seeMore: ",result);
       this.seeMore_form = result
       this.isShow = !this.isShow
-      this.isSeeMore = !this.isSeeMore
 
 
     }).catch(error => {
       console.log("[error] seeMore: ",error);
+      this.isShow = !this.isShow
 
     })
 
@@ -187,12 +189,7 @@ export class OrderComponent implements OnInit {
 
   acceptTransfer(order) {
     this.isShow = !this.isShow
-    let shipper = JSON.parse(localStorage.getItem('deliver'))
-    let body = {
-      order_status_id:4,
-      shipper_id:shipper.shipper_id
-    }
-    this.OrderService.updateOrder(order.order_id,body)
+    this.OrderService.ShipperAcceptOrder(order.order_id)
     .subscribe(response => {
       console.log("[response] acceptTransfer ",response);
       alert('Transfer slip has been approve')

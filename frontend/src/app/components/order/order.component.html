@@ -63,11 +63,11 @@
             <b>Total price:</b> {{seeMore_form.order_total_price}}</p>
           <p>
             <b>Updated at:</b> {{seeMore_form.updated_at}}</p>
-          <p>
+          <p *ngIf="seeMore_form.shipper!=null">
             <b>Shipper name:</b>{{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
-          <p>
+          <p *ngIf="seeMore_form.shipper!=null">
             <b>Shipper account no:</b>{{seeMore_form.shipper.bank_account_no}} {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
-          <p>
+          <p *ngIf="seeMore_form.shipper!=null">
             <b>Shipper telephone no:</b>{{seeMore_form.shipper.user.telephone_number}}</p>
         </div>
         <div class="modal-footer">

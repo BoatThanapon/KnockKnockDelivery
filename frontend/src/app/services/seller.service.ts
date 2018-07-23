@@ -98,6 +98,14 @@ export class SellerService {
     return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${lat},${lng}&key=AIzaSyCxcKTh1HnMR-RN3vHZ0NSyDCT_TByefpk`)
   }
 
+  searchShopName(keyWord) {
+    let body = {
+      search_data: keyWord
+    }
+    return this.http.post<shops>(`${this.baseUrl}seller/search/shop-name/`, body,this.httpOptions)
+
+  }
+
 }
 
 

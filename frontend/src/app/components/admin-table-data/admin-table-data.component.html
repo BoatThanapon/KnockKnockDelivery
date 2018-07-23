@@ -2,7 +2,7 @@
   <div class="loader"></div>
 </div>
 <div [hidden]="!isShow">
-  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
+  <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
     <thead>
       <tr *ngFor="let header of headers">
         <th>No.</th>
@@ -27,7 +27,7 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
   <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='buyer'">
     <thead>
@@ -255,8 +255,7 @@
   </div>
   
   
-  <div [hidden]="_type==null">
-      <!-- ////////////////////////////////// orderInfo ///////////////////////////////////////-->
+  <!-- <div [hidden]="_type==null">
       <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content"> 
@@ -293,7 +292,6 @@
         </div>
       </div>
   
-      <!-- ////////////////////////////////// qr code ///////////////////////////////////////-->
       <div class="modal fade" id="qrcodeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -313,7 +311,7 @@
         </div>
       </div>
   
-  </div>
+  </div> -->
   
 
 </div>
