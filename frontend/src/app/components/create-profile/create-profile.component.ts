@@ -2,8 +2,6 @@ declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { SellerService } from '../../services/seller.service';
-
-
 import { Router } from '@angular/router';
 
 
