@@ -88,7 +88,7 @@
 
   <div *ngIf="isNorti">
     <div class="w3-row-padding w3-container">
-      <p>Shop Nortification</p>
+      <app-table-history [_headers]="headers_history" [_type]="type" [_data]="noti"></app-table-history>
     </div>
   </div>
 

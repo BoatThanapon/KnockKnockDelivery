@@ -15,6 +15,7 @@ export class DeliverOrdersComponent implements OnInit {
   private orders_num = 0;
   private orders = [];
   private orderDetail = [];
+  private keyWord = '';
   private isShow:boolean = true;
   shop_latitude: any;
   shop_longtitude: any;
@@ -214,6 +215,43 @@ export class DeliverOrdersComponent implements OnInit {
   openAcceptOrder() {
     this.router.navigateByUrl('/order')
 
+  }
+
+  searchShop() {
+    console.log("[Key word] ",this.keyWord);
+    this.isShow = !this.isShow
+    this.orders = [];
+    this.orderService.searchSellerHaveOrders(this.keyWord)
+    .subscribe(response => {
+      console.log("[response] searchShop",response.data);
+      this.orders = response.data
+
+      this.orders.forEach((element,index) => {
+        element["shop_latitude"] = +element.seller.shop_latitude;
+        element["shop_longtitude"] = +element.seller.shop_longitude;
+        element["direction"] = {
+          origin: {
+            lat: +element.seller.shop_latitude,
+            lng: +element.seller.shop_longitude
+          },
+          destination: {
+            lat: +element.receiver_latitude,
+            lng: +element.receiver_longitude
+          }
+        };
+        console.log('[index]',index);
+        console.log('[this.orders.length]',this.orders.length);
+
+        
+        if(index == this.orders.length) {
+          this.isShow = !this.isShow
+        }
+      })
+
+    },error => {
+      console.log("[error] searchShop",error);
+
+    })
   }
 
 

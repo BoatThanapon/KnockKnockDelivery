@@ -9,9 +9,9 @@
     </div>
     <div class="w3-col m6 w3-center">
       <div class="input-group mb-6" id="search">
-        <input type="text" class="form-control input-lg" placeholder="Search">
+        <input type="text" class="form-control input-lg" placeholder="Search" [(ngModel)]="keyWord"> 
         <div class="input-group-append">
-          <button class="btn btn-warning" id="search-button">
+          <button class="btn btn-warning" id="search-button" (click)="searchShop()">
             <i class="fa fa-search"></i>
           </button>
         </div>

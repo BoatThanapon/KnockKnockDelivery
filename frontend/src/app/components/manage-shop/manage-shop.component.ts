@@ -20,6 +20,7 @@ export class ManageShopComponent implements OnInit {
     private seller;
     private products;
     private history;
+    private noti =[];
     private type;
     
     private availableProducts=[];
@@ -62,11 +63,23 @@ export class ManageShopComponent implements OnInit {
             response => {      
                 this.history = response.data       
                 console.log("[response] ",this.products)
+                this.filterHistory()
                 this.isLoad = !this.isLoad;
-
             },
             error => console.log(error)
         )
+    }
+
+    filterHistory() {
+        this.history.forEach(element => {                
+            console.log('[this.history] ',element);
+            if(element.order_status.order_status_id != 6) {
+                this.noti.push(element)
+                console.log('[Noti] ',this.noti);
+                
+            }
+            // this.noti = 
+        });
     }
 
     getAllProducts() {

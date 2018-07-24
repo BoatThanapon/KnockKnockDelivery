@@ -22,6 +22,10 @@ export class OrderService {
     return this.http.post<order>(`${this.baseUrl}order`, order, this.httpOptions)
   }
 
+  createOrderDetail(order) {
+    return this.http.post<order>(`${this.baseUrl}order-detail`, order, this.httpOptions)
+  }
+
   getOrders() {
     return this.http.get<orders>(`${this.baseUrl}order/sellers`, this.httpOptions)
   }
@@ -69,6 +73,13 @@ export class OrderService {
   ShipperAcceptOrder(id) {
     return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`, this.httpOptions)
 
+  }
+
+  searchSellerHaveOrders(keyWord) {
+    let body = {
+      search_data: keyWord
+    }
+    return this.http.post<orders>(`${this.baseUrl}order/search/shop-name`, body, this.httpOptions)
   }
 
 

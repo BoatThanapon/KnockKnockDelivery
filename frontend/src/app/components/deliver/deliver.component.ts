@@ -14,6 +14,7 @@ export class DeliverComponent implements OnInit {
   private deliver_profile;
   private isShow:boolean = true;
   private isUpdate:boolean = false;
+  private keyWord = '';
   private form = {
     bank_account_id:null,
     bank_account_no:null,
@@ -162,6 +163,24 @@ export class DeliverComponent implements OnInit {
       , error => {
         console.log('error',error);
       }
+    })
+  }
+
+
+  searchShop() {
+    console.log("[Key word] ",this.keyWord);
+    this.isShow = !this.isShow
+    this.orders = [];
+    this.orderService.searchSellerHaveOrders(this.keyWord)
+    .subscribe(response => {
+      console.log("[response] searchShop",response.data);
+      this.orders = response.data
+      this.isShow = !this.isShow
+
+
+    },error => {
+      console.log("[error] searchShop",error);
+
     })
   }
 
