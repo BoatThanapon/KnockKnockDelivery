@@ -24,6 +24,7 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  distance: any;
 
   labelOptionShop = {
     color: '#fff',
@@ -131,6 +132,12 @@ export class DeliverOrdersComponent implements OnInit {
     )
   }
 
+  calculateDistance(lat1, lng1, lat2, lng2) {
+    const nyc = new google.maps.LatLng(lat1, lng1);
+    const london = new google.maps.LatLng(lat2,lng2);
+    this.distance = (google.maps.geometry.spherical.computeDistanceBetween(nyc, london)/1000)*1.609344;
+  }
+
   getShopOrders() {
     let id = localStorage.getItem('seller_order_id');
     // return new Promise(function(resolve, reject) {
@@ -156,6 +163,10 @@ export class DeliverOrdersComponent implements OnInit {
             lng: +element.receiver_longitude
           }
         };
+        this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
+          +element.receiver_latitude,+element.receiver_longitude);
+          element["distance"] = this.distance;
+          element["serviceCharge"] = this.distance;
         })
 
 

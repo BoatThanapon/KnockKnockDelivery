@@ -29,6 +29,8 @@ export class ShopsComponent implements OnInit {
       profile_status_name:''
     }
   }
+  latitude = 18.800738;
+  longtitude = 98.950392;
 
 
 

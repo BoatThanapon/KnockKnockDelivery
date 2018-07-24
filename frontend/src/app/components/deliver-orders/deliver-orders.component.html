@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-5">
-              <agm-map [minZoom]="11" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+              <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
                 <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
                 [renderOptions]="options" ></agm-direction>
                 <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">

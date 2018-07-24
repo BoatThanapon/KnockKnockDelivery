@@ -85,7 +85,8 @@ import { TableHistoryComponent } from './components/table-history/table-history.
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8'
+      apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8',
+      libraries: ['geometry']
     }),
     AgmDirectionModule,
     QRCodeModule,
