@@ -51,8 +51,8 @@
         <td>{{user.profile_status.profile_status_name}}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -81,8 +81,8 @@
         <td>{{ user.profile_status.profile_status_name }}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.seller_id,3)">Reject</button>
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.seller_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -113,8 +113,8 @@
         <td>{{ user.profile_status.profile_status_name }}</td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
-            <button type="button" class="btn btn-danger" (click)="onClickUpdate(user.shipper_id,3)">Reject</button>
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.shipper_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -151,7 +151,7 @@
               <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -220,9 +220,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-              <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()" [disabled]="isClick">Save changes</button>
+              <button *ngIf="isEdit" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+              <button *ngIf="!isEdit" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+              <button *ngIf="!isEdit" type="button" class="btn btn-warning rounded-0" (click)="onEdit()" [disabled]="isClick">Save changes</button>
             </div>
           </div>
         </div>
@@ -245,9 +245,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-              <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
+              <button *ngIf="isDelete" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+              <button *ngIf="!isDelete" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+              <button *ngIf="!isDelete" type="button" class="btn btn-danger rounded-0" (click)="onDelete(product_id)">Delete</button>
             </div>
           </div>
         </div>

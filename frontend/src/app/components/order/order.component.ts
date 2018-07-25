@@ -166,6 +166,7 @@ export class OrderComponent implements OnInit {
     .subscribe(response => {
       this.isShow = !this.isShow
       console.log("[upload response] ",response);
+      this.ngOnInit();
 
     },error => {
       alert("Upload image fail")
