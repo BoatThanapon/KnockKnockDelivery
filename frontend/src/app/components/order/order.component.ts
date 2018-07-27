@@ -1,3 +1,4 @@
+declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { DeliverService } from './../../services/deliver.service';
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 export class OrderComponent implements OnInit {
 
   private orders = [];
+  private ordersdetail = [];
   private upload_order = {
     order_id: '', 
     order_status: {}, 
@@ -33,6 +35,7 @@ export class OrderComponent implements OnInit {
   private qrCodeImageUrl;
   private baseUrl = 'http://localhost:8000';
   private seeMore_form = {}
+  distance: any;
   constructor(
     private BuyerService: BuyerService,
     private DeliverService: DeliverService,
@@ -66,7 +69,7 @@ export class OrderComponent implements OnInit {
     let id = buyer.buyer_id;
     this.BuyerService.getOrderByBuyerId(id)
     .subscribe(response => {
-      console.log("[response] ", response.data.length)
+      console.log("[response]", response.data.length)
       this.orders = response.data
       this.isShow = ! this.isShow
       if(this.orders.length>0)
@@ -94,11 +97,44 @@ export class OrderComponent implements OnInit {
   }
 
 
+  calculateDistance(lat1, lng1, lat2, lng2) {
+    const nyc = new google.maps.LatLng(lat1, lng1);
+    const london = new google.maps.LatLng(lat2,lng2);
+    this.distance = (google.maps.geometry.spherical.computeDistanceBetween(nyc, london)/1000)*1.609344;
+  }
+
   getOrderDetail(id) {
     return new Promise((resolve, reject) => {
       this.OrderService.getOrderDetail(id)
       .subscribe(response => {
         console.log("[response] getOrderDetail: ",response.data);
+        this.ordersdetail = response.data;
+        this.ordersdetail["shop_latitude"] = +response.data["seller"].shop_latitude;
+        this.ordersdetail["shop_longtitude"] = +response.data["seller"].shop_longitude;
+          this.ordersdetail["direction"] = {
+            origin: {
+              lat: +response.data["seller"].shop_latitude,
+              lng: +response.data["seller"].shop_longitude
+            },
+            destination: {
+              lat: +response.data["receiver_latitude"],
+              lng: +response.data["receiver_longitude"]
+            }
+          };
+          this.calculateDistance(+response.data["seller"].shop_latitude,+response.data["seller"].shop_longitude,
+          +response.data["receiver_latitude"],+response.data["receiver_longitude"]);
+            this.ordersdetail["distance"] = this.distance;
+            if(this.distance > 8 && this.distance <= 40){
+              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*14))
+            }else if (this.distance > 5 && this.distance <= 8){
+              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*11))
+            }
+            else if (this.distance > 1 && this.distance <= 5){
+              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*8))
+            }else{
+              this.ordersdetail["service_charge"] = 25;
+            }
+
         resolve(response.data);
       }, error => {
         console.log("[error] getOrderDetail: ",error);
