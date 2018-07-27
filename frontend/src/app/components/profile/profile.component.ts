@@ -166,9 +166,26 @@ export class ProfileComponent implements OnInit {
       },
       error => {
         console.error("[Error] ",error)
+        this.isShow = true;
+
         if(error.status == 401) {
-          this.authService.removeToken();
-          this.router.navigateByUrl('/login')
+          // this.authService.removeToken();
+          // this.router.navigateByUrl('/login')
+          // alert('Error : '+error)
+          console.log('[Error] ',error.status);
+          this
+          this.authService.refresh()
+          .subscribe(response => {
+            console.log('[refresh] ',response);
+            this.authService.setToken(response.access_token)
+
+          },error => {
+            console.log('[error] ',error);
+            if(error.status === 401) {
+              location.reload();
+
+            }
+          })
 
         }
     })

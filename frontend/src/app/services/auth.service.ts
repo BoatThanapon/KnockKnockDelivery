@@ -69,7 +69,9 @@ export class AuthService {
   }
 
   refresh() {
-    return this.http.post(`${this.baseUrl}/refresh`, {})
+    console.log('[refresh]');
+  
+    return this.http.post<authResponse>(`${this.baseUrl}/refresh`, {},this.httpOptions)
 
   }
 
@@ -93,18 +95,6 @@ export class AuthService {
   }
 
   removeToken() {
-    // localStorage.removeItem('UAT');
-    // localStorage.removeItem('product_catagory');
-    // localStorage.removeItem('seller');
-    // localStorage.removeItem('shop_catagory');
-    // localStorage.removeItem('user_id');
-    // localStorage.removeItem('cart');
-    // localStorage.removeItem('masterData');
-    // localStorage.removeItem('accept_order');
-    // localStorage.removeItem('adminSelect');
-    // localStorage.removeItem('orders');
-    // localStorage.removeItem('seller_id');
-    // localStorage.removeItem('seller_order_id');
     localStorage.clear();
 
 
@@ -154,4 +144,11 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/resetPassword`, data)
   }
   
+}
+
+export interface authResponse {
+  access_token:'',
+  token_type:'',
+  expires_in:'',
+  user:''
 }
