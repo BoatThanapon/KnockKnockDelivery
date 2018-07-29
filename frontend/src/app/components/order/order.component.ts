@@ -35,7 +35,26 @@ export class OrderComponent implements OnInit {
   private qrCodeImageUrl;
   private baseUrl = 'http://localhost:8000';
   private seeMore_form = {}
+  options = {
+    suppressMarkers: true,
+  };
   distance: any;
+
+  labelOptionShop = {
+    color: '#fff',
+    fontFamily: '',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    text: 'S',
+    }
+
+    labelOptionReceiver = {
+      color: '#fff',
+      fontFamily: '',
+      fontSize: '15px',
+      fontWeight: 'bold',
+      text: 'R',
+      }
   constructor(
     private BuyerService: BuyerService,
     private DeliverService: DeliverService,
