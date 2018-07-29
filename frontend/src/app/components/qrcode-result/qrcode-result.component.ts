@@ -9,6 +9,15 @@ import { Router } from '@angular/router';
 })
 export class QrcodeResultComponent implements OnInit {
 
+  receiver_latitude: any;
+  receiver_longitude: any;
+  labelOptionReceiver = {
+    color: '#fff',
+    fontFamily: '',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    text: 'R',
+      }
   constructor(
     private OrderService: OrderService,
     private router: Router
@@ -49,6 +58,9 @@ export class QrcodeResultComponent implements OnInit {
       console.log('[reeponse] scan_seller',response);
       // alert('Success scan@seller')
       this.result = response.result
+      this.receiver_latitude = response.result["receiver_latitude"]
+      this.receiver_longitude = response.result["receiver_longitude"]
+
       this.isLoad =! this.isLoad
     },error => {
       console.log('[error] scan_seller',error);
@@ -68,6 +80,9 @@ export class QrcodeResultComponent implements OnInit {
       console.log('[reeponse] scan_buyer',response);
       this.isLoad =! this.isLoad
       this.result = response.result
+
+      this.receiver_latitude = response.result["receiver_latitude"]
+      this.receiver_longitude = response.result["receiver_longitude"]
 
 
     },error => {

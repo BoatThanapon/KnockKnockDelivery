@@ -10,7 +10,15 @@
     <p>receiver_firstname : {{result.receiver_firstname}}</p>
     <p>receiver_lastname : {{result.receiver_lastname}}</p>
     <p>receiver_location : {{result.receiver_location}}</p>
-    <h2>Google map here!!!</h2>
+    <div>
+      <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="receiver_latitude" [longitude]="receiver_longitude" >
+        <agm-marker  [latitude]="receiver_latitude" [longitude]="receiver_longitude" [label]="labelOptionReceiver">
+          <agm-info-window #infoWindow>
+            <strong>{{result.ReceiverName}}</strong><br>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+      </div>
     <button class="btn btn-success btn-block" (click)="acceptScanResult()">OK</button>
 </div>
 </div>
