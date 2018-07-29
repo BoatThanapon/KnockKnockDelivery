@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
 })
 export class DeliverOrdersComponent implements OnInit {
 
+  private baseUrl = 'http://localhost:8000';
   private haveOrder: boolean = false;
   private orders_num = 0;
   private orders = [];
+  private seller = [];
   private orderDetail = [];
   private keyWord = '';
+  private isOrder: boolean = true;
   private isShow:boolean = true;
   shop_latitude: any;
   shop_longtitude: any;
@@ -26,6 +29,16 @@ export class DeliverOrdersComponent implements OnInit {
     suppressMarkers: true,
   };
   distance: any;
+  private see_more = {
+    order_id:'',
+    recieverName: '',
+    receiverLocation: '',
+    shopName:'',
+    shopLocation:'',
+    create_at:'',
+    service_charge:'',
+    total_price:''
+  }
 
   labelOptionShop = {
     color: '#fff',
@@ -33,15 +46,15 @@ export class DeliverOrdersComponent implements OnInit {
     fontSize: '15px',
     fontWeight: 'bold',
     text: 'S',
-    }
+  }
 
-    labelOptionReceiver = {
-      color: '#fff',
-      fontFamily: '',
-      fontSize: '15px',
-      fontWeight: 'bold',
-      text: 'R',
-      }
+  labelOptionReceiver = {
+    color: '#fff',
+    fontFamily: '',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    text: 'R',
+  }
   
   private deliver_profile;
   private isUpdate:boolean = false;
@@ -66,6 +79,9 @@ export class DeliverOrdersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.seller = JSON.parse(localStorage.getItem('shop'))
+    console.log('[this.seller] ',this.seller );
+    
     this.getShopOrders()
     this.getProfile();
     this.setBankAccount();
@@ -85,16 +101,21 @@ export class DeliverOrdersComponent implements OnInit {
   }
 
   setOrderNum(){
-    
+    let order;
     let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
     this.deliverService.getOrderByDeliverId(id)
     .subscribe(
       response => {
-        console.log("[response] setOrderNum",response.data.length)
-        this.orders_num = response.data.length
-        if(this.orders_num != 0) {
-          this.haveOrder = !this.haveOrder
-        }
+        console.log("[response] setOrderNum",response.data)
+
+        order = response.data
+        order.forEach(element => {
+          if(element.order_status.order_status_id != 7 && element.order_status.order_status_id != 6) {
+            this.orders_num += 1;
+            this.haveOrder = true
+          }
+        })  
+        
 
         this.isShow = !this.isShow
 
@@ -147,7 +168,7 @@ export class DeliverOrdersComponent implements OnInit {
     // });
     this.orderService.getOrderBySellerId(id)
     .subscribe(response => {
-      console.log("[response] ",response)
+      console.log("[response] getShopOrders",response)
       this.orders = response.data;
       // this.getOrderDetail(this.orders)
 
@@ -272,6 +293,30 @@ export class DeliverOrdersComponent implements OnInit {
       console.log("[error] searchShop",error);
 
     })
+  }
+
+  seeMore(order) {
+    console.log('[See more] ',order);
+    
+    this.isOrder = !this.isOrder
+    this.see_more = {
+      order_id:order.order_id,
+      recieverName: order.receiver_firstname + ' ' +order.receiver_lastname,
+      receiverLocation: order.receiver_location,
+      shopName:order.seller.shop_name,
+      shopLocation:order.seller.shop_location,
+      create_at:order.created_at,
+      service_charge:order.service_charge,
+      total_price:order.order_total_price
+    }
+  }
+
+  goBack() {
+    this.isOrder = !this.isOrder
+  }
+
+  goBackDeliver() {
+    this.router.navigateByUrl('/deliver')
   }
 
 

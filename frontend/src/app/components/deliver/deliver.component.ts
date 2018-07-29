@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./deliver.component.css']
 })
 export class DeliverComponent implements OnInit {
-
+  
+  private baseUrl = 'http://localhost:8000';
   private deliver_profile;
   private isShow:boolean = true;
   private isUpdate:boolean = false;
@@ -132,6 +133,7 @@ export class DeliverComponent implements OnInit {
 
   gotoShop(seller) {
     console.log("[Go to shop] ",seller)
+    localStorage.setItem('shop',JSON.stringify(seller))
     localStorage.setItem('seller_order_id',seller.seller_id)
     this.router.navigateByUrl('/deliver-order')
 
@@ -152,12 +154,17 @@ export class DeliverComponent implements OnInit {
   }
 
   setOrderNum(){
-
+    let order;
     let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
     this.deliverService.getOrderByDeliverId(id)
     .subscribe(response => {
       console.log("[response] ", response)
-      this.orders_num = response.data.length
+      order = response.data
+      order.forEach(element => {
+        if(element.order_status.order_status_id != 7 && element.order_status.order_status_id != 6) {
+          this.orders_num += 1;
+        }
+      })   
       this.isShow = !this.isShow
 
       , error => {

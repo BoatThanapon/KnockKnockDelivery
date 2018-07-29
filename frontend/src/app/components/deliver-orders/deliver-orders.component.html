@@ -2,8 +2,6 @@
   <div class="loader"></div>
 </div>
 <div class="w3-row" id="container" [hidden]="isShow">
-
-
   <div class="w3-row" id="searchBox">
     <div class="w3-col m3 w3-center">
       <p></p>
@@ -24,13 +22,46 @@
         <i class="fa fa-history" data-toggle="modal" data-target="#recieveOrderModal" (click)="openAcceptOrder()">
           <span *ngIf="orders_num!=0" class="history-num" >{{orders_num}}</span>
         </i>
-
       </div>
     </div>
   </div>
 
-  <div class="container" id="list-container">
-    <div class="justify-content-center" *ngFor="let order of orders;let i = index">
+  <!-- Shop detaul -->
+  <div class="row w3-container w3-padding" id="header-container">
+      <div class="col-1 d-flex justify-content-center align-items-center">
+        <p>
+          <i class="fa fa-arrow-left fa-4x" aria-hidden="true" *ngIf="!isOrder" (click)="goBack()"></i>
+          <i class="fa fa-arrow-left fa-4x" aria-hidden="true" *ngIf="isOrder" (click)="goBackDeliver()"></i>
+        </p>
+      </div>
+      <div class="col-2">
+          <div class="d-flex justify-content-center">
+              <img [src]="baseUrl+seller.shop_logo_image" alt="">
+            </div>        </div>
+      <div class="col-3">
+          <p><b>Shop name: </b>{{seller.shop_name}}</p>
+          <p><b>Shop address: </b>{{seller.shop_location}}</p>
+
+      </div>
+      <div class="col-4">
+        Google Map here
+          <!-- <agm-map [zoom]="14" [latitude]="shop_latitude" [longitude]="shop_longtitude">
+            <agm-marker [latitude]="shop_latitude" [longitude]="shop_longtitude" [label]="labelOptionShop">
+              <agm-info-window [maxWidth]="200" #infoWindow>
+                <strong>{{address.formatted_address}}</strong><br>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map> -->
+      </div>
+      <div class="col-2">
+        </div>
+  </div>
+    <!-- End shop detaul -->
+
+<!-- Order -->
+<div class="w3-container w3-padding w3-light-grey" id="list-container" *ngIf="isOrder">
+    <div *ngFor="let order of orders;let i = index">
+      <div class="w3-container w3-quarter w3-padding-16">
       <div class="card">
         <div class="card-header">
           <p>
@@ -38,48 +69,135 @@
           </p>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-5">
-              <p>
-                <b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p>
-              <p>
-                <b>Reciever location:</b> {{order.receiver_location}}</p>
-              <p>
-                <b>Shop name:</b> {{order.seller.shop_name}}</p>
-              <p>
-                <b>Shop location:</b> {{order.seller.shop_location}}</p>
-              <p>
-                <b>Service charge:</b> {{order.service_charge}}</p>
-              <p>
-                <b>Total price:</b> {{order.order_total_price}}</p>
-            </div>
-
-            <div class="col-5">
-              <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
-                <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
-                [renderOptions]="options" ></agm-direction>
-                <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">
-                  <agm-info-window #infoWindow>
-                    <strong>{{order.seller.shop_name}}</strong><br>
-                  </agm-info-window>
-                </agm-marker>
-                <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng" 
-                [label]="labelOptionReceiver">
-                  <agm-info-window #infoWindow>
-                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
-                  </agm-info-window>
-                </agm-marker>
-              </agm-map>
-              </div>
-
-            <div class="col-2 d-flex align-items-center btn-group">
-              <button class="btn btn-success" (click)="acceptOrder(order)" [disabled]="haveOrder">Accept order</button>
-            </div>
+          <div>
+            <p>
+              <b>Create at:</b> {{order.created_at}}</p>
+            <p>
+              <b>Service charge:</b> {{order.service_charge}}</p>
+            <p>
+              <b>Total price:</b> {{order.order_total_price}}</p>
           </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-block btn-info" (click)="seeMore(order)">See More</button>
         </div>
       </div>
     </div>
+  
+    </div>
   </div>
+
+<!-- See more  -->
+<!-- <div class="w3-container w3-padding w3-light-grey" id="list-container" *ngIf="!isOrder">
+  <div *ngFor="let order of orders;let i = index">
+    <div class="w3-container w3-quarter w3-padding-16">
+    <div class="card">
+      <div class="card-header">
+        <p>
+          <b>Order id {{order.order_id}}</b>
+        </p>
+      </div>
+      <div class="card-body">
+        <div>
+          <p>
+            <b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p>
+          <p>
+            <b>Reciever location:</b> {{order.receiver_location}}</p>
+          <p>
+            <b>Shop name:</b> {{order.seller.shop_name}}</p>
+          <p>
+            <b>Shop location:</b> {{order.seller.shop_location}}</p>
+          <p>
+            <b>Service charge:</b> {{order.service_charge}}</p>
+          <p>
+            <b>Total price:</b> {{order.order_total_price}}</p>
+        </div>
+
+        <div>
+          <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+            <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
+            [renderOptions]="options" ></agm-direction>
+            <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">
+              <agm-info-window #infoWindow>
+                <strong>{{order.seller.shop_name}}</strong><br>
+              </agm-info-window>
+            </agm-marker>
+            <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng" 
+            [label]="labelOptionReceiver">
+              <agm-info-window #infoWindow>
+                <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
+        </div>
+
+          
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-block btn-success" (click)="acceptOrder(order)" [disabled]="haveOrder">Accept order</button>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div> -->
+
+<div class="w3-container w3-padding w3-light-grey" *ngIf="!isOrder">
+    <div class="w3-container w3-padding-16">
+        <div class="card">
+          <div class="card-header">
+            <p>
+              <b>Order id {{see_more.order_id}}</b>
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                  <p>
+                    <b>Reciever name:</b> {{see_more.recieverName}}</p>
+                  <p>
+                    <b>Reciever location:</b> {{see_more.receiverLocation}}</p>
+                  <p>
+                    <b>Shop name:</b> {{see_more.shopName}}</p>
+                  <p>
+                    <b>Shop location:</b> {{see_more.shopLocation}}</p>
+                  <p>
+                    <b>Create at:</b> {{see_more.create_at}}</p>
+                  <p>
+                    <b>Service charge:</b> {{see_more.service_charge}}</p>
+                  <p>
+                    <b>Total price:</b> {{see_more.total_price}}</p>
+              </div>
+              <div class="col">
+                <p>Map here</p>
+              </div>
+        <!--  <div>
+                      <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+                        <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
+                        [renderOptions]="options" ></agm-direction>
+                        <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">
+                          <agm-info-window #infoWindow>
+                            <strong>{{order.seller.shop_name}}</strong><br>
+                          </agm-info-window>
+                        </agm-marker>
+                        <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng" 
+                        [label]="labelOptionReceiver">
+                          <agm-info-window #infoWindow>
+                            <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
+                          </agm-info-window>
+                        </agm-marker>
+                      </agm-map>
+                    </div> -->
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-block btn-success" (click)="acceptOrder(see_more)" [disabled]="haveOrder">Accept order</button>
+          </div>
+        </div>
+      </div>
+</div>
+
+
 </div>
 
 

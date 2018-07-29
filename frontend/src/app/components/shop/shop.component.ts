@@ -13,7 +13,7 @@ export class ShopComponent implements OnInit {
     private baseUrl = 'http://localhost:8000';
     private products;
     private isShow: boolean = true;
-    private isEmpty: boolean = true;
+    private isEmpty: boolean = false;
     private cart_num = 0;
     private seller = [];
     private seller_id;
@@ -74,10 +74,10 @@ export class ShopComponent implements OnInit {
       console.log("Seller id = ",this.seller_id)
       this.SellerService.getAllProducts(this.seller_id)
       .subscribe(response => {
-        console.log("[Response] ",response.data);
+        console.log("[Response] getAllProduct",response.data);
         this.products = response.data;
-        if(this.products.lenght > 0){
-          this.isEmpty = !this.isEmpty
+        if(this.products.length > 0){
+          this.isEmpty = true
         }
         this.getBuyerProfile();
         this.showgetGoogleMapAddress(this.shop_latitude, this.shop_longtitude);
@@ -94,14 +94,6 @@ export class ShopComponent implements OnInit {
       this.seller = JSON.parse(localStorage.getItem('shop'))
       this.shop_latitude = +this.seller["shop_latitude"]
       this.shop_longtitude = +this.seller["shop_longitude"]
-
-
-
-      // this.seller.forEach(element => {
-      //   element["shop_latitude"] = +element.shop_latitude;
-      //   element["shop_longtitude"] = +element.shop_longitude;
-      //   })
-
 
     }
 
@@ -234,5 +226,6 @@ export class ShopComponent implements OnInit {
     }
     ,error => {console.log("[error] onEditBuyer: ",error)})
   }
+
 
 }

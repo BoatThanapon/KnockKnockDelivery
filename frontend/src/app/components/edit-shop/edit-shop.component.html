@@ -26,33 +26,7 @@
         <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
       </agm-map>
       </div>
-
-    <!-- <div class="form-group">
-      <label for="selectCatagory">Shop Catagory</label>
-      <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"
-        required>
-        <option disabled selected>Select a Catagory</option>
-        <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
-      </select>
-    </div> -->
-
-    <!-- <div class="form-group">
-        <label for="selectCatagory">Shop Catagory</label>
-        <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
-          required>
-          <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
-        </select>
-      </div> -->
-<!-- 
-    <div class="form-group">
-      <label for="input-price">Shop Image</label>
       <br>
-      <input [disabled]="isClick" type='file' id="img" (change)="preview($event)" accept="image/*" />
-      <br>
-      <br>
-
-      <canvas id="previewImg" #mycanvas></canvas>
-    </div> -->
 
     <div *ngIf="isClick">
       <p class="loading">Saving</p>

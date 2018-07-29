@@ -33,6 +33,7 @@ export class OrderComponent implements OnInit {
   private isShipper:boolean = true;
   private imageUrl =null;
   private qrCodeImageUrl;
+  private placeHolder = 'http://via.placeholder.com/250x300'
   private baseUrl = 'http://localhost:8000';
   private seeMore_form = {}
   options = {
@@ -192,12 +193,12 @@ export class OrderComponent implements OnInit {
   }
 
   openQrCode(order) {
+          this.isOpenQRCode = !this.isOpenQRCode
     console.log('[open qr code] ',order);
     this.OrderService.getDataQRcodeBuyerByOrderId(order.order_id)
     .subscribe(response => {
       console.log("[response] ",response);
       this.qrCodeImageUrl = response
-      this.isOpenQRCode = !this.isOpenQRCode
       console.log('[qrCodeImageUrl] ',this.qrCodeImageUrl);
     },error => {
       console.log("[error] ",error);
@@ -219,9 +220,9 @@ export class OrderComponent implements OnInit {
 
     this.OrderService.UploadTransferSlipByOrderId(this.upload_order.order_id,form)
     .subscribe(response => {
-      this.isShow = !this.isShow
+      // this.isShow = !this.isShow
       console.log("[upload response] ",response);
-      this.ngOnInit();
+      location.reload();
 
     },error => {
       alert("Upload image fail")

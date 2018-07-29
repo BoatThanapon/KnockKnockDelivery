@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
   private ready: boolean = false;
 
   private roles: string[];
-  private selectedRole: string;
+  private selectedRole: string = 'Seller';
   private holdingUsers = [];
   private userInsystem = [];
   private user = [];
@@ -94,7 +94,6 @@ export class AdminComponent implements OnInit {
 
   setMasterData() {
     this.masterData = JSON.parse(localStorage.getItem('masterData'));
-
   }
 
 
@@ -121,6 +120,7 @@ export class AdminComponent implements OnInit {
                 console.log("[this.holdingUsers] ", this.holdingUsers)
 
                 this.isLoad = !this.isLoad;
+                this.searchByRole()
 
               },
               error => {
@@ -165,6 +165,7 @@ export class AdminComponent implements OnInit {
                 this.userInsystem['deliver'] = response.data;
                 console.log("[this.userInSystem] ", this.holdingUsers)
                 this.isLoad = !this.isLoad;
+                this.searchByRole()
 
 
               },

@@ -75,7 +75,15 @@ export class OrderService {
   }
 
   ShipperAcceptOrder(id) {
-    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`, this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.UAT,
+        Accept: "application/json, text/plain, */*",
+        'Content-Type':"multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+
+      })
+    };
+    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`,{},this.httpOptions)
 
   }
 

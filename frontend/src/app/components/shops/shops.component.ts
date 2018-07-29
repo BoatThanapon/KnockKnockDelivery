@@ -177,7 +177,7 @@ export class ShopsComponent implements OnInit {
     console.log("cart: ",cart);
 
     if(cart != null) {
-          this.cart_num = cart.length;
+        this.cart_num = cart.length;
     } 
     else if(cart == {}) {
       this.cart_num = 0;
@@ -187,19 +187,17 @@ export class ShopsComponent implements OnInit {
   }
 
   setOrderNum(){
-    // let orders = JSON.parse(localStorage.getItem("orders"));
-    // console.log("orders: ",orders);
-    // if(orders != null) {
-    //       this.orders_num = orders.length;
-    // } 
-    // else if(orders == {}) {
-    //   this.orders_num = 0;
-    // }
+    let order;
     let id = localStorage.getItem('buyer_id')
     this.BuyerService.getOrderByBuyerId(id)
     .subscribe(response => {
-      console.log("[response] ", response)
-      this.orders_num = response.data.length
+      console.log("[response] setOrderNum", response)
+      order = response.data
+      order.forEach(element => {
+        if(element.order_status.order_status_id != 7 && element.order_status.order_status_id != 6) {
+          this.orders_num += 1;
+        }
+      })
       , error => {
         console.log('error',error);
       }

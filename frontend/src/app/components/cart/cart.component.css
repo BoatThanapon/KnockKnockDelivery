@@ -99,3 +99,8 @@ agm-map {
 #input-receiver_location {
   margin-bottom: 10px;
 }
+
+img {
+  max-width: 100px;
+  max-height: 70px;
+}

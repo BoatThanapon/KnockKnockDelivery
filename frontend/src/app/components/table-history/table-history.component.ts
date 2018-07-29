@@ -61,17 +61,17 @@ export class TableHistoryComponent implements OnInit {
   }
 
   openOrderInfo(order) {
-    this.isShow = !this.isShow
+    // this.isShow = !this.isShow
     this.isOrderInfo =!this.isOrderInfo
     this.getOrderDetail(order.order_id)
       .then(result => {
         console.log("[detail] seeMore: ", result);
         this.order = result
-        this.isShow = !this.isShow
+        // this.isShow = !this.isShow
 
       }).catch(error => {
         console.log("[error] seeMore: ", error);
-        this.isShow = !this.isShow
+        // this.isShow = !this.isShow
 
 
       })
@@ -152,6 +152,10 @@ export class TableHistoryComponent implements OnInit {
 
       }
     }
+  }
+
+  close() {
+    this.isOrderInfo = !this.isOrderInfo
   }
 
 

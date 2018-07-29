@@ -58,6 +58,7 @@
     max-height: 200px;
   }
   
+  
   @media screen and (max-width: 375px) {
     #catagory_container {
       width: 100%;
@@ -140,6 +141,13 @@
   #btn-Recommend,
   .card {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .card {
+    max-height: 400px;
+    height: 400px;
+    padding-top:25px;
+  
   }
   
   

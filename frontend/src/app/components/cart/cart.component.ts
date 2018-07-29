@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
-  // private isShow: boolean = false;
+  private baseUrl = 'http://localhost:8000';
   private isCheckOut: boolean = true;
   private isWarting: boolean = true;
   private isSameShop: boolean = true;
@@ -203,8 +203,8 @@ export class CartComponent implements OnInit {
     .subscribe(Response => {
       console.log("[Response] ",Response);
       result.push(Response.result)
-      this.isNewOrder = !this.isNewOrder
-      this.isShow = ! this.isShow;
+      // this.isNewOrder = !this.isNewOrder
+      // this.isShow = ! this.isShow;
 
       alert('Create order success')
       if(orders == null){
@@ -256,7 +256,8 @@ export class CartComponent implements OnInit {
   }
 
   isCreatedOrder() {
-    this.router.navigateByUrl('/shops')
+    this.isNewOrder = !this.isNewOrder
+    // this.router.navigateByUrl('/shops')
   }
 
   cancelOrderRequest() {
