@@ -81,8 +81,8 @@ export class QrcodeResultComponent implements OnInit {
       this.isLoad =! this.isLoad
       this.result = response.result
 
-      this.receiver_latitude = response.result["receiver_latitude"]
-      this.receiver_longitude = response.result["receiver_longitude"]
+      this.receiver_latitude = +response.result["receiver_latitude"]
+      this.receiver_longitude = +response.result["receiver_longitude"]
 
 
     },error => {
