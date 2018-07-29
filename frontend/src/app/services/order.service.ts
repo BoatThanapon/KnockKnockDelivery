@@ -70,7 +70,7 @@ export class OrderService {
   }
 
   QRcodeUpdateStatusOrderByOrderId(id,body) {
-    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}`,body, this.httpOptions)
+    return this.http.put<order>(`${this.baseUrl}orderQRcode/order/${id}`,body, this.httpOptions)
 
   }
 

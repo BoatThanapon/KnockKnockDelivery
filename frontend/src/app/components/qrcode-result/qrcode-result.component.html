@@ -1,3 +1,16 @@
-<p>
-  qrcode-result works!
-</p>
+<div *ngIf="isLoad">
+  <div class="loader-container">
+    <div class="loader" ></div>
+  </div>
+</div>
+<div class="w3-container">
+  <div class="w3-row" id="container" *ngIf="!isLoad">
+    <p>order_id : {{result.order_id}}</p>
+    <p>order_total_price : {{result.order_total_price}}</p>
+    <p>receiver_firstname : {{result.receiver_firstname}}</p>
+    <p>receiver_lastname : {{result.receiver_lastname}}</p>
+    <p>receiver_location : {{result.receiver_location}}</p>
+    <h2>Google map here!!!</h2>
+    <button class="btn btn-success btn-block" (click)="acceptScanResult()">OK</button>
+</div>
+</div>

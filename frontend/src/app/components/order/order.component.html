@@ -69,6 +69,24 @@
             <b>Shipper account no:</b>{{seeMore_form.shipper.bank_account_no}} {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
             <b>Shipper telephone no:</b>{{seeMore_form.shipper.user.telephone_number}}</p>
+            <div class="col-5">
+              <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="ordersdetail.shop_latitude" [longitude]="ordersdetail.shop_longtitude" >
+                <agm-direction [origin]="ordersdetail.direction.origin" [destination]="ordersdetail.direction.destination" 
+                [renderOptions]="options" ></agm-direction>
+                <agm-marker  [latitude]="ordersdetail.shop_latitude" [longitude]="ordersdetail.shop_longtitude" [label]="labelOptionShop">
+                  <agm-info-window #infoWindow>
+                    <strong>{{ordersdetail.seller.shop_name}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+                <agm-marker  [latitude]="ordersdetail.direction.destination.lat" [longitude]="ordersdetail.direction.destination.lng" 
+                [label]="labelOptionReceiver">
+                  <agm-info-window #infoWindow>
+                    <strong>{{ordersdetail.receiver_firstname}} {{ordersdetail.receiver_lastname}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+              </agm-map>
+              </div>
+
         </div>
         <div class="modal-footer">
           <button type="button rounded-0" class="btn btn" data-dismiss="modal">Close</button>
