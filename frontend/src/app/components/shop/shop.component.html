@@ -81,9 +81,9 @@
             <img [src]="baseUrl+product.product_image_1" alt="">
           </div>
           <div class="card-body">
-            <h5 class="card-title" id="title">{{product.product_name}}</h5>
-            <p class="card-text" id="description">{{product.product_description}}</p>
-            <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
+            <h5 class="card-title" id="title">Product name: {{product.product_name}}</h5>
+            <p class="card-text" id="description">Product description: {{product.product_description}}</p>
+            <p class="card-text" id="text">Product price: &#3647; {{product.product_price}}</p>
             <a class="btn btn-primary btn-block" (click)="addToCart(product)">Add to cart</a>
           </div>
         </div>

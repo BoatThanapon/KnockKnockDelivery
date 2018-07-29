@@ -9,7 +9,7 @@
         <th>{{header.order_id}}</th>
         <th>{{header.order_status.order_status_name}}</th>
         <th>{{header.updated_at}}</th>
-        <th> </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +21,9 @@
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#orderInfo" (click)="openOrderInfo(order)">Info</button>
-            <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#qrcodeModel" (click)="openQRCode(order)">Open QR Code</button>
+            <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#qrcodeModel" *ngIf="!isAdmin" (click)="openQRCode(order)">Open QR Code</button>
+            <button type="button" class="btn btn-danger rounded-0"  *ngIf="isAdmin" (click)="cancelOrder(order)" [disabled]="order.order_status.order_status_id===7">Cancel order</button>
+
           </div>
         </td>
       </tr>

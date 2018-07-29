@@ -100,6 +100,7 @@ export class AdminComponent implements OnInit {
 
 
   holdingUser() {
+    this.roles = ["Seller", "Deliver"]
     this.isMenu = !this.isMenu;
     this.isLoad = !this.isLoad;
     this.isHolding = !this.isHolding;
@@ -433,6 +434,7 @@ export class AdminComponent implements OnInit {
 
 
   OrderHistory() {
+    localStorage.setItem('adminSelect', "oderHistory")
     this.isMenu = !this.isMenu;
     this.setOrderHistory();
 

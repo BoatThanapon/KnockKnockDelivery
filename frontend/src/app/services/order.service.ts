@@ -44,7 +44,7 @@ export class OrderService {
   }
 
   updateOrder(oid, body) {
-    return this.http.put(`${this.baseUrl}order/` + oid, body, this.httpOptions)
+    return this.http.put<order>(`${this.baseUrl}order/` + oid, body, this.httpOptions)
 
   }
 
@@ -99,7 +99,9 @@ export interface image {
 }
 
 export interface order {
-  result: null
+  result: {
+    order_id:''
+  }
 }
 
 export interface orders {

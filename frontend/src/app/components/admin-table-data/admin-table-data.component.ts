@@ -22,7 +22,7 @@ export class AdminTableDataComponent implements OnInit {
   private isShow:boolean = true;
   private isOrderInfo:boolean = false;
   private isOpenQRCode:boolean = false;
-
+  private adminSelect;
   private emit_data;
   private headers;
   private data;
@@ -49,6 +49,7 @@ export class AdminTableDataComponent implements OnInit {
   }
 
   setPage() {
+    this.adminSelect = localStorage.getItem('adminSelect')
     this.headers = this._headers;
     this.data = this._data;
 

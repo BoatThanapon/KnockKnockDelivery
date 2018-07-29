@@ -54,9 +54,15 @@
           <p>
             <b>Order id:</b> {{seeMore_form.order_id}}</p>
           <p>
+            <b>Create Date:</b> {{seeMore_form.created_at}}</p>
+          <p>
+            <b>Shop name:</b> {{seeMore_form.seller.shop_name}}</p>
+          <p>
             <b>Receiver name:</b> {{seeMore_form.receiver_firstname}} {{seeMore_form.receiver_lastname}}</p>
           <p>
-            <b>Retriever address:</b> {{seeMore_form.receiver_location}}</p>
+            <b>Retriever location:</b> {{seeMore_form.receiver_location}}</p>
+          <p>
+            <b>Product name:</b> {{seeMore_form.receiver_location}}</p>
           <p>
             <b>Service charge:</b> {{seeMore_form.service_charge}}</p>
           <p>
@@ -64,11 +70,13 @@
           <p>
             <b>Updated at:</b> {{seeMore_form.updated_at}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper name:</b>{{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
+            <b>Shipper name:</b> {{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper account no:</b>{{seeMore_form.shipper.bank_account_no}} {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
+            <b>Shipper account no:</b> {{seeMore_form.shipper.bank_account_no}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper telephone no:</b>{{seeMore_form.shipper.user.telephone_number}}</p>
+            <b>Shipper account name:</b> {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
+            <p *ngIf="seeMore_form.shipper!=null">
+            <b>Shipper telephone no:</b> {{seeMore_form.shipper.user.telephone_number}}</p>
             <div class="col-5">
               <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="ordersdetail.shop_latitude" [longitude]="ordersdetail.shop_longtitude" >
                 <agm-direction [origin]="ordersdetail.direction.origin" [destination]="ordersdetail.direction.destination" 

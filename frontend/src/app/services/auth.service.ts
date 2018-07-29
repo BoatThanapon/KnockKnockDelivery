@@ -24,11 +24,21 @@ export class AuthService {
     })
   };
 
+
   private userLoggedIn = new BehaviorSubject<boolean>(this.loggedIn());
   authStatus = this.userLoggedIn.asObservable()
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ this.UAT,
+        'Accept':'application/json, text/plain, */*',
+  
+      })
+    };
+  }
   // middleware(url, data, headers, method) {
   //   const _this = this;
   //   return {
@@ -65,7 +75,16 @@ export class AuthService {
   }
 
   logOut() {
-    return this.http.post(`${this.baseUrl}/logout`,{},this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer '+ this.UAT,
+        Accept: 'application/json, text/plain, */*',
+        Connection: 'keep-alive',
+        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' 
+      })
+    };
+
+    return this.http.post(`${this.baseUrl}/logout`,{},header)
   }
 
   refresh() {
