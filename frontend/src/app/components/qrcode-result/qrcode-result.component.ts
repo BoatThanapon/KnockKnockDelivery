@@ -58,8 +58,8 @@ export class QrcodeResultComponent implements OnInit {
       console.log('[reeponse] scan_seller',response);
       // alert('Success scan@seller')
       this.result = response.result
-      this.receiver_latitude = response.result["receiver_latitude"]
-      this.receiver_longitude = response.result["receiver_longitude"]
+      this.receiver_latitude = +response.result["receiver_latitude"]
+      this.receiver_longitude = +response.result["receiver_longitude"]
 
       this.isLoad =! this.isLoad
     },error => {
