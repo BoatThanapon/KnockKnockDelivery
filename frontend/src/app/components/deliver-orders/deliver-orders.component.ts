@@ -81,6 +81,8 @@ export class DeliverOrdersComponent implements OnInit {
   ngOnInit() {
     this.seller = JSON.parse(localStorage.getItem('shop'))
     console.log('[this.seller] ',this.seller );
+    this.shop_latitude = +this.seller["shop_latitude"];
+    this.shop_longtitude = +this.seller["shop_longitude"]
     
     this.getShopOrders()
     this.getProfile();
