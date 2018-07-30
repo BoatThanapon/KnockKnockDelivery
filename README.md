@@ -7,12 +7,12 @@ Laravel and Angular
 - Create .env file and copy code on .env.example to .env file
   # Connect with AWS MySQL
    - In .env file folder backend
-     DB_CONNECTION=mysql
-     DB_HOST=knockknockdb.ceisn90mxwfd.ap-southeast-1.rds.amazonaws.com
-     DB_PORT=3306
-     DB_DATABASE=knockknock_dev
-     DB_USERNAME=knockknock_db
-     DB_PASSWORD=Passw0rd!   
+     - DB_CONNECTION=mysql
+     - DB_HOST=knockknockdb.ceisn90mxwfd.ap-southeast-1.rds.amazonaws.com
+     - DB_PORT=3306
+     - DB_DATABASE=knockknock_dev
+     - DB_USERNAME=knockknock_db
+     - DB_PASSWORD=Passw0rd!   
 - php artisan key:generate
 - php artisan config:cache
 - php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
