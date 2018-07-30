@@ -63,9 +63,9 @@
       <div class="col-4">
           <agm-map [zoom]="14" [latitude]="shop_latitude" [longitude]="shop_longtitude">
             <agm-marker [latitude]="shop_latitude" [longitude]="shop_longtitude" [label]="labelOptionShop">
-              <agm-info-window [maxWidth]="200" #infoWindow>
+              <!-- <agm-info-window [maxWidth]="200" #infoWindow>
                 <strong>{{address.formatted_address}}</strong><br>
-              </agm-info-window>
+              </agm-info-window> -->
             </agm-marker>
           </agm-map>
       </div>
@@ -149,6 +149,44 @@
             <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="buyer_profile.buyer_address"
               required></textarea>
           </div>
+
+        <!-- profile -->
+        <div class="form-group">
+            <label for="user-firstname">First name</label>
+            <input  type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_form.firstname"
+              required/>
+            <span class="text-danger" [hidden]="!error.firstname">
+                {{error.firstname}}
+              </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-lastname">Last name</label>
+            <input type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_form.lastname"
+              required/>
+            <span class="text-danger" [hidden]="!error.lastname">
+                {{error.lastname}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-identity_no">Identity no</label>
+            <input type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
+              required/>
+            <span class="text-danger" [hidden]="!error.identity_no">
+                {{error.identity_no}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-telephone_number">telephone number</label>
+            <input type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+              required/>
+            <span class="text-danger" [hidden]="!error.telephone_number">
+                {{error.telephone_number}}
+            </span>
+        </div> -->
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-ganger" data-dismiss="modal">Cancel</button>

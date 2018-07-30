@@ -195,6 +195,44 @@
             required></textarea>
         </div>
 
+        <!-- profile -->
+        <div class="form-group">
+            <label for="user-firstname">First name</label>
+            <input [disabled]="isClick" type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_form.firstname"
+              required/>
+            <span class="text-danger" [hidden]="!error.firstname">
+                {{error.firstname}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-lastname">Last name</label>
+              <input [disabled]="isClick" type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_form.lastname"
+                required/>
+              <span class="text-danger" [hidden]="!error.lastname">
+                  {{error.lastname}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-identity_no">Identity no</label>
+              <input [disabled]="isClick" type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
+                required/>
+              <span class="text-danger" [hidden]="!error.identity_no">
+                  {{error.identity_no}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-telephone_number">telephone number</label>
+              <input [disabled]="isClick" type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+                required/>
+              <span class="text-danger" [hidden]="!error.telephone_number">
+                  {{error.telephone_number}}
+              </span>
+          </div>
+  
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-ganger rounded-0" data-dismiss="modal">Cancel</button>

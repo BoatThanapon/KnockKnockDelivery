@@ -161,7 +161,7 @@ export class AuthService {
   }
 
   editUser(id,data) {
-    return this.http.post(`${this.baseUrl}/user${id}`,data,this.httpOptions)
+    return this.http.put(`${this.baseUrl}/user/${id}`,data,this.httpOptions)
   }
 
   me() {
