@@ -29,6 +29,7 @@ export class AdminTableDataComponent implements OnInit {
   private imageUrl;
   private order = {}
   private product = {}
+  private status;
 
   constructor(
     private modalService: NgbModal,
@@ -105,6 +106,16 @@ export class AdminTableDataComponent implements OnInit {
       console.log("[error] ",error);
 
     })
+  }
+
+  onClickInfo(user) {
+    console.log('[onClickInfo] ',user);
+    
+  }
+
+  onClickEdit(user) {
+    console.log('[onClickEdit] ',user);
+
   }
 
 }

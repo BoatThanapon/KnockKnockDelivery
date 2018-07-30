@@ -8,7 +8,7 @@
       <div class="card-header">Cart</div>
       <div class="card-body">
         <div class="row" id="inner" *ngFor="let product of cart;let i = index">
-          <div class="col-3">
+          <div class="col" id="image">
             <img [src]="baseUrl+product.product_image_1" alt="">
           </div>
           <div class="col" style="display:flex">

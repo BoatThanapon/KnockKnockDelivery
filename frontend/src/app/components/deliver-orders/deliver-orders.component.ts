@@ -3,6 +3,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-deliver-orders',
@@ -16,6 +17,7 @@ export class DeliverOrdersComponent implements OnInit {
   private orders_num = 0;
   private orders = [];
   private seller = [];
+  private user;
   private orderDetail = [];
   private keyWord = '';
   private isOrder: boolean = true;
@@ -28,6 +30,12 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  private user_form = {
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
+  }
   distance: any;
   private see_more = {
     order_id:'',
@@ -62,7 +70,7 @@ export class DeliverOrdersComponent implements OnInit {
     bank_account_id:null,
     bank_account_no:null,
     profile_status_id:null,
-    shipper_transfer_slip:null,
+    shipper_transfer_slip_Image:null,
     selected_bank:null
 
   }
@@ -74,8 +82,8 @@ export class DeliverOrdersComponent implements OnInit {
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
-    private router: Router
-
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -88,6 +96,8 @@ export class DeliverOrdersComponent implements OnInit {
     this.getProfile();
     this.setBankAccount();
     this.setOrderNum();
+    this.getUserProfile();
+
   }
 
   getAcceptOrder() {
@@ -320,6 +330,65 @@ export class DeliverOrdersComponent implements OnInit {
   goBackDeliver() {
     this.router.navigateByUrl('/deliver')
   }
+
+  onUpdateProfile() {
+    console.log("[Update]")
+    let id = this.deliver_profile.shipper_id;
+    let form = {
+      bank_account_id:this.form.bank_account_id,
+      bank_account_no:this.form.bank_account_no,
+      shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
+      // profile_status_id:this.form.profile_status_id
+    }
+    this.updateProfile().then(result => {
+    this.deliverService.updateDeliver(form,id)
+    .subscribe(response => {
+      console.log("[Response] ",response)
+    },
+    error => {
+      console.log("[Error] ",error)
+
+    })
+    })
+
+  }
+
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+
+      this.user_form.firstname = this.user.firstname;
+      this.user_form.lastname = this.user.lastname;
+      this.user_form.identity_no = this.user.identity_no;
+      this.user_form.telephone_number = this.user.telephone_number;
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
+  }
+
 
 
 

@@ -139,8 +139,8 @@ export class TableHistoryComponent implements OnInit {
     let _data = {
       order_id:order.order_id,
       order_status:{
-        order_status_id:order.order_status_id,
-        order_status_name:order.order_status_name
+        order_status_id:order.order_status.order_status_id,
+        order_status_name:order.order_status.order_status_name
       },
       payment_transfer_slip:order.payment_transfer_slip,
       updated_at:order.updated_at

@@ -152,7 +152,10 @@
         </div>
         <div class="modal-body">
           <!-- <app-qrcode></app-qrcode> -->
-          <img [src]="baseUrl+qrCodeImageUrl.data.qrcode_buyer" >
+          <div class="text-center">
+              <img [src]="baseUrl+qrCodeImageUrl.data.qrcode_buyer" >
+
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn rounded-0" data-dismiss="modal">Close</button>

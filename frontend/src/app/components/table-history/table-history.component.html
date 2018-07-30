@@ -21,7 +21,7 @@
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#orderInfo" (click)="openOrderInfo(order)">Info</button>
-            <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#qrcodeModel" *ngIf="!isAdmin" [disabled]="order.order_status.order_status_id===7" (click)="openQRCode(order)">Open QR Code</button>
+            <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#qrcodeModel" *ngIf="!isAdmin" [disabled]="order.order_status.order_status_id===7" (click)="openQRCode(order)">QR Code</button>
             <button type="button" class="btn btn-danger rounded-0"  *ngIf="isAdmin" (click)="cancelOrder(order)" [disabled]="order.order_status.order_status_id===7">Cancel order</button>
 
           </div>

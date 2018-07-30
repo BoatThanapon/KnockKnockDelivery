@@ -80,7 +80,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private adminService: AdminService,
   ) {
-    this.roles = ["Buyer", "Seller", "Deliver"]
+    this.roles = ["Buyer", "Seller", "Shipper"]
   }
 
   ngOnInit() {
@@ -99,7 +99,7 @@ export class AdminComponent implements OnInit {
 
 
   holdingUser() {
-    this.roles = ["Seller", "Deliver"]
+    this.roles = ["Seller", "Shipper"]
     this.isMenu = !this.isMenu;
     this.isLoad = !this.isLoad;
     this.isHolding = !this.isHolding;
@@ -116,7 +116,7 @@ export class AdminComponent implements OnInit {
             this.adminService.getAllHoldingUser(4).subscribe(
               response => {
                 // console.log("[Response 4]: ", response.data);
-                this.holdingUsers['deliver'] = response.data;
+                this.holdingUsers['Shipper'] = response.data;
                 console.log("[this.holdingUsers] ", this.holdingUsers)
 
                 this.isLoad = !this.isLoad;
@@ -162,7 +162,7 @@ export class AdminComponent implements OnInit {
             this.adminService.getAllUserInSystem(4).subscribe(
               response => {
                 // console.log("[Response 4]: ", response.data);
-                this.userInsystem['deliver'] = response.data;
+                this.userInsystem['Shipper'] = response.data;
                 console.log("[this.userInSystem] ", this.holdingUsers)
                 this.isLoad = !this.isLoad;
                 this.searchByRole()
@@ -262,7 +262,7 @@ export class AdminComponent implements OnInit {
         console.log("[this.display_buyer]", this.display_buyer)
 
       }
-      else if (this.selectedRole == 'Deliver') {
+      else if (this.selectedRole == 'Shipper') {
         // this.userInsystem['deliver'].forEach((element, index) => {
         //   let temp = {
         //     id: element.shipper_id,
@@ -337,7 +337,7 @@ export class AdminComponent implements OnInit {
         console.log("[this.display_buyer]", this.display_buyer)
 
       }
-      else if (this.selectedRole == 'Deliver') {
+      else if (this.selectedRole == 'Shipper') {
         // this.holdingUsers['deliver'].forEach((element, index) => {
         //   console.log("[Selected deliver] here!!!");
         //   let temp = {
@@ -374,7 +374,7 @@ export class AdminComponent implements OnInit {
     let role;
     if (!this.isDeliver) {
       role_id = 4
-      role = 'deliver'
+      role = 'Shipper'
     }
     else if (!this.isSeller) {
       role_id = 2
@@ -484,7 +484,7 @@ export class AdminComponent implements OnInit {
             this.display_buyer = response.data
             this.adminService.getAllHoldingUser(4).subscribe(
               response => {
-                this.holdingUsers['deliver'] = response.data;
+                this.holdingUsers['Shipper'] = response.data;
                 console.log("[this.holdingUsers] ", this.holdingUsers)
                 this._data = response.data
 

@@ -62,7 +62,7 @@
             <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
           <div [hidden]="isDeliver">
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['Shipper']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@
             <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
           <div [hidden]="isDeliver">
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['Shipper']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
         </div>
       </div>

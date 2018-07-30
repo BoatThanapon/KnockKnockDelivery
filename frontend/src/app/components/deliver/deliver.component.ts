@@ -2,6 +2,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
 
 
 @Component({
@@ -16,13 +18,20 @@ export class DeliverComponent implements OnInit {
   private isShow:boolean = true;
   private isUpdate:boolean = false;
   private keyWord = '';
+  private user;
   private form = {
     bank_account_id:null,
     bank_account_no:null,
     profile_status_id:null,
     shipper_transfer_slip_Image:null,
     selected_bank:null
+  }
 
+  private user_form = {
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
   }
   private dafault_bank;
   private error;
@@ -36,8 +45,8 @@ export class DeliverComponent implements OnInit {
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
-    private router: Router
-
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -45,6 +54,8 @@ export class DeliverComponent implements OnInit {
     this.setBankAccount();
     this.getAllOrder();
     this.setOrderNum();
+    this.getUserProfile();
+
   }
 
   openOrderInfo() {
@@ -110,6 +121,7 @@ export class DeliverComponent implements OnInit {
       shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
       // profile_status_id:this.form.profile_status_id
     }
+    this.updateProfile().then(result => {
     this.deliverService.updateDeliver(form,id)
     .subscribe(response => {
       console.log("[Response] ",response)
@@ -118,6 +130,8 @@ export class DeliverComponent implements OnInit {
       console.log("[Error] ",error)
 
     })
+    })
+
   }
 
   getAllOrder() {
@@ -190,5 +204,42 @@ export class DeliverComponent implements OnInit {
 
     })
   }
+
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+
+      this.user_form.firstname = this.user.firstname;
+      this.user_form.lastname = this.user.lastname;
+      this.user_form.identity_no = this.user.identity_no;
+      this.user_form.telephone_number = this.user.telephone_number;
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
+  }
+
 
 }

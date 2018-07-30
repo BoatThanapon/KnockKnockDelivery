@@ -212,10 +212,12 @@ export class CartComponent implements OnInit {
     .subscribe(Response => {
       console.log("[Response] ",Response);
       result.push(Response.result)
-      // this.isNewOrder = !this.isNewOrder
-      // this.isShow = ! this.isShow;
+      this.isNewOrder = !this.isNewOrder
+      this.isShow = ! this.isShow;
 
       alert('Create order success')
+      this.router.navigateByUrl('/shops')
+
       if(orders == null){
         localStorage.setItem('orders',JSON.stringify(result));
         localStorage.removeItem('cart')
