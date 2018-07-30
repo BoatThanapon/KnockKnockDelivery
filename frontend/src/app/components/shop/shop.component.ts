@@ -147,6 +147,10 @@ export class ShopComponent implements OnInit {
 
   addToCart(product) {
     console.log("addToCart: ",product)
+
+    product.seller.shop_latitude = this.shop_latitude
+    product.seller.shop_longtitude = this.shop_longtitude
+
     let cart = JSON.parse(localStorage.getItem("cart"));
     if(cart == null){
       let obj = [];

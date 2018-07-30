@@ -115,9 +115,6 @@ export class AuthService {
 
   removeToken() {
     localStorage.clear();
-
-
-
   }
 
   isValidToken() {
@@ -161,6 +158,14 @@ export class AuthService {
   
   changePassword(data) {
     return this.http.post(`${this.baseUrl}/resetPassword`, data)
+  }
+
+  editUser(id,data) {
+    return this.http.post(`${this.baseUrl}/user${id}`,data,this.httpOptions)
+  }
+
+  me() {
+    return this.http.post(`${this.baseUrl}/me`,{},this.httpOptions)
   }
   
 }
