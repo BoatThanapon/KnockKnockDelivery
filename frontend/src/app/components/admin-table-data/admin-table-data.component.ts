@@ -102,9 +102,10 @@ export class AdminTableDataComponent implements OnInit {
   }
 
   onClickUpdate(data) {
-    console.log('[onClickUpdate] admin-data-table',data);
-    // this.emit_data = {data.id, status}
-    // this.updateUser.emit(this.emit_data)
+    console.log('[onClickUpdate] admin-data-table',data.user);
+
+    this.emit_data = { id: data.user, status: data.status}
+    this.updateUser.emit(this.emit_data)
 
   }
 

@@ -25,12 +25,12 @@
         <td [hidden]="adminSelect==='holdingUser'">
             <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
                 <option>Approve</option>
-                <option [value]="({user: user.buyer_id, id: 4})">Block</option>
+                <option [ngValue]='({user: user.buyer_id, status: 4})'>Block</option>
             </select>
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.buyer_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
@@ -65,14 +65,14 @@
         <!-- <td [hidden]="adminSelect==='holdingUser'">{{ user.profile_status.profile_status_name }}</td> -->
         <td [hidden]="adminSelect==='holdingUser'">
           <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
-            <option >Approve</option>
-            <option [value]="({user: user.seller_id, id: 4})">Block</option>
+            <option>Approve</option>
+            <option [ngValue]='({user: user.seller_id, status: 4})'>Block</option>
           </select>
         </td>
         <td>
           <div class="btn-group">
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.seller_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
@@ -106,13 +106,13 @@
         <!-- <td [hidden]="adminSelect==='holdingUser'">{{ user.profile_status.profile_status_name }}</td> -->
         <td [hidden]="adminSelect==='holdingUser'">
             <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
-                <option >Approve</option>
-                <option [value]="({user: user.buyer_id, id: 4})">Block</option>
+                <option>Approve</option>
+                <option [ngValue]='({user: user.shipper_id, status: 4})'>Block</option>
             </select>
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.shipper_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
