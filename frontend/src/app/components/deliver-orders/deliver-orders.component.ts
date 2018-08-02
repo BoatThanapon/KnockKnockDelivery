@@ -210,19 +210,6 @@ export class DeliverOrdersComponent implements OnInit {
             lng: +element.receiver_longitude
           }
         };
-        // this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
-        //   +element.receiver_latitude,+element.receiver_longitude);
-        //   element["distance"] = this.distance;
-        //   if(this.distance > 8 && this.distance <= 40){
-        //   element["service_charge"] = Math.round(25+((this.distance-1)*14))
-        //   }else if (this.distance > 5 && this.distance <= 8){
-        //     element["service_charge"] = Math.round(25+((this.distance-1)*11))
-        //   }
-        //   else if (this.distance > 1 && this.distance <= 5){
-        //     element["service_charge"] = Math.round(25+((this.distance-1)*8))
-        //   }else{
-        //     element["service_charge"] = 25;
-        //   }
         })
 
 

@@ -141,20 +141,7 @@ export class OrderComponent implements OnInit {
               lng: +response.data["receiver_longitude"]
             }
           };
-          this.calculateDistance(+response.data["seller"].shop_latitude,+response.data["seller"].shop_longitude,
-          +response.data["receiver_latitude"],+response.data["receiver_longitude"]);
-            this.ordersdetail["distance"] = this.distance;
-            if(this.distance > 8 && this.distance <= 40){
-              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*14))
-            }else if (this.distance > 5 && this.distance <= 8){
-              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*11))
-            }
-            else if (this.distance > 1 && this.distance <= 5){
-              this.ordersdetail["service_charge"] = Math.round(25+((this.distance-1)*8))
-            }else{
-              this.ordersdetail["service_charge"] = 25;
-            }
-
+      
         resolve(response.data);
       }, error => {
         console.log("[error] getOrderDetail: ",error);
