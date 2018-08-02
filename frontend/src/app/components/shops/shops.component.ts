@@ -17,6 +17,7 @@ export class ShopsComponent implements OnInit {
   private products;
   private user;
   private product_catagory;
+  private dafault_catagory = '';
   private shops;
   private isShow: boolean = true;
   private cart_num = 0;
@@ -308,6 +309,23 @@ export class ShopsComponent implements OnInit {
       })
     })
 
+  }
+
+  onCatagorySelected(id) {
+    console.log('[onCatagorySelected] ',id);
+    this.shops = [];
+    this.isShow = !this.isShow
+    this.SellerService.getShopByProductCategoryId(id)
+    .subscribe(response => {
+      console.log('[response] ',response.data);
+      this.shops = response.data
+      this.isShow = !this.isShow
+
+    }, error => {
+      console.log('[error] ',error);
+      this.isShow = !this.isShow
+
+    })
   }
 
 }

@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
     password_confirmation: null,
 
   }
-
+  isValid: boolean = false;
   isShow: boolean = false;
   error = []
 
@@ -32,26 +32,40 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
+  onChange() {
+    console.log("onChange ");
+
+    if (this.form.firstname != null && this.form.lastname != null && this.form.identity_no != null && this.form.telephone_number != null && this.form.email != null && this.form.password != null && this.form.password_confirmation != null) {
+      console.log("isValid");
+
+      this.isValid = true;
+    }
+  }
+
   onSubmit() {
-    console.log("onSubmit signup: ");
-    // console.log("this.form.password.lenght: ",this.form.password.lenght);
-    // console.log("this.form.password_confirmation.lenght: ",this.form.password_confirmation.lenght)
+    console.log("onSubmit signup: ",this.form);
+    this.isShow = !this.isShow
 
     if (this.form.firstname != null || this.form.lastname != null || this.form.identity_no != null || this.form.telephone_number != null || this.form.email != null || this.form.password != null || this.form.password_confirmation != null) {
-      this.isShow = !this.isShow;
-      if (this.form.password.length < 8 || this.form.password_confirmation.length < 8) {
-        this.isShow = !this.isShow;
+      if(this.form.password == null && this.form.password_confirmation == null) {
+        alert('Password and confirm password must contain more than 8 character long')
+        return;
+      }
+      else if (this.form.password.length < 8 || this.form.password_confirmation.length < 8 ) {
         this.error['password'] = 'Password and confirm password must contain more than 8 character long';
       }
       else if (this.form.password != this.form.password_confirmation) {
-        this.isShow = !this.isShow;
         this.error['password'] = 'Password and confirm password not match';
       }
+      else if(this.form.identity_no == null  ) {
+        this.error['identity_no'] = 'Identity is require';
+
+      }
       else if (this.form.identity_no.length < 13) {
-        this.isShow = !this.isShow;
         this.error['identity_no'] = 'Identity no must more than 13 digit';
       }
       else {
+        this.isValid = !this.isValid
         this.authService.signup(this.form).subscribe(
           data => this.handleResponse(data),
           error => this.handleError(error)
@@ -66,17 +80,17 @@ export class SignupComponent implements OnInit {
   }
 
   handleResponse(data) {
+    this.isShow = !this.isShow
     this.authService.handleToken(data.access_token)
     this.authService.changeAuthStatus(true)
     this.authService.setUserId(data.user.user_id)
     this.router.navigateByUrl('/profile')
-    this.isShow = !this.isShow;
 
   }
 
   handleError(error) {
     this.error = error.error.errors;
-    this.isShow = !this.isShow;
+    this.isShow = !this.isShow
 
   }
 
