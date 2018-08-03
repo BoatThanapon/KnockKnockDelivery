@@ -166,7 +166,7 @@ export class AdminTableDataComponent implements OnInit {
   onClickEdit(user) {
     console.log('[onClickEdit] ',user);
     this.editUser = !this.editUser
-    if(this._type==='buyer') {
+    if(this._type === 'buyer') {
       this.user_info = {
         firstname: user.user.firstname,
         lastname: user.user.lastname,
@@ -178,7 +178,7 @@ export class AdminTableDataComponent implements OnInit {
         uid: user.user.user_id
       }
     }
-    else if(this._type==='seller') {
+    else if(this._type === 'seller') {
       this.user_info = {
         firstname: user.user.firstname,
         lastname: user.user.lastname,
@@ -194,7 +194,7 @@ export class AdminTableDataComponent implements OnInit {
 
       } 
     }
-    else if(this._type==='deliver') {
+    else if(this._type === 'deliver') {
       this.user_info = {
         firstname: user.user.firstname,
         lastname: user.user.lastname,
@@ -235,6 +235,8 @@ export class AdminTableDataComponent implements OnInit {
       lastname: this.user_info.lastname,
       identity_no: this.user_info.identity_no,
       telephone_number: this.user_info.telephone_number,
+      email: this.user_info.email,
+
 
     }
     this.authService.editUser(this.user_info.uid,data)
@@ -318,10 +320,12 @@ export class AdminTableDataComponent implements OnInit {
     if(this._type==='buyer') {
       this.data.forEach(element => {
         if(element.buyer_id === user.user.buyer_id) {
-          element.firstname = user.user.firstname
-          element.lastname = user.user.lastname
+          element.user.firstname = user.user.firstname
+          element.user.lastname = user.user.lastname
           element.buyer_address = role.result.buyer_address
           element.email = user.user.email
+          element.user.telephone_number = user.user.telephone_number
+          element.user.identity_no = user.user.identity_no
 
         }
       });
@@ -331,7 +335,11 @@ export class AdminTableDataComponent implements OnInit {
           if(element.seller_id === role.result.seller_id) {
             element.shop_name = role.result.shop_name
             element.shop_location = role.result.shop_location
-            element.email = user.user.email
+            element.user.email = user.user.email
+            element.user.firstname = user.user.firstname
+            element.user.lastname = user.user.lastname
+            element.user.telephone_number = user.user.telephone_number
+            element.user.identity_no = user.user.identity_no
           }
       });
     }
@@ -343,6 +351,9 @@ export class AdminTableDataComponent implements OnInit {
           element.bank_account_no = role.result.bank_account_no
           element.bank_account.bank_account_name = role.result.bank_account_no
           element.user.email = user.user.email
+          element.user.telephone_number = user.user.telephone_number
+          element.user.identity_no = user.user.identity_no
+
 
           this.bankAccount.forEach((element, idx) => {
             if (element.bank_account_id == role.result.bank_account_id) {

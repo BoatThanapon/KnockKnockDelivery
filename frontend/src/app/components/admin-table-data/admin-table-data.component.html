@@ -319,13 +319,17 @@
 
             <div class="form-group">
               <label for="user-telephone_number">Telephone number</label>
-              <input type="number" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
+              <input type="number" maxlength="10" 
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
                 required/>
             </div>
 
             <div class="form-group">
               <label for="user-identity_no">Identity_no</label>
-              <input type="number" name="user-identity_no" class="form-control" id="input-identity_no" placeholder="Identity no"  [(ngModel)]="user_info.identity_no"
+              <input type="number" name="user-identity_no" maxlength="13"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              class="form-control" id="input-identity_no" placeholder="Identity no"  [(ngModel)]="user_info.identity_no"
                 required/>
             </div>
 
