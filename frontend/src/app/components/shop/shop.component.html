@@ -80,7 +80,7 @@
 
   <div class="w3-container w3-padding w3-light-grey"  [hidden]="!isEmpty">
     <div *ngFor="let product of products;let i = index">
-      <div class="w3-container w3-quarter w3-padding-16">
+      <div class="w3-container w3-quarter w3-padding-16" *ngIf="product.product_status.product_status_id === 1 ">
         <div class="card">
           <div class="card-img-top d-flex justify-content-center">
             <img [src]="baseUrl+product.product_image_1" alt="">
