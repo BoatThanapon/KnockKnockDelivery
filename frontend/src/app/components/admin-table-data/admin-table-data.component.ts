@@ -349,15 +349,16 @@ export class AdminTableDataComponent implements OnInit {
           element.user.firstname = user.user.firstname
           element.user.lastname = user.user.lastname
           element.bank_account_no = role.result.bank_account_no
-          element.bank_account.bank_account_name = role.result.bank_account_no
+          // element.bank_account.bank_account_name = role.result.bank_account_no
+          element.bank_account_id = role.result.bank_account_id
           element.user.email = user.user.email
           element.user.telephone_number = user.user.telephone_number
           element.user.identity_no = user.user.identity_no
 
 
-          this.bankAccount.forEach((element, idx) => {
-            if (element.bank_account_id == role.result.bank_account_id) {
-              element.bank_account_name = element.bank_account_name;
+          this.bankAccount.forEach((ele, idx) => {
+            if (ele.bank_account_id == role.result.bank_account_id) {
+              element.bank_account.bank_account_name = ele.bank_account_name;
             }    
           });
 
