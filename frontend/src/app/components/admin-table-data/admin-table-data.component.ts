@@ -156,7 +156,8 @@ export class AdminTableDataComponent implements OnInit {
         telephone_number: user.user.telephone_number,
         identity_no: user.user.identity_no,
         bank_account_no:user.bank_account_no,
-        bank_account_name:user.bank_account.bank_account_name
+        bank_account_name:user.bank_account.bank_account_name,
+        shipper_transfer_slip: user.shipper_transfer_slip
       } 
     }
 

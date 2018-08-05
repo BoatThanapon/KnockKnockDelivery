@@ -74,7 +74,7 @@
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
             <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.seller_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
-            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
+            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
         </td>
@@ -116,7 +116,7 @@
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
-            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
+            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
         </td>
@@ -269,6 +269,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <img  *ngIf="_type==='deliver'" class="card-img-top" [src]="baseUrl + user_info.shipper_transfer_slip" alt="">
           <p>First name: {{user_info.firstname}}</p>
           <p>Last name: {{user_info.lastname}}</p>
           <p>Email: {{user_info.email}}</p>
