@@ -36,7 +36,7 @@
 
           <div class="form-group">
             <label for="input-email">Telephone number</label>
-            <input type="number" maxlength="10" name="telephone_number" 
+            <input type="tel" pattern="[0-9]*" maxlength="10" name="telephone_number" 
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             class="form-control" id="input-telephone_number" placeholder="Telephone number" (keyup)="onChange()" [(ngModel)]="form.telephone_number" required>
             <span class="text-danger" [hidden]="!error.telephone_number">

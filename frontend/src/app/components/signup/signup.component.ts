@@ -89,8 +89,9 @@ export class SignupComponent implements OnInit {
   }
 
   handleError(error) {
-    this.error = error.error.errors;
+    this.isValid = !this.isValid
     this.isShow = !this.isShow
+    this.error = error.error.errors;
 
   }
 

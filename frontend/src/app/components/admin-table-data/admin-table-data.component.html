@@ -271,7 +271,8 @@
         <div class="modal-body">
           <div class="text-center">
               <img  *ngIf="_type==='deliver'" class="card-img-top" [src]="baseUrl + user_info.shipper_transfer_slip" alt="">
-          </div>
+              <img  *ngIf="_type==='seller'" class="card-img-top" [src]="baseUrl + user_info.shop_logo_image" alt="">
+            </div>
           <p>First name: {{user_info.firstname}}</p>
           <p>Last name: {{user_info.lastname}}</p>
           <p>Email: {{user_info.email}}</p>

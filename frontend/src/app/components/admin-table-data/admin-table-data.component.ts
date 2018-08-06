@@ -134,7 +134,7 @@ export class AdminTableDataComponent implements OnInit {
         email: user.user.email,
         telephone_number: user.user.telephone_number,
         identity_no: user.user.identity_no,
-        buyer_address:user.buyer_address
+        buyer_address: user.buyer_address,
       }
     }
     else if(this._type==='seller') {
@@ -145,7 +145,9 @@ export class AdminTableDataComponent implements OnInit {
         telephone_number: user.user.telephone_number,
         identity_no: user.user.identity_no,
         shop_name:user.shop_name,
-        shop_location:user.shop_location
+        shop_location:user.shop_location,
+        shop_logo_image: user.shop_logo_image
+
       } 
     }
     else if(this._type==='deliver') {
