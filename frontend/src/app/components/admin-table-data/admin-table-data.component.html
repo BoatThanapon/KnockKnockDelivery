@@ -323,7 +323,7 @@
 
             <div class="form-group">
               <label for="user-telephone_number">Telephone number</label>
-              <input type="number" maxlength="10" 
+              <input type="tel" pattern="[0-9]*" maxlength="10" 
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
                 required/>
