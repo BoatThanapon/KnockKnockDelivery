@@ -75,12 +75,12 @@ export class SignupComponent implements OnInit {
         // this.isShow = !this.isShow
       }
       if(this.form.identity_no == null  ) {
-        this.error['identity_no'] = 'Identity is require';
+        this.error['identity_no'] = 'Citizen id is require';
         // this.isShow = !this.isShow
       }
       if(this.form.identity_no != null) {
         if (this.form.identity_no.length < 13) {
-          this.error['identity_no'] = 'Identity no must more than 13 digit';
+          this.error['identity_no'] = 'Citizen id must more than 13 digit';
         }
       }
       if(this.form.password != null || this.form.password_confirmation != null ) {

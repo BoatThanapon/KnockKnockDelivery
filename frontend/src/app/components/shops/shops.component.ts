@@ -20,6 +20,7 @@ export class ShopsComponent implements OnInit {
   private dafault_catagory = '';
   private shops;
   private isShow: boolean = true;
+  private isEdit:boolean = false;
   private cart_num = 0;
   private orders_num = 0;
   private baseUrl = 'http://localhost:8000';
@@ -34,7 +35,7 @@ export class ShopsComponent implements OnInit {
   }
   latitude = 18.800738;
   longtitude = 98.950392;
-
+  error = []
   private user_form = {
     firstname: null,
     lastname: null,
@@ -245,19 +246,46 @@ export class ShopsComponent implements OnInit {
   onEditBuyer() {
     let id = localStorage.getItem('buyer_id')
     console.log("[buyer] ",this.buyer_profile)
-    let temp = {
-      buyer_address: this.buyer_profile.buyer_address,
-      profile_status_id: 1
-    }
-    this.updateProfile()
+    this.error['buyer_address'] = false
+    this.error['firstname'] = false
+    this.error['lastname'] = false
+    this.error['identity_no'] = false
+    this.error['telephone_number'] = false
 
-    this.BuyerService.updateBuyer(temp,id)
-    .subscribe(response => {
-      console.log("[response] onEditBuyer: ",response)
+    if(this.buyer_profile.buyer_address.length == 0) {
+      this.error['buyer_address'] = 'Please fill in address.'
     }
-    ,error => {
-      console.log("[error] onEditBuyer: ",error)
-    })
+    if(this.user_form.firstname.length == 0) {
+      this.error['firstname'] = 'Please fill in first name.'
+    }
+    if(this.user_form.lastname.length == 0) {
+      this.error['lastname'] = 'Please fill in last name.'
+    }
+    if(this.user_form.identity_no.length == 0) {
+      this.error['identity_no'] = 'Please fill in citizen id'
+    }
+    if(this.user_form.telephone_number.length == 0) {
+      this.error['telephone_number'] = 'Please fill in telephone number'
+    }
+    else {
+      this.isEdit  = !this.isEdit
+      let temp = {
+        buyer_address: this.buyer_profile.buyer_address,
+        profile_status_id: 1
+      }
+      this.user_form.telephone_number = '0' + this.user_form.telephone_number.toString();
+      this.updateProfile()
+      this.BuyerService.updateBuyer(temp,id)
+      .subscribe(response => {
+        console.log("[response] onEditBuyer: ",response)
+        this.isEdit  = !this.isEdit
+
+      }
+      ,error => {
+        console.log("[error] onEditBuyer: ",error)
+      })
+    }
+
   }
 
   searchShop() {
@@ -294,20 +322,24 @@ export class ShopsComponent implements OnInit {
   }
 
   updateProfile() {
-    let id = localStorage.getItem('user_id')
-    return new Promise((resolve,reject) => {
-      this.authService.editUser(id,this.user_form)
-      .subscribe(response => {
-        console.log('[response] updateProfile: ',response);
-        resolve(response)
-        
-      }, error => {
-        console.log('[error] updateProfile: ',error);
-        reject(error)
 
+      let id = localStorage.getItem('user_id')
+      return new Promise((resolve,reject) => {
+        this.authService.editUser(id,this.user_form)
+        .subscribe(response => {
+          console.log('[response] updateProfile: ',response);
+          alert('Update profile success')
+          resolve(response)
+          
+        }, error => {
+          console.log('[error] updateProfile: ',error);
+          reject(error)
   
+    
+        })
       })
-    })
+  
+    
 
   }
 

@@ -277,7 +277,7 @@
           <p>Last name: {{user_info.lastname}}</p>
           <p>Email: {{user_info.email}}</p>
           <p>Telephone number: {{user_info.telephone_number}}</p>
-          <p>Identity no: {{user_info.identity_no}}</p>
+          <p>Citizen Id: {{user_info.identity_no}}</p>
           <p *ngIf="_type==='buyer'">Buyer address: {{user_info.buyer_address}}</p>
           <p *ngIf="_type==='seller'">Shop name: {{user_info.shop_name}}</p>
           <p *ngIf="_type==='seller'">Shop location: {{user_info.shop_location}}</p>
@@ -330,10 +330,10 @@
             </div>
 
             <div class="form-group">
-              <label for="user-identity_no">Identity_no</label>
+              <label for="user-identity_no">Citizen Id</label>
               <input type="number" name="user-identity_no" maxlength="13"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-              class="form-control" id="input-identity_no" placeholder="Identity no"  [(ngModel)]="user_info.identity_no"
+              class="form-control" id="input-identity_no" placeholder="Citizen Id"  [(ngModel)]="user_info.identity_no"
                 required/>
             </div>
 
