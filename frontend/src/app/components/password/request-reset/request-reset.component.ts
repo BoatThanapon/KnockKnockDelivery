@@ -37,6 +37,8 @@ export class RequestResetComponent implements OnInit {
 
   handleError(error) {
     this.error = error.error.error;
+    this.router.navigateByUrl('/login')
+
   }
 
 }
