@@ -246,7 +246,7 @@ export class AdminTableDataComponent implements OnInit {
     }
     this.authService.editUser(this.user_info.uid,data)
     .subscribe( response => {
-      this.isShow = !this.isShow
+      alert('User account information information has been edited');
       console.log('[response] onEditUser: ',response);
       this.updateTable(role,response)
     }, error => {
@@ -266,20 +266,21 @@ export class AdminTableDataComponent implements OnInit {
       if(this.user_info.buyer_address.length == 0) {
         this.error['buyer_address'] = 'Please fill in address.'
       }
-      else if(this.user_info.firstname.length == 0) {
+      if(this.user_info.firstname.length == 0) {
         this.error['firstname'] = 'Please fill in first name.'
       }
-      else if(this.user_info.lastname.length == 0) {
+      if(this.user_info.lastname.length == 0) {
         this.error['lastname'] = 'Please fill in last name.'
       }
-      else if(this.user_info.identity_no == null) {
+      if(this.user_info.identity_no == null) {
         this.error['identity_no'] = 'Please fill in citizen id'
       }
-      else if(this.user_info.telephone_number == null) {
+      if(this.user_info.telephone_number == null) {
         this.error['telephone_number'] = 'Please fill in telephone number'
       }
       
-      else{
+      else if (this.user_info.buyer_address.length != 0 && this.user_info.firstname.length != 0 &&
+        this.user_info.lastname.length != 0 && this.user_info.identity_no != null && this.user_info.telephone_number != null){
       
       this.isShow = !this.isShow
       let temp = {
