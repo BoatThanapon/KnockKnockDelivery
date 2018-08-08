@@ -461,5 +461,18 @@ export class AdminTableDataComponent implements OnInit {
   }
 
 
+  confirmFunction(data) {
+    console.log('data: ',data);
+
+    if (confirm("Confirm")) {
+      console.log("You pressed OK!");
+      this.onClickUpdate(data)
+    } else {
+      console.log("You pressed Cancel!");
+    }
+  }
+
+
+
 
 }

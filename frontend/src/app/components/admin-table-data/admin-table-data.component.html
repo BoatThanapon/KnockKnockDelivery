@@ -30,8 +30,8 @@
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.buyer_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="confirmFunction({user: user.buyer_id, status: 2})">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.buyer_id,status: 3})">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
@@ -72,8 +72,8 @@
         <td>
           <div class="btn-group">
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.seller_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate({user: user.seller_id, status: 3})">Reject</button>
+            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="confirmFunction({user: user.seller_id, status: 2})">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.seller_id, status: 3})">Reject</button>
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
@@ -112,10 +112,10 @@
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.shipper_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate({user: user.shipper_id, status: 3})">Reject</button>
-            <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.shipper_id, status: 2})">Approve</button>
+            <!-- (click)="onClickUpdate({user: user.shipper_id, status: 2})" -->
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.shipper_id, status: 3})">Reject</button> 
+            <!-- (click)="onClickUpdate({user: user.shipper_id, status: 3})" -->
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
@@ -232,7 +232,7 @@
       </div>
   
     <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -242,7 +242,6 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- <p>Delete {{ product_name }} ??</p> -->
               <div *ngIf="isDelete">
                 <p style="color:red">Product has been delete</p>
               </div>
@@ -254,7 +253,30 @@
             </div>
           </div>
         </div>
+      </div> -->
+
+    <!-- ////////////////////////////////// confirm ///////////////////////////////////////-->
+    <div class="modal fade" id="confirmModel" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
+    </div>
+
+
+        
   </div>
 
 
@@ -405,8 +427,8 @@
           </div>
         </div>
       </div>
-    </div>
-  
+  </div>
 
 </div>
+
 

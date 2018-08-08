@@ -22,11 +22,13 @@ export class OrderComponent implements OnInit {
     order_status: {}, 
     updated_at: ''
   };
-  private upload_img;
+  private upload_img = null;
   private isSeeMore:boolean = false;
   private isUploadTransfer:boolean = false;
   private isOpenQRCode:boolean = false;
-
+  private error = {
+    image:null
+  }
   private isEmpty:boolean = true;
   private isShow:boolean = true;
   private isBuyer:boolean = true;
@@ -200,22 +202,30 @@ export class OrderComponent implements OnInit {
   }
 
   updateOrder() {
-    this.isShow = !this.isShow
-
-    let form = new FormData();
-    form.append("payment_transfer_slip",this.upload_img);
-
-    this.OrderService.UploadTransferSlipByOrderId(this.upload_order.order_id,form)
-    .subscribe(response => {
-      // this.isShow = !this.isShow
-      console.log("[upload response] ",response);
-      location.reload();
-
-    },error => {
-      alert("Upload image fail")
+    console.log('this.upload_img',this.upload_img);
+    
+    if(this.upload_img == null ) {
+      this.error.image = 'Please upload Transfer slip image.'
+    }
+    else {
       this.isShow = !this.isShow
-
-    })
+      let form = new FormData();
+      form.append("payment_transfer_slip",this.upload_img);
+  
+      this.OrderService.UploadTransferSlipByOrderId(this.upload_order.order_id,form)
+      .subscribe(response => {
+        // this.isShow = !this.isShow
+        console.log("[upload response] ",response);
+        alert('Successful, please wait for shipper to confirm')
+        location.reload();
+  
+      },error => {
+        alert("Upload image fail")
+        this.isShow = !this.isShow
+  
+      })
+  
+    }
 
 
   }
@@ -238,7 +248,7 @@ export class OrderComponent implements OnInit {
       console.log("[response] acceptTransfer ",response);
       alert('Transfer slip has been approve')
       this.isShow = !this.isShow
-      this.ngOnInit();
+      location.reload()    
     },error => {
       console.log("[error] acceptTransfer ",error);
 
