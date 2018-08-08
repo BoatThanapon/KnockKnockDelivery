@@ -307,12 +307,18 @@
               <label for="user-firstname">First name</label>
               <input type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_info.firstname"
                 required/>
+                <span class="text-danger" [hidden]="!error.firstname">
+                    {{error.firstname}}
+                </span>
             </div>
 
             <div class="form-group">
               <label for="user-lastname">Last name</label>
               <input type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_info.lastname"
                 required/>
+                <span class="text-danger" [hidden]="!error.lastname">
+                    {{error.lastname}}
+                </span>
             </div>
 
             <!-- <div class="form-group">
@@ -323,10 +329,13 @@
 
             <div class="form-group">
               <label for="user-telephone_number">Telephone number</label>
-              <input type="tel" pattern="[0-9]*" maxlength="10" 
+              <input type="number" pattern="[0-9]*" maxlength="10" 
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
                 required/>
+                <span class="text-danger" [hidden]="!error.telephone_number">
+                    {{error.telephone_number}}
+                </span>
             </div>
 
             <div class="form-group">
@@ -335,30 +344,45 @@
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               class="form-control" id="input-identity_no" placeholder="Citizen Id"  [(ngModel)]="user_info.identity_no"
                 required/>
+                <span class="text-danger" [hidden]="!error.identity_no">
+                    {{error.identity_no}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='buyer'">
               <label for="user-buyer_address">Buyer address</label>
               <input type="text" name="user-buyer_address" class="form-control" id="input-buyer_address" placeholder="Buyer address"  [(ngModel)]="user_info.buyer_address"
                 required/>
+                <span class="text-danger" [hidden]="!error.buyer_address">
+                    {{error.buyer_address}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='seller'">
               <label for="user-shop_name">Shop name</label>
               <input type="text" name="user-shop_name" class="form-control" id="input-shop_name" placeholder="Shop name"  [(ngModel)]="user_info.shop_name"
                 required/>
+                <span class="text-danger" [hidden]="!error.shop_name">
+                    {{error.shop_name}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='seller'">
               <label for="user-shop_location">Shop location</label>
               <textarea type="text" name="user-shop_location" class="form-control" id="input-shop_location" placeholder="Shop location"  [(ngModel)]="user_info.shop_location"
                 required></textarea>
+                <span class="text-danger" [hidden]="!error.shop_location">
+                    {{error.shop_location}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='deliver'">
               <label for="user-bank_account_no">Bank account no</label>
               <input type="number" name="user-bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no"  [(ngModel)]="user_info.bank_account_no"
                 required/>
+                <span class="text-danger" [hidden]="!error.bank_account_no">
+                    {{error.bank_account_no}}
+                </span>
             </div>
 
             
@@ -376,7 +400,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-warning rounded-0" data-dismiss="modal" (click)="onEdit()">Edit</button>
+            <button type="button" class="btn btn-warning rounded-0" (click)="onEdit()">Confirm</button>
 
           </div>
         </div>

@@ -6,6 +6,7 @@ import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
 import { BuyerService } from '../../services/buyer.service';
 import { DeliverService } from '../../services/deliver.service';
+import { Alert } from '../../../../node_modules/@types/selenium-webdriver';
 
 
 
@@ -39,6 +40,7 @@ export class AdminTableDataComponent implements OnInit {
   private user_info;
   private update_data;
   private dafault_bank;
+  private error = [];
   private bankAccount = JSON.parse(localStorage.getItem('masterData')).bank_account
 
 
@@ -227,7 +229,7 @@ export class AdminTableDataComponent implements OnInit {
   }
 
   onEdit() {
-    this.isShow = !this.isShow
+   
     this.onEditRole();
 
   }
@@ -256,6 +258,30 @@ export class AdminTableDataComponent implements OnInit {
 
   onEditRole() {
     if(this._type==='buyer') {
+      this.error['buyer_address'] = false
+      this.error['firstname'] = false
+      this.error['lastname'] = false
+      this.error['identity_no'] = false
+      this.error['telephone_number'] = false
+      if(this.user_info.buyer_address.length == 0) {
+        this.error['buyer_address'] = 'Please fill in address.'
+      }
+      else if(this.user_info.firstname.length == 0) {
+        this.error['firstname'] = 'Please fill in first name.'
+      }
+      else if(this.user_info.lastname.length == 0) {
+        this.error['lastname'] = 'Please fill in last name.'
+      }
+      else if(this.user_info.identity_no == null) {
+        this.error['identity_no'] = 'Please fill in citizen id'
+      }
+      else if(this.user_info.telephone_number == null) {
+        this.error['telephone_number'] = 'Please fill in telephone number'
+      }
+      
+      else{
+      
+      this.isShow = !this.isShow
       let temp = {
         buyer_address: this.user_info.buyer_address,
         profile_status_id: 1
@@ -271,6 +297,7 @@ export class AdminTableDataComponent implements OnInit {
         console.log("[error] ",error)
       })
     }
+    }
     else if(this._type==='seller') {
 
       let temp = {
@@ -284,6 +311,7 @@ export class AdminTableDataComponent implements OnInit {
       this.sellerService.updateShop(temp, this.user_info.seller_id).subscribe(
         response => {
           console.log("response onSubmit: ", response)
+          alert('User account information information has been edited.')
           if(response.message == 'Successfully') {
             this.onEditUser(response);
           }
