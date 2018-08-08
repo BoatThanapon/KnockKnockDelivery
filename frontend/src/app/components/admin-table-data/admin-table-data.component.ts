@@ -247,6 +247,7 @@ export class AdminTableDataComponent implements OnInit {
     this.authService.editUser(this.user_info.uid,data)
     .subscribe( response => {
       alert('User account information information has been edited');
+      this.isShow = !this.isShow
       console.log('[response] onEditUser: ',response);
       this.updateTable(role,response)
     }, error => {
@@ -301,6 +302,36 @@ export class AdminTableDataComponent implements OnInit {
     }
     else if(this._type==='seller') {
       
+      this.error['firstname'] = false
+      this.error['lastname'] = false
+      this.error['identity_no'] = false
+      this.error['telephone_number'] = false
+      this.error['shop_name'] = false;
+      this.error['shop_location'] = false;
+    
+      if(this.user_info.firstname.length == 0) {
+        this.error['firstname'] = 'Please fill in first name.'
+      }
+      if(this.user_info.lastname.length == 0) {
+        this.error['lastname'] = 'Please fill in last name.'
+      }
+      if(this.user_info.identity_no == null) {
+        this.error['identity_no'] = 'Please fill in citizen id'
+      }
+      if(this.user_info.telephone_number == null) {
+        this.error['telephone_number'] = 'Please fill in telephone number'
+      }
+      if(this.user_info.shop_name.length == 0) {
+        this.error['shop_name'] = 'Please fill in shop name'
+      }
+      if(this.user_info.shop_location.length == 0) {
+        this.error['shop_location'] = 'Please fill in address'
+      }
+      
+      else if (this.user_info.telephone_number != null && this.user_info.firstname.length != 0 && this.user_info.lastname.length != 0 && 
+        this.user_info.identity_no != null && this.user_info.shop_name.length != 0 && this.user_info.shop_location.length != 0){
+
+      this.isShow = !this.isShow
 
       let temp = {
         shop_name: this.user_info.shop_name,
@@ -324,6 +355,7 @@ export class AdminTableDataComponent implements OnInit {
 
         }
       )
+    }
   
     }
     else if(this._type==='deliver') {
