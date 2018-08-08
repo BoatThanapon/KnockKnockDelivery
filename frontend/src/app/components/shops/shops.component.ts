@@ -245,7 +245,7 @@ export class ShopsComponent implements OnInit {
 
   onEditBuyer() {
     let id = localStorage.getItem('buyer_id')
-    console.log("[buyer] ",this.buyer_profile)
+    console.log("[buyer] ",this.user_form)
     this.error['buyer_address'] = false
     this.error['firstname'] = false
     this.error['lastname'] = false
@@ -261,10 +261,10 @@ export class ShopsComponent implements OnInit {
     if(this.user_form.lastname.length == 0) {
       this.error['lastname'] = 'Please fill in last name.'
     }
-    if(this.user_form.identity_no.length == 0) {
+    if(this.user_form.identity_no == null) {
       this.error['identity_no'] = 'Please fill in citizen id'
     }
-    if(this.user_form.telephone_number.length == 0) {
+    if(this.user_form.telephone_number == null) {
       this.error['telephone_number'] = 'Please fill in telephone number'
     }
     else {
@@ -283,6 +283,8 @@ export class ShopsComponent implements OnInit {
       }
       ,error => {
         console.log("[error] onEditBuyer: ",error)
+        this.isEdit  = !this.isEdit
+
       })
     }
 
