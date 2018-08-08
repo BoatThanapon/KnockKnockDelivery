@@ -300,6 +300,7 @@ export class AdminTableDataComponent implements OnInit {
     }
     }
     else if(this._type==='seller') {
+      
 
       let temp = {
         shop_name: this.user_info.shop_name,
@@ -327,6 +328,33 @@ export class AdminTableDataComponent implements OnInit {
     }
     else if(this._type==='deliver') {
       console.log("[Update]")
+
+      this.error['bank_account_no'] = false
+      this.error['firstname'] = false
+      this.error['lastname'] = false
+      this.error['identity_no'] = false
+      this.error['telephone_number'] = false
+    
+      if(this.user_info.firstname.length == 0) {
+        this.error['firstname'] = 'Please fill in first name.'
+      }
+      if(this.user_info.lastname.length == 0) {
+        this.error['lastname'] = 'Please fill in last name.'
+      }
+      if(this.user_info.identity_no == null) {
+        this.error['identity_no'] = 'Please fill in citizen id'
+      }
+      if(this.user_info.bank_account_no == null) {
+        this.error['bank_account_no'] = 'Please fill in back account number'
+      }
+      if(this.user_info.telephone_number == null) {
+        this.error['telephone_number'] = 'Please fill in telephone number'
+      }
+      
+      else if (this.user_info.telephone_number != null && this.user_info.firstname.length != 0 &&
+        this.user_info.lastname.length != 0 && this.user_info.identity_no != null && this.user_info.bank_account_no != null){
+
+      this.isShow = !this.isShow
       let id = this.user_info.shipper_id;
       let form = {
         bank_account_id: this.user_info.bank_account_id,
@@ -343,6 +371,7 @@ export class AdminTableDataComponent implements OnInit {
   
       })
     }
+  }
   }
 
   updateTable(role,user) {
