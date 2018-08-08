@@ -113,7 +113,7 @@
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.shipper_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate({user: user.shipper_id, status: 3})">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
