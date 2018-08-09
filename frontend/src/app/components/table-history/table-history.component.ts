@@ -78,6 +78,10 @@ export class TableHistoryComponent implements OnInit {
       })
   }
 
+  getOrderInfoDetail(orderId) {
+
+  }
+
   getOrderDetail(id) {
     return new Promise((resolve, reject) => {
       this.orderService.getOrderDetail(id)

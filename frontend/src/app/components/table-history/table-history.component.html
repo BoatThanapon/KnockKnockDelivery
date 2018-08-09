@@ -75,6 +75,10 @@
             <strong>Shipper phone no. : </strong>{{order.shipper.user.telephone_number}}</p>
           <p>
               <strong>Shop name : </strong>{{order.seller.shop_name}}</p>
+          <p><strong>product list: </strong></p>
+          <div *ngFor="let product of order.order_details;let  i = index">
+            <p>{{i+1}}. {{product.product.product_name}}</p>
+          </div>
           <p>
             <strong>Service charge : </strong>{{order.service_charge}}</p>
           <p>
