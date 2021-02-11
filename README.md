@@ -8,7 +8,7 @@ Laravel and Angular
   # Connect with AWS MySQL
    - In .env file folder backend
      - DB_CONNECTION=mysql
-     - DB_HOST=knockknockdb.ceisn90mxwfd.ap-southeast-1.rds.amazonaws.com
+     - DB_HOST=localhost
      - DB_PORT=3306
      - DB_DATABASE=knockknock_dev
      - DB_USERNAME=knockknock_db
